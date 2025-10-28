@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+const getOpenAIClient = () => {
+  const apiKey = process.env.OPENAI_API_KEY || 'placeholder-key'
+  if (!process.env.OPENAI_API_KEY) {
+    console.warn('Missing OPENAI_API_KEY environment variable')
+  }
+  return new OpenAI({ apiKey })
+}
 
 interface VehicleInfo {
   make: string
@@ -124,6 +128,7 @@ Format your response as a JSON object with the following structure:
 Ensure all values are realistic and based on current Australian market conditions.
 `
 
+    const openai = getOpenAIClient()
     const completion = await openai.chat.completions.create({
       model: "gpt-4o",
       messages: [
