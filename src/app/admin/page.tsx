@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Search, FileText, Download, Eye, Plus, Settings, BarChart3, Users, Database, CheckCircle, XCircle, AlertTriangle, Clock, Edit, Mail, Trash2 } from 'lucide-react'
 import SimpleReportBuilder from '@/components/SimpleReportBuilder'
+import AdminAuth from '@/components/AdminAuth'
 import { VehicleReport } from '@/types/vehicle-report'
 
 interface SimpleVehicleReport {
@@ -109,7 +110,7 @@ interface ReportData {
   }
 }
 
-export default function AdminDashboard() {
+function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'reports' | 'generate' | 'builder' | 'analytics' | 'settings'>('reports')
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedReport, setSelectedReport] = useState<SimpleVehicleReport | null>(null)
@@ -1263,5 +1264,13 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <AdminAuth>
+      <AdminDashboard />
+    </AdminAuth>
   )
 }
