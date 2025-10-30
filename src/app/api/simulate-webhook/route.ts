@@ -4,9 +4,15 @@ import { supabaseAdmin } from '@/lib/supabase'
 
 type ReportType = 'BASIC' | 'STANDARD' | 'PREMIUM'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-})
+const getStripeClient = () => {
+  const apiKey = process.env.STRIPE_SECRET_KEY || 'sk_placeholder_key'
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.warn('Missing STRIPE_SECRET_KEY environment variable')
+  }
+  return new Stripe(apiKey, {
+    apiVersion: '2025-08-27.basil',
+  })
+}
 
 // Track processed sessions to prevent duplicates
 const processedSessions = new Set<string>()
@@ -33,6 +39,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Retrieve the session from Stripe
+    const stripe = getStripeClient()
     const session = await stripe.checkout.sessions.retrieve(sessionId)
 
     if (session.payment_status === 'paid') {

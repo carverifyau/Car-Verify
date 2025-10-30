@@ -2,9 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import Stripe from 'stripe'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-})
+const getStripeClient = () => {
+  const apiKey = process.env.STRIPE_SECRET_KEY || 'sk_placeholder_key'
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.warn('Missing STRIPE_SECRET_KEY environment variable')
+  }
+  return new Stripe(apiKey, {
+    apiVersion: '2025-08-27.basil',
+  })
+}
 
 const createCheckoutSessionSchema = z.object({
   customerEmail: z.string().email('Valid email address is required'),
@@ -22,6 +28,7 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const validatedData = createCheckoutSessionSchema.parse(body)
 
+    const stripe = getStripeClient()
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [

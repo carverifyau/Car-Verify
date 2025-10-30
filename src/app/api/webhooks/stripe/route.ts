@@ -6,11 +6,17 @@ import { supabaseAdmin } from '@/lib/supabase'
 
 type ReportType = 'BASIC' | 'STANDARD' | 'PREMIUM'
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2025-08-27.basil',
-})
+const getStripeClient = () => {
+  const apiKey = process.env.STRIPE_SECRET_KEY || 'sk_placeholder_key'
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.warn('Missing STRIPE_SECRET_KEY environment variable')
+  }
+  return new Stripe(apiKey, {
+    apiVersion: '2025-08-27.basil',
+  })
+}
 
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET!
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder_secret'
 
 export async function POST(request: NextRequest) {
   const body = await request.text()
@@ -20,6 +26,7 @@ export async function POST(request: NextRequest) {
   let event: Stripe.Event
 
   try {
+    const stripe = getStripeClient()
     event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
   } catch (err) {
     console.error('Webhook signature verification failed:', err)
