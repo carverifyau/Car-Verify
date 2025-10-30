@@ -40,9 +40,6 @@ export default function Home() {
               <Link href="#support" className="text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
                 Support
               </Link>
-              <Link href="/admin" className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all duration-300 text-sm font-medium">
-                Admin Portal
-              </Link>
             </nav>
           </div>
         </div>
@@ -525,7 +522,6 @@ export default function Home() {
               <ul className="space-y-3 text-gray-300">
                 <li><Link href="#how-it-works" className="hover:text-blue-400 transition-colors">How it Works</Link></li>
                 <li><Link href="#sample-report" className="hover:text-blue-400 transition-colors">Sample Report</Link></li>
-                <li><Link href="/admin" className="hover:text-blue-400 transition-colors">Admin Portal</Link></li>
               </ul>
             </div>
 
