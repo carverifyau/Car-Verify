@@ -18,8 +18,11 @@ const getStripeClient = () => {
 const processedSessions = new Set<string>()
 
 export async function POST(request: NextRequest) {
+  let sessionId: string | undefined
+
   try {
-    const { sessionId } = await request.json()
+    const requestBody = await request.json()
+    sessionId = requestBody.sessionId
 
     if (!sessionId) {
       return NextResponse.json(
