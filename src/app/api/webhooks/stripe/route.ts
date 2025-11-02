@@ -19,17 +19,24 @@ const getStripeClient = () => {
 const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder_secret'
 
 export async function POST(request: NextRequest) {
+  console.log('🚀 Stripe webhook received at:', new Date().toISOString())
+
   const body = await request.text()
   const headersList = await headers()
-  const signature = headersList.get('Stripe-Signature')!
+  const signature = headersList.get('Stripe-Signature')
+
+  console.log('📝 Webhook body length:', body.length)
+  console.log('🔑 Stripe signature present:', !!signature)
+  console.log('🔑 Webhook secret configured:', !!webhookSecret && webhookSecret !== 'whsec_placeholder_secret')
 
   let event: Stripe.Event
 
   try {
     const stripe = getStripeClient()
-    event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    event = stripe.webhooks.constructEvent(body, signature!, webhookSecret)
+    console.log('✅ Webhook signature verified, event type:', event.type)
   } catch (err) {
-    console.error('Webhook signature verification failed:', err)
+    console.error('❌ Webhook signature verification failed:', err)
     return NextResponse.json(
       { error: 'Invalid signature' },
       { status: 400 }
@@ -77,6 +84,11 @@ export async function POST(request: NextRequest) {
       }
 
       // Save directly to Supabase database
+      console.log('💾 Attempting to save to Supabase...')
+      console.log('📧 Customer email:', metadata.customerEmail)
+      console.log('🚗 Vehicle info:', vehicleInfo)
+      console.log('📋 Report type:', reportType)
+
       try {
         const { data, error } = await supabaseAdmin
           .from('reports')
@@ -94,9 +106,12 @@ export async function POST(request: NextRequest) {
           .select()
 
         if (error) {
-          console.error('Supabase save error:', error)
+          console.error('❌ Supabase save error:', error)
+          console.error('❌ Error details:', JSON.stringify(error, null, 2))
         } else {
-          console.log('✅ Report saved to Supabase successfully:', data[0]?.id)
+          console.log('✅ Report saved to Supabase successfully!')
+          console.log('✅ Report ID:', data[0]?.id)
+          console.log('✅ Report data:', JSON.stringify(data[0], null, 2))
         }
       } catch (error) {
         console.error('Error saving report to Supabase:', error)
