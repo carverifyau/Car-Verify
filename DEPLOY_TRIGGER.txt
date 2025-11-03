@@ -1,2 +1,6 @@
 Deploy trigger file created at: 2025-11-03 22:41:30
+UPDATED: 2025-11-03 22:47:15
 This file triggers a new Vercel deployment with the latest webhook fix.
+
+CRITICAL: Deploy commit 2958ed0 and aef73c6 which contain the webhook signature fix.
+Production webhook is STILL returning {"error":"Invalid signature"} which proves the fix is not deployed.
