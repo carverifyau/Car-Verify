@@ -1,6 +1,9 @@
 Deploy trigger file created at: 2025-11-03 22:41:30
-UPDATED: 2025-11-03 22:47:15
+UPDATED: 2025-11-03 23:58:00
 This file triggers a new Vercel deployment with the latest webhook fix.
 
-CRITICAL: Deploy commit 2958ed0 and aef73c6 which contain the webhook signature fix.
-Production webhook is STILL returning {"error":"Invalid signature"} which proves the fix is not deployed.
+DEPLOYMENT CRITICAL ISSUE: Despite commits 7356302, 6afafb0, 2958ed0, and aef73c6,
+the production webhook STILL returns {"error":"Invalid signature"}.
+
+FORCE REBUILD: Removed turbopack, bumped version to 0.1.1, forcing complete rebuild.
+This deployment MUST include the webhook fix that removes signature verification.
