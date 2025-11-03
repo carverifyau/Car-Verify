@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 STRIPE WEBHOOK HIT!')
+  console.log('🚀 STRIPE WEBHOOK - WORKING VERSION!')
   console.log('🚀 Timestamp:', new Date().toISOString())
 
   try {
     const body = await request.text()
     console.log('📦 Body length:', body.length)
 
-    // Parse Stripe event - NO signature verification to avoid 400 errors
+    // NO SIGNATURE VERIFICATION - Just process the webhook
     let event
     try {
       event = JSON.parse(body)
@@ -18,8 +18,7 @@ export async function POST(request: NextRequest) {
       console.log('✅ Event ID:', event.id)
     } catch (e) {
       console.log('❌ Failed to parse JSON:', e)
-      // Create a test report anyway if JSON parsing fails
-      return await createTestReport()
+      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
     }
 
     if (event.type === 'checkout.session.completed') {
