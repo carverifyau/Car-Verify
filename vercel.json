@@ -6,11 +6,15 @@
   },
   "headers": [
     {
-      "source": "/api/webhooks/(.*)",
+      "source": "/(.*)",
       "headers": [
         {
-          "key": "x-vercel-skip-deployment-protection",
-          "value": "1"
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET,POST,PUT,DELETE,OPTIONS"
         }
       ]
     }
