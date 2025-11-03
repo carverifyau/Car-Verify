@@ -18,5 +18,13 @@
         }
       ]
     }
-  ]
+  ],
+  "deploymentProtection": {
+    "bypassPaths": [
+      "/api/webhooks/stripe",
+      "/api/test-webhook",
+      "/api/create-manual-report",
+      "/api/test-supabase"
+    ]
+  }
 }

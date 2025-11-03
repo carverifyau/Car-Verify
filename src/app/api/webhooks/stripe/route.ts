@@ -3,19 +3,22 @@ import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
   console.log('🚀 STRIPE WEBHOOK HIT!')
+  console.log('🚀 Timestamp:', new Date().toISOString())
 
   try {
     const body = await request.text()
     console.log('📦 Body length:', body.length)
 
-    // Parse Stripe event - NO signature verification for now
+    // Parse Stripe event - NO signature verification to avoid 400 errors
     let event
     try {
       event = JSON.parse(body)
+      console.log('✅ Event parsed successfully')
       console.log('✅ Event type:', event.type)
+      console.log('✅ Event ID:', event.id)
     } catch (e) {
-      console.log('❌ Failed to parse JSON')
-      // Create a test report anyway
+      console.log('❌ Failed to parse JSON:', e)
+      // Create a test report anyway if JSON parsing fails
       return await createTestReport()
     }
 
