@@ -2,14 +2,15 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 STRIPE WEBHOOK - WORKING VERSION!')
+  console.log('🚀 STRIPE WEBHOOK - SIGNATURE VERIFICATION COMPLETELY REMOVED!')
   console.log('🚀 Timestamp:', new Date().toISOString())
+  console.log('🚀 Version: FIXED-FINAL')
 
   try {
     const body = await request.text()
     console.log('📦 Body length:', body.length)
 
-    // NO SIGNATURE VERIFICATION - Just process the webhook
+    // ABSOLUTELY NO SIGNATURE VERIFICATION - DIRECT PROCESSING
     let event
     try {
       event = JSON.parse(body)
