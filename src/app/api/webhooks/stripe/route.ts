@@ -2,60 +2,44 @@ import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 WEBHOOK HIT!')
+  console.log('🚀 STRIPE WEBHOOK HIT!')
 
   try {
     const body = await request.text()
-    console.log('📦 Body received, length:', body.length)
+    console.log('📦 Body length:', body.length)
 
-    // Parse the Stripe event
+    // Parse Stripe event - NO signature verification for now
     let event
     try {
       event = JSON.parse(body)
+      console.log('✅ Event type:', event.type)
     } catch (e) {
-      console.log('❌ Failed to parse JSON, creating test report instead')
+      console.log('❌ Failed to parse JSON')
+      // Create a test report anyway
       return await createTestReport()
     }
 
-    console.log('✅ Event type:', event.type)
-
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object
-      console.log('💳 Processing checkout session:', session.id)
-      console.log('📧 Customer email:', session.customer_details?.email)
-      console.log('🚗 Metadata:', session.metadata)
+      console.log('💳 Processing session:', session.id)
 
-      // Extract data from the real Stripe event
+      // Extract metadata
       const metadata = session.metadata || {}
-      let vehicleInfo
+      console.log('🏷️ Metadata:', metadata)
 
-      if (metadata.vehicleType === 'vin') {
-        vehicleInfo = {
-          type: 'vin',
-          vin: metadata.vehicleVin,
-        }
-      } else {
-        vehicleInfo = {
-          type: 'rego',
-          rego: metadata.vehicleRego || 'UNKNOWN',
-          state: metadata.vehicleState || 'QLD',
-        }
+      const vehicleInfo = {
+        type: metadata.vehicleType === 'vin' ? 'vin' : 'rego',
+        vin: metadata.vehicleVin || undefined,
+        rego: metadata.vehicleRego || 'UNKNOWN',
+        state: metadata.vehicleState || 'QLD'
       }
-
-      // Map report type
-      const reportTypeMap = {
-        'standard': 'STANDARD',
-        'premium': 'PREMIUM',
-        'comprehensive': 'PREMIUM', // Map comprehensive to premium
-      }
-      const reportType = reportTypeMap[metadata.reportType] || 'STANDARD'
 
       const reportData = {
         order_id: session.id,
-        customer_email: session.customer_details?.email || session.customer_email || 'unknown@email.com',
-        customer_name: session.customer_details?.name || 'Customer',
+        customer_email: session.customer_details?.email || metadata.customerEmail || 'unknown@test.com',
+        customer_name: session.customer_details?.name || 'Test Customer',
         vehicle_identifier: vehicleInfo,
-        report_type: reportType,
+        report_type: metadata.reportType === 'comprehensive' ? 'PREMIUM' : 'STANDARD',
         status: 'pending',
         report_data: {
           stripe_session_id: session.id,
@@ -63,12 +47,11 @@ export async function POST(request: NextRequest) {
           currency: session.currency,
           payment_status: session.payment_status,
           created_at: new Date().toISOString(),
-          webhook_processed: true,
-          metadata: metadata
+          webhook_processed: true
         }
       }
 
-      console.log('💾 Saving report:', reportData)
+      console.log('💾 Creating report:', reportData)
 
       const { data, error } = await supabaseAdmin
         .from('reports')
@@ -81,37 +64,34 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('✅ REPORT CREATED:', data[0]?.id)
-      return NextResponse.json({
-        success: true,
-        id: data[0]?.id,
-        customer: session.customer_details?.email,
-        vehicle: vehicleInfo
-      })
+      return NextResponse.json({ success: true, id: data[0]?.id })
     }
 
-    // For other event types, just acknowledge
+    // For other events
     return NextResponse.json({ received: true, type: event.type })
 
   } catch (error) {
     console.error('❌ ERROR:', error)
-    return NextResponse.json({ error: 'Failed' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed', message: error.message }, { status: 500 })
   }
 }
 
 async function createTestReport() {
+  console.log('🧪 Creating test report')
+
   const testData = {
-    order_id: `test_${Date.now()}`,
-    customer_email: 'test@stripe.com',
-    customer_name: 'Test Customer',
+    order_id: `fallback_${Date.now()}`,
+    customer_email: 'sloshedau@gmail.com',
+    customer_name: 'connor rawiri',
     vehicle_identifier: {
       type: 'rego',
-      rego: 'TEST123',
+      rego: 'ZZM991',
       state: 'QLD'
     },
-    report_type: 'STANDARD',
+    report_type: 'PREMIUM',
     status: 'pending',
     report_data: {
-      webhook_test: true,
+      fallback_creation: true,
       timestamp: new Date().toISOString()
     }
   }
@@ -129,5 +109,10 @@ async function createTestReport() {
 }
 
 export async function GET() {
-  return NextResponse.json({ status: 'OK', time: new Date().toISOString() })
+  console.log('🔍 Webhook GET request')
+  return NextResponse.json({
+    status: 'Webhook ready',
+    time: new Date().toISOString(),
+    version: 'simplified'
+  })
 }
