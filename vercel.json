@@ -2,6 +2,9 @@
   "functions": {
     "src/app/api/webhooks/stripe/route.ts": {
       "maxDuration": 10
+    },
+    "src/app/api/webhooks/stripe-fixed/route.ts": {
+      "maxDuration": 10
     }
   },
   "headers": [
