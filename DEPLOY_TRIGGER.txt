@@ -1,9 +1,9 @@
 Deploy trigger file created at: 2025-11-03 22:41:30
-UPDATED: 2025-11-03 23:58:00
-This file triggers a new Vercel deployment with the latest webhook fix.
+UPDATED: 2025-11-04 01:00:00
+This file triggers a new Vercel deployment with the latest payment fix.
 
-DEPLOYMENT CRITICAL ISSUE: Despite commits 7356302, 6afafb0, 2958ed0, and aef73c6,
-the production webhook STILL returns {"error":"Invalid signature"}.
+PAYMENT CRITICAL ISSUE: Production deployment returns 500 error on payment initialization.
+Local development works fine, but production has old Stripe API version.
 
-FORCE REBUILD: Removed turbopack, bumped version to 0.1.1, forcing complete rebuild.
-This deployment MUST include the webhook fix that removes signature verification.
+FORCE REBUILD: Deploy commit 6078235 with Stripe API version fix.
+This deployment MUST include the payment initialization fix that updates API version to 2024-12-18.acacia.
