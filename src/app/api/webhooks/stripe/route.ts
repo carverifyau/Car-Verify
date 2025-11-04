@@ -26,20 +26,32 @@ export async function POST(request: NextRequest) {
       const session = event.data.object
       console.log('💳 Processing session:', session.id)
 
-      // Extract metadata
+      // Extract metadata (from API-created sessions)
       const metadata = session.metadata || {}
       console.log('🏷️ Metadata:', metadata)
 
+      // Also try to parse client_reference_id (from Payment Links)
+      let clientRefData = null
+      if (session.client_reference_id) {
+        try {
+          clientRefData = JSON.parse(session.client_reference_id)
+          console.log('🔗 Client Reference Data:', clientRefData)
+        } catch (e) {
+          console.log('⚠️ Could not parse client_reference_id')
+        }
+      }
+
+      // Use clientRefData if available (Payment Link), otherwise use metadata (API session)
       const vehicleInfo = {
-        type: metadata.vehicleType === 'vin' ? 'vin' : 'rego',
-        vin: metadata.vehicleVin || undefined,
-        rego: metadata.vehicleRego || 'UNKNOWN',
-        state: metadata.vehicleState || 'QLD'
+        type: clientRefData?.type || (metadata.vehicleType === 'vin' ? 'vin' : 'rego'),
+        vin: clientRefData?.vin || metadata.vehicleVin || undefined,
+        rego: clientRefData?.rego || metadata.vehicleRego || 'UNKNOWN',
+        state: clientRefData?.state || metadata.vehicleState || 'QLD'
       }
 
       const reportData = {
         order_id: session.id,
-        customer_email: session.customer_details?.email || metadata.customerEmail || 'unknown@test.com',
+        customer_email: session.customer_details?.email || clientRefData?.email || metadata.customerEmail || 'unknown@test.com',
         customer_name: session.customer_details?.name || 'Test Customer',
         vehicle_identifier: vehicleInfo,
         report_type: metadata.reportType === 'comprehensive' ? 'PREMIUM' : 'STANDARD',
