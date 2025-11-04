@@ -86,15 +86,28 @@ function CheckoutPageContent() {
 
       const data = await response.json()
 
+      // Log the full response for debugging
+      console.log('Checkout session response:', { status: response.status, data })
+
+      if (!response.ok) {
+        // Handle API errors
+        const errorMessage = data.error || data.message || 'Unknown error occurred'
+        console.error('API error:', data)
+        alert(`Payment Error: ${errorMessage}\n\nPlease contact support if this persists.`)
+        return
+      }
+
       if (data.url) {
         // Redirect to Stripe Checkout
+        console.log('Redirecting to Stripe:', data.url)
         window.location.href = data.url
       } else {
-        throw new Error('Failed to create checkout session')
+        throw new Error('No checkout URL returned from API')
       }
     } catch (error) {
       console.error('Payment initialization error:', error)
-      alert('Failed to initialize payment. Please try again.')
+      const errorMsg = error instanceof Error ? error.message : 'Unknown error'
+      alert(`Failed to initialize payment: ${errorMsg}\n\nPlease try again or contact support.`)
     } finally {
       setIsCreatingPayment(false)
     }

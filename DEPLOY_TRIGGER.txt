@@ -1,10 +1,12 @@
 Deploy trigger file created at: 2025-11-03 22:41:30
-UPDATED: 2025-11-04 01:17:00
+UPDATED: 2025-11-04 01:25:00
 This file triggers a new Vercel deployment with the latest payment fix.
 
-PAYMENT CRITICAL ISSUE: Environment variables added but still getting Stripe connection errors.
-Production needs latest code with Stripe API version fix (2024-12-18.acacia).
+FINAL PAYMENT FIX: Production deployment missing latest stable Stripe API version.
+Critical deployment needed with commit 6180a4d containing stable API version 2023-10-16.
 
-FORCE REBUILD: Deploy latest commit with Stripe API version fix.
-Current error: "An error occurred with our connection to Stripe. Request was retried 2 times."
-Need deployment with commit 2714d7c containing fixed Stripe API version.
+STATUS: Payment system still failing with "An error occurred with our connection to Stripe"
+ISSUE: Production deployment not reflecting latest code changes despite clean git status.
+
+FORCE REBUILD: Need fresh deployment with stable Stripe API version 2023-10-16.
+Previous deployments using unstable/invalid API versions causing payment failures.
