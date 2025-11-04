@@ -8,7 +8,7 @@ const getStripeClient = () => {
     console.warn('Missing STRIPE_SECRET_KEY environment variable')
   }
   return new Stripe(apiKey, {
-    apiVersion: '2024-12-18.acacia',
+    apiVersion: '2023-10-16',
   })
 }
 
