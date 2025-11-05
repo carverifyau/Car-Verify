@@ -73,32 +73,44 @@ function CheckoutPageContent() {
     setIsCreatingPayment(true)
 
     try {
-      // Use Stripe Payment Link directly (configured in src/config/stripe.ts)
-      const paymentLink = STRIPE_PAYMENT_LINK
-
-      // Add metadata to the payment link using query parameters
-      const params = new URLSearchParams({
-        prefilled_email: customerEmail.trim(),
-        // Store vehicle info in client_reference_id (limited to 200 chars)
-        client_reference_id: JSON.stringify({
-          email: customerEmail.trim(),
-          type: vehicleInfo.type,
-          vin: vehicleInfo.vin || '',
-          rego: vehicleInfo.rego || '',
-          state: vehicleInfo.state || '',
-        }).substring(0, 200),
+      // Create checkout session via API with vehicle metadata
+      const response = await fetch('/api/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerEmail: customerEmail.trim(),
+          vehicleInfo,
+          reportType: 'comprehensive',
+        }),
       })
 
-      const checkoutUrl = `${paymentLink}?${params.toString()}`
+      const data = await response.json()
 
-      console.log('Redirecting to Stripe Payment Link:', checkoutUrl)
+      // Log the full response for debugging
+      console.log('Checkout session response:', { status: response.status, data })
 
-      // Redirect to Stripe Payment Link
-      window.location.href = checkoutUrl
+      if (!response.ok) {
+        // Handle API errors
+        const errorMessage = data.error || data.message || 'Unknown error occurred'
+        console.error('API error:', data)
+        alert(`Payment Error: ${errorMessage}\n\nPlease contact support if this persists.`)
+        return
+      }
+
+      if (data.url) {
+        // Redirect to Stripe Checkout
+        console.log('Redirecting to Stripe:', data.url)
+        window.location.href = data.url
+      } else {
+        throw new Error('No checkout URL returned from API')
+      }
     } catch (error) {
       console.error('Payment initialization error:', error)
       const errorMsg = error instanceof Error ? error.message : 'Unknown error'
       alert(`Failed to initialize payment: ${errorMsg}\n\nPlease try again or contact support.`)
+    } finally {
       setIsCreatingPayment(false)
     }
   }
