@@ -17,9 +17,7 @@ const getStripeClient = () => {
 
   console.log('[STRIPE] Initializing Stripe with key:', apiKey.substring(0, 10) + '...')
 
-  return new Stripe(apiKey, {
-    apiVersion: '2023-10-16',
-  })
+  return new Stripe(apiKey)
 }
 
 const createCheckoutSessionSchema = z.object({
