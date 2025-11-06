@@ -156,22 +156,25 @@ CRITICAL: For a ${vehicle.year} ${vehicle.make} ${vehicle.model}, consult RedBoo
     // Base value calculation based on brand and type
     let tradeValue = 15000; // Default baseline
 
-    // Brand-specific baseline values (approximate RedBook trade-in values)
+    // Brand-specific baseline values (NEW car equivalent prices for depreciation calculation)
     const premiumSportsBrands = ['Porsche', 'Ferrari', 'Lamborghini', 'McLaren'];
     const premiumBrands = ['BMW', 'Mercedes-Benz', 'Mercedes', 'Audi', 'Lexus', 'Land Rover', 'Jaguar'];
     const popularBrands = ['Toyota', 'Mazda', 'Honda', 'Hyundai', 'Subaru', 'Nissan'];
     const budgetBrands = ['Holden', 'Ford', 'Mitsubishi', 'Kia'];
 
-    // Set initial trade value based on brand tier
+    // Set initial trade value based on brand tier (starting from new car baseline)
     if (premiumSportsBrands.includes(vehicle.make)) {
       // Porsche/Ferrari/etc - higher starting point due to brand prestige
+      // Target: 2007 Porsche Cayman (18y) = $26k trade from $55k base
       tradeValue = vehicle.make === 'Porsche' ? 55000 : 50000;
     } else if (premiumBrands.includes(vehicle.make)) {
-      tradeValue = 40000;
+      // Target: 2015 BMW 3 Series (10y) = $25k trade from $70k base
+      tradeValue = 70000;
     } else if (popularBrands.includes(vehicle.make)) {
-      tradeValue = 25000;
+      // Target: 2020 Toyota Camry (5y) = $28k trade from $48k base
+      tradeValue = 48000;
     } else if (budgetBrands.includes(vehicle.make)) {
-      tradeValue = 18000;
+      tradeValue = 35000;
     }
 
     // Age depreciation - sports cars depreciate slower after initial years
@@ -187,9 +190,15 @@ CRITICAL: For a ${vehicle.year} ${vehicle.make} ${vehicle.model}, consult RedBoo
         // Calculation: 55k * 0.92^5 * 0.96^5 * 0.98^8 ≈ $25k
         depreciationRate = i < 5 ? 0.08 : i < 10 ? 0.04 : 0.02;
       } else if (premiumBrands.includes(vehicle.make)) {
-        depreciationRate = i < 5 ? 0.15 : i < 10 ? 0.10 : 0.08;
+        // Premium brands: faster initial depreciation, moderate ongoing
+        // Target: 2015 BMW 3 Series (10y) ~$25k trade from $70k base
+        // 70k * 0.88^5 * 0.92^5 ≈ $23k
+        depreciationRate = i < 5 ? 0.12 : i < 10 ? 0.08 : 0.06;
       } else {
-        depreciationRate = i < 5 ? 0.18 : i < 10 ? 0.12 : 0.10;
+        // Popular brands: steady depreciation curve
+        // Target: 2020 Camry (5y) ~$28k trade from $48k base
+        // 48k * 0.90^5 ≈ $28k
+        depreciationRate = i < 5 ? 0.10 : i < 10 ? 0.07 : 0.05;
       }
       tradeValue *= (1 - depreciationRate);
     }

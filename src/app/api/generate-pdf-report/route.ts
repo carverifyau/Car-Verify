@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
+import chromium from '@sparticuz/chromium'
 
 interface ReportData {
   customerRego: string
@@ -1730,20 +1731,51 @@ export async function POST(request: NextRequest) {
     const htmlContent = generateReportHTML(reportData)
     console.log('HTML content generated, length:', htmlContent.length)
 
-    // Launch Puppeteer with macOS-compatible settings
+    // Launch Puppeteer with serverless-compatible settings
     console.log('Launching Puppeteer browser...')
-    browser = await puppeteer.launch({
+
+    // Detect if we're in development or production
+    const isDev = process.env.NODE_ENV === 'development'
+
+    const launchOptions: any = {
+      args: isDev
+        ? [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-gpu',
+            '--disable-web-security'
+          ]
+        : chromium.args,
       headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu',
-        '--disable-web-security',
-        '--disable-features=VizDisplayCompositor'
-      ],
       timeout: 30000
-    })
+    }
+
+    // In production, use serverless Chrome binary
+    if (!isDev) {
+      launchOptions.executablePath = await chromium.executablePath()
+      launchOptions.defaultViewport = chromium.defaultViewport
+    }
+    // In development, use local Chrome (path auto-detected by puppeteer-core)
+    else {
+      // Try common Chrome paths for macOS
+      const { execSync } = require('child_process')
+      try {
+        // Try to find Chrome using which command (works on macOS/Linux)
+        const chromePath = execSync('which google-chrome-stable || which google-chrome || which chromium-browser || echo "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"')
+          .toString()
+          .trim()
+        if (chromePath) {
+          launchOptions.executablePath = chromePath
+        }
+      } catch (error) {
+        // Fallback to common macOS Chrome location
+        launchOptions.executablePath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+      }
+    }
+
+    console.log('Launching browser with config:', { isDev, executablePath: launchOptions.executablePath?.substring(0, 50) })
+    browser = await puppeteer.launch(launchOptions)
     console.log('Browser launched successfully')
 
     console.log('Creating new page...')
