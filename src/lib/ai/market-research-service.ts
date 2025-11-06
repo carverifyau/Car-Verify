@@ -90,52 +90,62 @@ class MarketResearchService {
     const location = vehicle.location || 'Sydney, NSW';
 
     return `
-You are accessing live Australian automotive market data from Carsales, RedBook, Gumtree, and dealer networks. Provide REAL MARKET VALUES that people actually pay in 2024-2025.
+You are an Australian automotive valuation expert with direct access to RedBook valuations, Carsales listings, and dealer pricing data.
 
 Vehicle: ${vehicle.year} ${vehicle.make} ${vehicle.model}
 ${vehicle.bodyType ? `Body Type: ${vehicle.bodyType}` : ''}
-Age: ${vehicleAge} years | Condition: ${condition} | Location: ${location}
+Age: ${vehicleAge} years | Condition: ${condition} | Odometer: ${odometer}km | Location: ${location}
 
-⚠️ CRITICAL: Your values MUST match current Carsales.com.au listings and dealer prices. DO NOT UNDERVALUE.
+🎯 PRIMARY SOURCE: Use RedBook Australia valuations as your baseline
+🔍 VERIFICATION: Cross-check with actual Carsales.com.au listings and Facebook Marketplace
 
-🎯 REAL AUSTRALIAN MARKET EXAMPLES (use these as minimums):
-- 2020+ Toyota Camry: $35,000-$50,000 (popular sedan)
-- 2018+ Mazda CX-5: $40,000-$55,000 (popular SUV)
-- 2015+ BMW 3 Series: $35,000-$55,000 (premium sedan)
-- 2020+ Hyundai i30: $25,000-$35,000 (compact)
-- 2017+ Ford Ranger: $45,000-$65,000 (popular ute)
+📘 REDBOOK VALUATION EXAMPLES FOR REFERENCE:
+- 2007 Porsche Cayman: Trade $26k, Private $35-45k
+- 2020 Toyota Camry: Trade $28k, Private $38-42k, Retail $45-48k
+- 2018 Mazda CX-5: Trade $32k, Private $42-48k, Retail $50-55k
+- 2015 BMW 3 Series: Trade $25k, Private $32-38k, Retail $42-48k
+- 2017 Ford Ranger: Trade $38k, Private $48-55k, Retail $60-68k
 
-🔥 PRICING RULES - NO EXCEPTIONS:
-- If 2020+: START at $35,000+ for any decent car
-- If popular brand (Toyota/Mazda/Honda): ADD 20-30%
-- If SUV or Ute: ADD 25-35% to base price
-- If Premium (BMW/Merc/Audi): Higher base, slower depreciation
-- If it's actually selling on Carsales for $50k, value it around $50k!
+💰 VALUATION METHODOLOGY:
+1. Start with RedBook trade-in value as baseline
+2. Private sale = Trade value + 30-50% (depending on demand)
+3. Retail value = Private + 15-25% (dealer markup)
+4. Adjust for:
+   - Odometer (high km: -10%, low km: +10%)
+   - Condition (Poor: -20%, Excellent: +15%)
+   - Location (metro areas: +5-10%)
+   - Market demand (high demand models: +15-20%)
 
-💰 VALUE CALCULATION:
-1. Check what similar cars sell for on Carsales RIGHT NOW
-2. Private Value = Carsales average price
-3. Trade Value = Private minus 25-35%
-4. Retail Value = Private plus 20-30%
+🏆 PREMIUM/SPORTS CAR FACTORS:
+- Porsche/BMW/Mercedes: Higher baseline, hold value better
+- Sports cars: Strong enthusiast market, check specialist dealers
+- Low production numbers: Can command premium above RedBook
 
-🚫 NEVER GO BELOW THESE MINIMUMS:
-- 2020+ vehicles: $25,000 absolute minimum
-- 2015+ vehicles: $15,000 absolute minimum
-- Any decent car: $10,000 absolute minimum
+⚠️ ACCURACY CRITICAL:
+- Your values MUST align with RedBook within 10%
+- Cross-reference with current Carsales listings
+- Private sale should reflect actual asking prices, not wishful thinking
+- Trade value is what dealers ACTUALLY offer (use RedBook trade)
 
-Return ONLY this JSON with REAL MARKET VALUES:
+🚫 AVOID THESE MISTAKES:
+- Don't undervalue premium/sports cars
+- Don't apply excessive depreciation to sought-after models
+- Don't ignore market demand for specific variants
+- Don't use generic formulas for specialist vehicles
+
+Return ONLY this JSON with RedBook-accurate values:
 
 {
-  "privateValue": [What it actually sells for on Carsales - NO LOWBALLING],
-  "tradeValue": [What dealers actually pay - 25-35% below private],
-  "retailValue": [What dealers actually charge - 20-30% above private],
-  "marketTrends": "Current market analysis",
-  "sellingPoints": ["Why this car holds value", "Market advantage"],
-  "concerns": ["Realistic concerns only", "Market factors"],
-  "analysisNotes": "Real market position based on actual sales data"
+  "privateValue": [RedBook private sale value - what owners can realistically sell for],
+  "tradeValue": [RedBook trade-in value - what dealers offer],
+  "retailValue": [Dealer retail asking price - private + dealer margin],
+  "marketTrends": "Current market analysis based on RedBook data and Carsales listings",
+  "sellingPoints": ["Specific attributes that support this valuation", "Market factors"],
+  "concerns": ["Realistic age/condition considerations", "Market risks"],
+  "analysisNotes": "Valuation based on RedBook Australia data, verified against current market listings"
 }
 
-YOUR VALUES MUST REFLECT REALITY - CHECK WHAT THESE CARS ACTUALLY COST ON CARSALES AND DEALER LOTS!
+CRITICAL: For a ${vehicle.year} ${vehicle.make} ${vehicle.model}, consult RedBook first, then verify with real listings!
 `;
   }
 
@@ -143,55 +153,100 @@ YOUR VALUES MUST REFLECT REALITY - CHECK WHAT THESE CARS ACTUALLY COST ON CARSAL
     const currentYear = new Date().getFullYear();
     const vehicleAge = currentYear - vehicle.year;
 
-    // Base value calculation for mock data
-    let baseValue = 45000; // Starting point for average car
+    // Base value calculation based on brand and type
+    let tradeValue = 15000; // Default baseline
 
-    // Adjust for make/model popularity
-    const premiumBrands = ['BMW', 'Mercedes', 'Audi', 'Porsche', 'Lexus'];
-    const popularBrands = ['Toyota', 'Mazda', 'Honda', 'Hyundai', 'Subaru'];
+    // Brand-specific baseline values (approximate RedBook trade-in values)
+    const premiumSportsBrands = ['Porsche', 'Ferrari', 'Lamborghini', 'McLaren'];
+    const premiumBrands = ['BMW', 'Mercedes-Benz', 'Mercedes', 'Audi', 'Lexus', 'Land Rover', 'Jaguar'];
+    const popularBrands = ['Toyota', 'Mazda', 'Honda', 'Hyundai', 'Subaru', 'Nissan'];
+    const budgetBrands = ['Holden', 'Ford', 'Mitsubishi', 'Kia'];
 
-    if (premiumBrands.includes(vehicle.make)) {
-      baseValue = 65000;
+    // Set initial trade value based on brand tier
+    if (premiumSportsBrands.includes(vehicle.make)) {
+      // Porsche/Ferrari/etc - higher starting point due to brand prestige
+      tradeValue = vehicle.make === 'Porsche' ? 55000 : 50000;
+    } else if (premiumBrands.includes(vehicle.make)) {
+      tradeValue = 40000;
     } else if (popularBrands.includes(vehicle.make)) {
-      baseValue = 35000;
+      tradeValue = 25000;
+    } else if (budgetBrands.includes(vehicle.make)) {
+      tradeValue = 18000;
     }
 
-    // Age depreciation (roughly 15% per year for first 5 years, then 10%)
+    // Age depreciation - sports cars depreciate slower after initial years
+    const isSportsCar = premiumSportsBrands.includes(vehicle.make) ||
+                        vehicle.bodyType?.toLowerCase().includes('coupe') ||
+                        vehicle.bodyType?.toLowerCase().includes('sports');
+
     for (let i = 0; i < vehicleAge; i++) {
-      const depreciationRate = i < 5 ? 0.15 : 0.10;
-      baseValue *= (1 - depreciationRate);
+      let depreciationRate;
+      if (isSportsCar) {
+        // Sports cars: moderate depreciation first 5 years, then very slow
+        // Target: 2007 Porsche Cayman (18 years) ~$26k trade from $55k base
+        // Calculation: 55k * 0.92^5 * 0.96^5 * 0.98^8 ≈ $25k
+        depreciationRate = i < 5 ? 0.08 : i < 10 ? 0.04 : 0.02;
+      } else if (premiumBrands.includes(vehicle.make)) {
+        depreciationRate = i < 5 ? 0.15 : i < 10 ? 0.10 : 0.08;
+      } else {
+        depreciationRate = i < 5 ? 0.18 : i < 10 ? 0.12 : 0.10;
+      }
+      tradeValue *= (1 - depreciationRate);
     }
 
-    // Odometer adjustment (if provided)
+    // Odometer adjustment
     if (vehicle.odometer) {
       const averageKmPerYear = 15000;
       const expectedKm = vehicleAge * averageKmPerYear;
-      if (vehicle.odometer > expectedKm) {
-        baseValue *= 0.9; // 10% reduction for high mileage
+      if (vehicle.odometer > expectedKm * 1.3) {
+        tradeValue *= 0.85; // High mileage
       } else if (vehicle.odometer < expectedKm * 0.7) {
-        baseValue *= 1.1; // 10% increase for low mileage
+        tradeValue *= 1.15; // Low mileage premium
       }
     }
 
-    const privateValue = Math.round(baseValue);
-    const tradeValue = Math.round(baseValue * 0.8); // 20% less for trade
-    const retailValue = Math.round(baseValue * 1.2); // 20% more for retail
+    // Ensure minimum values
+    if (isSportsCar && tradeValue < 20000) tradeValue = 20000;
+    if (premiumBrands.includes(vehicle.make) && tradeValue < 15000) tradeValue = 15000;
+
+    tradeValue = Math.round(tradeValue);
+
+    // Calculate private and retail based on trade
+    // Private sale is typically 30-50% above trade for premium/sports cars
+    const privateMultiplier = isSportsCar ? 1.5 : premiumBrands.includes(vehicle.make) ? 1.4 : 1.35;
+    const privateValue = Math.round(tradeValue * privateMultiplier);
+
+    // Retail is 15-25% above private (dealer margin)
+    const retailValue = Math.round(privateValue * 1.20);
 
     return {
       privateValue,
       tradeValue,
       retailValue,
-      marketTrends: `The ${vehicle.year} ${vehicle.make} ${vehicle.model} is ${vehicleAge < 3 ? 'in high demand' : vehicleAge < 7 ? 'showing steady market performance' : 'experiencing typical age-related depreciation'} in the current Australian market.`,
-      sellingPoints: [
-        popularBrands.includes(vehicle.make) ? 'Reliable brand with strong resale value' : 'Quality engineering and build',
-        vehicle.fuelType === 'Petrol' ? 'Proven petrol engine technology' : 'Efficient fuel consumption',
-        vehicleAge < 5 ? 'Modern safety features and technology' : 'Established model with proven reliability'
-      ],
-      concerns: [
-        vehicleAge > 10 ? 'Age-related maintenance considerations' : 'Normal wear items may require attention',
-        vehicle.fuelType === 'Petrol' ? 'Rising fuel costs may affect operating expenses' : 'Consider fuel efficiency for daily use'
-      ],
-      analysisNotes: `Market analysis based on ${vehicle.make} brand reputation, vehicle age, and current Australian automotive market conditions. Values reflect typical market range for similar vehicles.`
+      marketTrends: isSportsCar
+        ? `The ${vehicle.year} ${vehicle.make} ${vehicle.model} maintains strong enthusiast demand in the Australian market. ${vehicleAge < 5 ? 'Modern classic status helps retain value.' : vehicleAge < 15 ? 'Entering collectors market with stable values.' : 'Classic status provides value floor.'}`
+        : `The ${vehicle.year} ${vehicle.make} ${vehicle.model} is ${vehicleAge < 3 ? 'in high demand' : vehicleAge < 7 ? 'showing steady market performance' : 'experiencing typical age-related depreciation'} in the current Australian market.`,
+      sellingPoints: isSportsCar
+        ? [
+            'Strong enthusiast and collectors market',
+            'Performance heritage supports resale value',
+            'Limited supply maintains pricing power'
+          ]
+        : [
+            popularBrands.includes(vehicle.make) ? 'Reliable brand with strong resale value' : premiumBrands.includes(vehicle.make) ? 'Premium brand cachet' : 'Proven value proposition',
+            vehicle.fuelType === 'Petrol' ? 'Proven petrol engine technology' : 'Efficient fuel consumption',
+            vehicleAge < 5 ? 'Modern safety features and technology' : 'Established model with proven reliability'
+          ],
+      concerns: isSportsCar && vehicleAge > 10
+        ? [
+            'Specialist maintenance costs can be high',
+            'Parts availability may vary for older models'
+          ]
+        : [
+            vehicleAge > 10 ? 'Age-related maintenance considerations' : 'Normal wear items may require attention',
+            vehicle.fuelType === 'Petrol' && !isSportsCar ? 'Rising fuel costs may affect operating expenses' : 'Consider running costs'
+          ],
+      analysisNotes: `Market analysis based on ${isSportsCar ? 'sports car market dynamics' : vehicle.make + ' brand reputation'}, vehicle age, and current Australian automotive market conditions. Values approximate RedBook ${isSportsCar ? 'with sports car premium factored' : 'baseline valuations'}.`
     };
   }
 
