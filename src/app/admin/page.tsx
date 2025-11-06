@@ -812,7 +812,56 @@ function AdminDashboard() {
                                         return
                                       }
 
+                                      // Prompt user to attach PPSR certificate
+                                      const attachPPSR = confirm('Would you like to attach a PPSR certificate PDF to this email?')
+
+                                      let ppsrData = null
+                                      if (attachPPSR) {
+                                        // Create file input
+                                        const fileInput = document.createElement('input')
+                                        fileInput.type = 'file'
+                                        fileInput.accept = 'application/pdf,.pdf'
+
+                                        // Wait for file selection
+                                        const filePromise = new Promise<File | null>((resolve) => {
+                                          fileInput.onchange = (e) => {
+                                            const file = (e.target as HTMLInputElement).files?.[0]
+                                            resolve(file || null)
+                                          }
+                                          fileInput.oncancel = () => resolve(null)
+                                        })
+
+                                        fileInput.click()
+                                        const file = await filePromise
+
+                                        if (file) {
+                                          // Convert to base64
+                                          const reader = new FileReader()
+                                          const base64Promise = new Promise<string>((resolve, reject) => {
+                                            reader.onload = () => {
+                                              const base64 = (reader.result as string).split(',')[1]
+                                              resolve(base64)
+                                            }
+                                            reader.onerror = reject
+                                          })
+
+                                          reader.readAsDataURL(file)
+                                          const base64Data = await base64Promise
+
+                                          ppsrData = {
+                                            ppsrCertificateData: base64Data,
+                                            ppsrCertificateFilename: file.name,
+                                            ppsrCertificateType: file.type
+                                          }
+
+                                          console.log('📎 PPSR certificate attached:', file.name)
+                                        }
+                                      }
+
                                       try {
+                                        // Merge PPSR data into reportData if provided
+                                        const finalReportData = ppsrData ? { ...reportData, ...ppsrData } : reportData
+
                                         const emailResponse = await fetch('/api/send-report-email', {
                                           method: 'POST',
                                           headers: {
@@ -821,14 +870,14 @@ function AdminDashboard() {
                                           body: JSON.stringify({
                                             customerEmail: customerEmail,
                                             customerName: customerName,
-                                            reportData: reportData,
+                                            reportData: finalReportData,
                                             rego: report.rego,
                                             state: report.state
                                           }),
                                         })
 
                                         if (emailResponse.ok) {
-                                          alert('Email sent successfully!')
+                                          alert('Email sent successfully!' + (ppsrData ? ' (with PPSR certificate attached)' : ''))
                                         } else {
                                           alert('Failed to send email. Please check email settings.')
                                         }
