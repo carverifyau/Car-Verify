@@ -34,11 +34,9 @@ class MarketResearchService {
 
   async generateMarketResearch(vehicle: VehicleDetails): Promise<VehicleMarketData> {
     if (!this.openai) {
-      console.log('🤖 No OpenAI API key, using mock market data');
-      console.log('🚗 Vehicle data for mock calculation:', vehicle);
-      const mockData = this.getMockMarketData(vehicle);
-      console.log('💰 Mock data generated:', mockData);
-      return mockData;
+      const errorMsg = '❌ OPENAI_API_KEY is not configured. Cannot generate market research. Please add the API key to your environment variables.';
+      console.error(errorMsg);
+      throw new Error('OpenAI API key not configured. AI market research is unavailable.');
     }
 
     try {
@@ -75,10 +73,20 @@ class MarketResearchService {
 
     } catch (error) {
       console.error('❌ AI market research error:', error);
-      console.log('🤖 Falling back to mock market data');
-      const mockData = this.getMockMarketData(vehicle);
-      console.log('💰 Fallback mock data:', mockData);
-      return mockData;
+
+      // Determine error type and throw with clear message
+      if (error instanceof Error) {
+        if (error.message.includes('API key')) {
+          throw new Error(`OpenAI API key error: ${error.message}`);
+        } else if (error.message.includes('quota') || error.message.includes('rate limit')) {
+          throw new Error(`OpenAI API quota/rate limit exceeded: ${error.message}`);
+        } else if (error.message.includes('JSON')) {
+          throw new Error(`Failed to parse OpenAI response: ${error.message}`);
+        }
+      }
+
+      // Generic error
+      throw new Error(`AI market research failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -149,115 +157,6 @@ CRITICAL: For a ${vehicle.year} ${vehicle.make} ${vehicle.model}, consult RedBoo
 `;
   }
 
-  private getMockMarketData(vehicle: VehicleDetails): VehicleMarketData {
-    const currentYear = new Date().getFullYear();
-    const vehicleAge = currentYear - vehicle.year;
-
-    // Base value calculation based on brand and type
-    let tradeValue = 15000; // Default baseline
-
-    // Brand-specific baseline values (NEW car equivalent prices for depreciation calculation)
-    const premiumSportsBrands = ['Porsche', 'Ferrari', 'Lamborghini', 'McLaren'];
-    const premiumBrands = ['BMW', 'Mercedes-Benz', 'Mercedes', 'Audi', 'Lexus', 'Land Rover', 'Jaguar'];
-    const popularBrands = ['Toyota', 'Mazda', 'Honda', 'Hyundai', 'Subaru', 'Nissan'];
-    const budgetBrands = ['Holden', 'Ford', 'Mitsubishi', 'Kia'];
-
-    // Set initial trade value based on brand tier (starting from new car baseline)
-    if (premiumSportsBrands.includes(vehicle.make)) {
-      // Porsche/Ferrari/etc - higher starting point due to brand prestige
-      // Target: 2007 Porsche Cayman (18y) = $26k trade from $55k base
-      tradeValue = vehicle.make === 'Porsche' ? 55000 : 50000;
-    } else if (premiumBrands.includes(vehicle.make)) {
-      // Target: 2015 BMW 3 Series (10y) = $25k trade from $70k base
-      tradeValue = 70000;
-    } else if (popularBrands.includes(vehicle.make)) {
-      // Target: 2020 Toyota Camry (5y) = $28k trade from $48k base
-      tradeValue = 48000;
-    } else if (budgetBrands.includes(vehicle.make)) {
-      tradeValue = 35000;
-    }
-
-    // Age depreciation - sports cars depreciate slower after initial years
-    const isSportsCar = premiumSportsBrands.includes(vehicle.make) ||
-                        vehicle.bodyType?.toLowerCase().includes('coupe') ||
-                        vehicle.bodyType?.toLowerCase().includes('sports');
-
-    for (let i = 0; i < vehicleAge; i++) {
-      let depreciationRate;
-      if (isSportsCar) {
-        // Sports cars: moderate depreciation first 5 years, then very slow
-        // Target: 2007 Porsche Cayman (18 years) ~$26k trade from $55k base
-        // Calculation: 55k * 0.92^5 * 0.96^5 * 0.98^8 ≈ $25k
-        depreciationRate = i < 5 ? 0.08 : i < 10 ? 0.04 : 0.02;
-      } else if (premiumBrands.includes(vehicle.make)) {
-        // Premium brands: faster initial depreciation, moderate ongoing
-        // Target: 2015 BMW 3 Series (10y) ~$25k trade from $70k base
-        // 70k * 0.88^5 * 0.92^5 ≈ $23k
-        depreciationRate = i < 5 ? 0.12 : i < 10 ? 0.08 : 0.06;
-      } else {
-        // Popular brands: steady depreciation curve
-        // Target: 2020 Camry (5y) ~$28k trade from $48k base
-        // 48k * 0.90^5 ≈ $28k
-        depreciationRate = i < 5 ? 0.10 : i < 10 ? 0.07 : 0.05;
-      }
-      tradeValue *= (1 - depreciationRate);
-    }
-
-    // Odometer adjustment
-    if (vehicle.odometer) {
-      const averageKmPerYear = 15000;
-      const expectedKm = vehicleAge * averageKmPerYear;
-      if (vehicle.odometer > expectedKm * 1.3) {
-        tradeValue *= 0.85; // High mileage
-      } else if (vehicle.odometer < expectedKm * 0.7) {
-        tradeValue *= 1.15; // Low mileage premium
-      }
-    }
-
-    // Ensure minimum values
-    if (isSportsCar && tradeValue < 20000) tradeValue = 20000;
-    if (premiumBrands.includes(vehicle.make) && tradeValue < 15000) tradeValue = 15000;
-
-    tradeValue = Math.round(tradeValue);
-
-    // Calculate private and retail based on trade
-    // Private sale is typically 30-50% above trade for premium/sports cars
-    const privateMultiplier = isSportsCar ? 1.5 : premiumBrands.includes(vehicle.make) ? 1.4 : 1.35;
-    const privateValue = Math.round(tradeValue * privateMultiplier);
-
-    // Retail is 15-25% above private (dealer margin)
-    const retailValue = Math.round(privateValue * 1.20);
-
-    return {
-      privateValue,
-      tradeValue,
-      retailValue,
-      marketTrends: isSportsCar
-        ? `The ${vehicle.year} ${vehicle.make} ${vehicle.model} maintains strong enthusiast demand in the Australian market. ${vehicleAge < 5 ? 'Modern classic status helps retain value.' : vehicleAge < 15 ? 'Entering collectors market with stable values.' : 'Classic status provides value floor.'}`
-        : `The ${vehicle.year} ${vehicle.make} ${vehicle.model} is ${vehicleAge < 3 ? 'in high demand' : vehicleAge < 7 ? 'showing steady market performance' : 'experiencing typical age-related depreciation'} in the current Australian market.`,
-      sellingPoints: isSportsCar
-        ? [
-            'Strong enthusiast and collectors market',
-            'Performance heritage supports resale value',
-            'Limited supply maintains pricing power'
-          ]
-        : [
-            popularBrands.includes(vehicle.make) ? 'Reliable brand with strong resale value' : premiumBrands.includes(vehicle.make) ? 'Premium brand cachet' : 'Proven value proposition',
-            vehicle.fuelType === 'Petrol' ? 'Proven petrol engine technology' : 'Efficient fuel consumption',
-            vehicleAge < 5 ? 'Modern safety features and technology' : 'Established model with proven reliability'
-          ],
-      concerns: isSportsCar && vehicleAge > 10
-        ? [
-            'Specialist maintenance costs can be high',
-            'Parts availability may vary for older models'
-          ]
-        : [
-            vehicleAge > 10 ? 'Age-related maintenance considerations' : 'Normal wear items may require attention',
-            vehicle.fuelType === 'Petrol' && !isSportsCar ? 'Rising fuel costs may affect operating expenses' : 'Consider running costs'
-          ],
-      analysisNotes: `Market analysis based on ${isSportsCar ? 'sports car market dynamics' : vehicle.make + ' brand reputation'}, vehicle age, and current Australian automotive market conditions. Values approximate RedBook ${isSportsCar ? 'with sports car premium factored' : 'baseline valuations'}.`
-    };
-  }
 
   isConfigured(): boolean {
     return !!this.openai;
