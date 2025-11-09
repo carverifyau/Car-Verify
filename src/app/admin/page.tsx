@@ -610,7 +610,8 @@ function AdminDashboard() {
                             </span>
                           </div>
                           <div className="text-xs text-gray-500 mb-3">
-                            Submitted: {new Date(report.timestamp || report.generatedAt).toLocaleDateString()}
+                            <div>Submitted: {new Date(report.timestamp || report.generatedAt).toLocaleDateString()}</div>
+                            <div className="text-gray-400">{new Date(report.timestamp || report.generatedAt).toLocaleTimeString()}</div>
                           </div>
                           <div className="space-y-2">
                             <button
@@ -702,18 +703,34 @@ function AdminDashboard() {
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="flex items-center">
-                              {getStatusIcon(report.status)}
-                              <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(report.status)}`}>
-                                {report.status}
-                              </span>
+                            <div className="flex items-center space-x-2">
+                              <div className="flex items-center">
+                                {getStatusIcon(report.status)}
+                                <span className={`ml-2 px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(report.status)}`}>
+                                  {report.status}
+                                </span>
+                              </div>
+                              <button
+                                onClick={async () => {
+                                  const newStatus = report.status === 'complete' ? 'pending' : 'complete'
+                                  await handleSaveReport({
+                                    ...report,
+                                    status: newStatus as any
+                                  })
+                                }}
+                                className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-md transition-colors text-xs font-medium"
+                                title={`Mark as ${report.status === 'complete' ? 'Pending' : 'Complete'}`}
+                              >
+                                {report.status === 'complete' ? '↩' : '✓'}
+                              </button>
                             </div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 capitalize">
                             {report.reportType}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            {new Date(report.generatedAt).toLocaleDateString()}
+                            <div>{new Date(report.generatedAt).toLocaleDateString()}</div>
+                            <div className="text-xs text-gray-400">{new Date(report.generatedAt).toLocaleTimeString()}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <div className="flex items-center space-x-2">
