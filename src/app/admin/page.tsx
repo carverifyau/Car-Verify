@@ -877,7 +877,17 @@ function AdminDashboard() {
                                         })
 
                                         if (emailResponse.ok) {
-                                          alert('Email sent successfully!' + (ppsrData ? ' (with PPSR certificate attached)' : ''))
+                                          // Mark report as completed after successful email
+                                          try {
+                                            await handleSaveReport({
+                                              ...report,
+                                              status: 'complete' as any // TypeScript uses 'complete', but DB uses 'completed'
+                                            })
+                                            alert('Email sent successfully! Report marked as complete.' + (ppsrData ? ' (with PPSR certificate attached)' : ''))
+                                          } catch (error) {
+                                            console.error('Failed to update report status:', error)
+                                            alert('Email sent successfully, but failed to update report status.' + (ppsrData ? ' (with PPSR certificate attached)' : ''))
+                                          }
                                         } else {
                                           alert('Failed to send email. Please check email settings.')
                                         }
