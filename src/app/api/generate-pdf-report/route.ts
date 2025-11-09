@@ -225,6 +225,14 @@ function generateReportHTML(data: ReportData): string {
     return insights.slice(0, 3) // Limit to 3 insights
   }
 
+  // Helper function to format unavailable data
+  const formatValue = (value: any, defaultText: string = 'Data Not Available') => {
+    if (value === null || value === undefined || value === '' || value === 'Unknown') {
+      return `<span class="info-value-unavailable">${defaultText}</span>`
+    }
+    return value
+  }
+
   // Helper function to calculate market heat
   const getMarketHeat = (aiData: any) => {
     if (!aiData) return null
@@ -467,6 +475,11 @@ function generateReportHTML(data: ReportData): string {
 
         .info-value {
             color: #333;
+        }
+
+        .info-value-unavailable {
+            color: #9ca3af;
+            font-style: italic;
         }
 
         .security-interest {
@@ -1389,43 +1402,59 @@ function generateReportHTML(data: ReportData): string {
                 <div class="info-grid">
                     <div class="info-item">
                         <div class="info-label">Make</div>
-                        <div class="info-value">${data.make || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.make)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Model</div>
-                        <div class="info-value">${data.model || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.model)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Year</div>
-                        <div class="info-value">${data.year || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.year)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Body Type</div>
-                        <div class="info-value">${data.bodyType || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.bodyType)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">VIN</div>
-                        <div class="info-value">${data.vin || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.vin)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Color</div>
-                        <div class="info-value">${data.color || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.color)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Engine Size</div>
-                        <div class="info-value">${data.engineSize || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.engineSize)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Fuel Type</div>
-                        <div class="info-value">${data.fuelType || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.fuelType)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Transmission</div>
-                        <div class="info-value">${data.transmission || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.transmission)}</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label">Odometer</div>
-                        <div class="info-value">${data.odometer || 'Not Available'}</div>
+                        <div class="info-value">${formatValue(data.odometer)}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Drive Type</div>
+                        <div class="info-value">${formatValue(data.driveType)}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Doors</div>
+                        <div class="info-value">${formatValue(data.doors)}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Seats</div>
+                        <div class="info-value">${formatValue(data.seats)}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Registration Expiry</div>
+                        <div class="info-value">${formatValue(data.registrationExpiry)}</div>
                     </div>
                 </div>
             </div>
@@ -1711,6 +1740,8 @@ function generateReportHTML(data: ReportData): string {
                 While every effort is made to ensure accuracy, Car Verify cannot guarantee the completeness or
                 accuracy of all information. This report should be used as a guide only and professional advice
                 should be sought before making any purchasing decisions.</p>
+
+                <p style="margin-top: 10px;"><strong>DATA AVAILABILITY:</strong> Fields marked as <span class="info-value-unavailable">"Data Not Available"</span> indicate that the specific information could not be obtained from available data sources at the time of report generation. This may be due to limited API access or data source availability.</p>
             </div>
         </div>
     </div>
