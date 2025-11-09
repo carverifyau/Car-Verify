@@ -610,8 +610,8 @@ function AdminDashboard() {
                             </span>
                           </div>
                           <div className="text-xs text-gray-500 mb-3">
-                            <div>Submitted: {new Date(report.timestamp || report.generatedAt).toLocaleDateString()}</div>
-                            <div className="text-gray-400">{new Date(report.timestamp || report.generatedAt).toLocaleTimeString()}</div>
+                            <div>Submitted: {new Date(report.timestamp || report.generatedAt).toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' })}</div>
+                            <div className="text-gray-400">{new Date(report.timestamp || report.generatedAt).toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane', hour12: true })}</div>
                           </div>
                           <div className="space-y-2">
                             <button
@@ -729,8 +729,8 @@ function AdminDashboard() {
                             {report.reportType}
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <div>{new Date(report.generatedAt).toLocaleDateString()}</div>
-                            <div className="text-xs text-gray-400">{new Date(report.generatedAt).toLocaleTimeString()}</div>
+                            <div>{new Date(report.generatedAt).toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' })}</div>
+                            <div className="text-xs text-gray-400">{new Date(report.generatedAt).toLocaleTimeString('en-AU', { timeZone: 'Australia/Brisbane', hour12: true })}</div>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                             <div className="flex items-center space-x-2">

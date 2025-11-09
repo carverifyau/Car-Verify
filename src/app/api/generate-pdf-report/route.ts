@@ -65,7 +65,8 @@ function generateReportHTML(data: ReportData): string {
   const currentDate = new Date().toLocaleDateString('en-AU', {
     day: '2-digit',
     month: '2-digit',
-    year: 'numeric'
+    year: 'numeric',
+    timeZone: 'Australia/Brisbane'
   })
 
   const getStatusIcon = (status: string) => {
@@ -1693,10 +1694,10 @@ function generateReportHTML(data: ReportData): string {
                             <strong>Data Source:</strong> ${data.aiMarketResearch.dataSource}
                         </div>
                         <div class="source-item">
-                            <strong>Last Updated:</strong> ${new Date(data.aiMarketResearch.lastUpdated).toLocaleDateString()}
+                            <strong>Last Updated:</strong> ${new Date(data.aiMarketResearch.lastUpdated).toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' })}
                         </div>
                         <div class="source-item">
-                            <strong>Analysis Generated:</strong> ${new Date(data.aiMarketResearch.generatedAt).toLocaleDateString()}
+                            <strong>Analysis Generated:</strong> ${new Date(data.aiMarketResearch.generatedAt).toLocaleDateString('en-AU', { timeZone: 'Australia/Brisbane' })}
                         </div>
                     </div>
                 </div>
