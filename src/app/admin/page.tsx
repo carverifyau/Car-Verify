@@ -217,18 +217,24 @@ function AdminDashboard() {
   const handleSaveReport = async (report: Partial<VehicleReport>) => {
     try {
       console.log('🔧 Admin Save: Updating report in Supabase:', report.id)
+      console.log('🔧 Report data:', report)
 
       if (!report.id) {
         alert('Error: Report ID is required')
         return
       }
 
-      // Extract vehicle identifier
-      const vehicleIdentifier = report.customerVin || (report.customerRego && report.customerRego.length >= 17) ?
-        { type: 'vin', vin: report.customerVin || report.customerRego } :
-        { type: 'rego', rego: report.customerRego || 'Unknown', state: report.customerState || 'Unknown' }
+      // Extract vehicle identifier - use rego/state from report object
+      const vehicleIdentifier = report.vin && report.vin.length >= 17 ?
+        { type: 'vin', vin: report.vin } :
+        { type: 'rego', rego: report.rego || 'Unknown', state: report.state || 'Unknown' }
 
       // Update the existing report in Supabase (don't create new ones)
+      // Convert UI status ('complete') to DB status ('completed')
+      const dbStatus = report.status === 'complete' || report.status === 'completed' ? 'completed' : 'pending'
+
+      console.log('🔄 Status conversion:', { uiStatus: report.status, dbStatus })
+
       const response = await fetch('/api/admin/reports', {
         method: 'PUT', // Use PUT for updates instead of POST
         headers: {
@@ -240,45 +246,57 @@ function AdminDashboard() {
           customer_name: report.customerName || '',
           vehicle_identifier: vehicleIdentifier,
           report_type: 'STANDARD',
-          status: report.status === 'completed' ? 'completed' : 'pending',
+          status: dbStatus,
           report_data: report
         })
       })
 
       if (!response.ok) {
         const errorData = await response.json()
+        console.error('❌ Update failed:', errorData)
         throw new Error(errorData.message || 'Failed to update report')
       }
 
+      console.log('✅ Report updated successfully in database')
+
       // Refresh the reports from API instead of localStorage
       const reportsResponse = await fetch('/api/admin/reports')
-      if (reportsResponse.ok) {
-        const data = await reportsResponse.json()
-        const apiReports = data.reports || []
-
-        // Update pending reports (webhook reports)
-        const formattedWebhookReports = apiReports.map((report: any) => ({
-          id: report.id,
-          rego: report.rego || 'Unknown',
-          state: report.state || 'Unknown',
-          make: 'Unknown',
-          model: 'Unknown',
-          year: 0,
-          vin: '',
-          status: report.status === 'completed' ? 'complete' as const : 'pending' as const,
-          generatedAt: report.timestamp || new Date().toISOString(),
-          customerId: 'webhook',
-          reportType: 'comprehensive' as const,
-          customerEmail: report.customerEmail || 'No email',
-          customerName: report.customerName || 'No name',
-          timestamp: report.timestamp
-        }))
-
-        setPendingReports(formattedWebhookReports.filter(r => r.status === 'pending'))
-        setSavedReports(formattedWebhookReports.filter(r => r.status === 'complete'))
+      if (!reportsResponse.ok) {
+        throw new Error('Failed to refresh reports list')
       }
 
-      alert('Report updated successfully!')
+      const data = await reportsResponse.json()
+      const apiReports = data.reports || []
+
+      console.log('📋 Refreshed reports from API:', apiReports.length)
+
+      // Update pending reports (webhook reports)
+      const formattedWebhookReports = apiReports.map((report: any) => ({
+        id: report.id,
+        rego: report.rego || 'Unknown',
+        state: report.state || 'Unknown',
+        make: 'Unknown',
+        model: 'Unknown',
+        year: 0,
+        vin: '',
+        status: report.status === 'completed' ? 'complete' as const : 'pending' as const,
+        generatedAt: report.timestamp || new Date().toISOString(),
+        customerId: 'webhook',
+        reportType: 'comprehensive' as const,
+        customerEmail: report.customerEmail || 'No email',
+        customerName: report.customerName || 'No name',
+        timestamp: report.timestamp
+      }))
+
+      setPendingReports(formattedWebhookReports.filter(r => r.status === 'pending'))
+      setSavedReports(formattedWebhookReports.filter(r => r.status === 'complete'))
+
+      console.log('✅ UI state updated - Pending:', formattedWebhookReports.filter(r => r.status === 'pending').length, 'Complete:', formattedWebhookReports.filter(r => r.status === 'complete').length)
+
+      // Only show alert for manual actions (not automatic email sends)
+      if (!report.status || report.status === 'complete' || report.status === 'pending') {
+        // Success - no alert needed, just console log
+      }
 
     } catch (error) {
       console.error('Error updating report:', error)
