@@ -3,6 +3,7 @@
 import { Shield, CheckCircle, AlertTriangle, Zap, Clock, Award, Search, FileText, Users, TrendingUp, Brain, Target, Download, ExternalLink, Car } from 'lucide-react'
 import Link from 'next/link'
 import VehicleLookupFormWithPreview from '@/components/VehicleLookupFormWithPreview'
+import Footer from '@/components/Footer'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -497,76 +498,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-4 gap-8 mb-12">
-            <div>
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-blue-600 p-2 rounded-lg">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                <span className="text-2xl font-bold">Car Verify</span>
-              </div>
-              <p className="text-gray-300 leading-relaxed mb-6">
-                Australia's trusted vehicle verification service. Get instant, accurate reports from official government databases.
-              </p>
-              <div className="text-sm text-gray-400">
-                <p>Authorised PPSR Provider</p>
-                <p>Australian Registered Business</p>
-              </div>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-lg mb-4 text-white">Services</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><Link href="#how-it-works" className="hover:text-blue-400 transition-colors">How it Works</Link></li>
-                <li><Link href="#sample-report" className="hover:text-blue-400 transition-colors">Sample Report</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-lg mb-4 text-white">Support</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><Link href="#support" className="hover:text-blue-400 transition-colors">FAQ</Link></li>
-                <li><Link href="/contact" className="hover:text-blue-400 transition-colors">Contact Support</Link></li>
-                <li><Link href="/help" className="hover:text-blue-400 transition-colors">Help Center</Link></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-lg mb-4 text-white">Legal</h4>
-              <ul className="space-y-3 text-gray-300">
-                <li><Link href="/privacy" className="hover:text-blue-400 transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="hover:text-blue-400 transition-colors">Terms of Service</Link></li>
-                <li><Link href="/disclaimer" className="hover:text-blue-400 transition-colors">Disclaimer</Link></li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-700 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-              <div className="text-gray-400 text-sm">
-                <p>&copy; 2024 Car Verify. All rights reserved.</p>
-              </div>
-              <div className="flex items-center space-x-6 text-sm text-gray-400">
-                <div className="flex items-center space-x-2">
-                  <Shield className="h-4 w-4 text-blue-400" />
-                  <span>Secure & Encrypted</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-4 w-4 text-blue-400" />
-                  <span>99.9% Uptime</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Clock className="h-4 w-4 text-blue-400" />
-                  <span>24/7 Available</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   )
 }

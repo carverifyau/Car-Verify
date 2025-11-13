@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, CheckCircle, AlertTriangle, FileText, Star, Clock, Users, TrendingDown, Award } from 'lucide-react'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'REVS Check Sydney - Instant Vehicle Finance Check NSW | From $34.99',
@@ -166,6 +167,8 @@ export default function RevsCheckSydneyPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

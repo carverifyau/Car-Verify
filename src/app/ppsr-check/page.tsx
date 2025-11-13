@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, CheckCircle, AlertTriangle, FileText, DollarSign, Star, Clock, Lock, Award, TrendingDown, Users, BadgeCheck, AlertCircle, Search } from 'lucide-react'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'PPSR Check Australia - Official Vehicle Finance & Encumbrance Check | $34.99',
@@ -388,6 +389,8 @@ export default function PPSRCheckPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, CheckCircle, AlertTriangle, Search, FileText, DollarSign, AlertCircle, Star, Clock, Lock, Award, TrendingDown, Users, BadgeCheck, Hash } from 'lucide-react'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'VIN Check Australia - Free VIN Number Lookup & Decoder | Car Verify',
@@ -348,6 +349,8 @@ export default function VINCheckPage() {
           </div>
         </div>
       </section>
+
+      <Footer />
     </div>
   )
 }
