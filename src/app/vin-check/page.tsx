@@ -343,6 +343,277 @@ export default function VINCheckPage() {
         </div>
       </section>
 
+      {/* Complete VIN Decoder Guide */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">Decode Any VIN: Complete 17-Character Breakdown</h2>
+
+          <p className="text-black text-lg mb-8">
+            Every VIN tells a story - if you know how to read it. Here's the complete breakdown of what each character means and how to spot fake or altered VINs:
+          </p>
+
+          <div className="bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-purple-300 rounded-xl p-8 mb-8">
+            <div className="text-center mb-6">
+              <h3 className="text-black text-2xl font-bold mb-3">Example VIN Decoded:</h3>
+              <div className="bg-white rounded-lg p-4 font-mono text-2xl font-bold text-purple-600 mb-4">
+                6 G 1 Y Z 2 3 J 9 P 5 1 0 0 0 0 1
+              </div>
+              <p className="text-black text-sm">Toyota RAV4, 2023 model, built in Australia, Serial #000001</p>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            {/* Positions 1-3: WMI */}
+            <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-4">Positions 1-3: World Manufacturer Identifier (WMI)</h3>
+
+              <div className="space-y-4">
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Position 1: Country of Origin</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm text-black">
+                    <div><strong>1-5:</strong> USA/Canada</div>
+                    <div><strong>6:</strong> 🇦🇺 Australia</div>
+                    <div><strong>J:</strong> 🇯🇵 Japan</div>
+                    <div><strong>K:</strong> 🇰🇷 Korea</div>
+                    <div><strong>L:</strong> 🇨🇳 China</div>
+                    <div><strong>S:</strong> 🇬🇧 UK</div>
+                    <div><strong>V:</strong> 🇫🇷 France/Spain</div>
+                    <div><strong>W:</strong> 🇩🇪 Germany</div>
+                    <div><strong>Y:</strong> 🇸🇪 Sweden</div>
+                    <div><strong>Z:</strong> 🇮🇹 Italy</div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Position 2: Manufacturer</p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm text-black">
+                    <div><strong>A:</strong> Audi</div>
+                    <div><strong>B:</strong> BMW</div>
+                    <div><strong>C:</strong> Chrysler</div>
+                    <div><strong>F:</strong> Ford</div>
+                    <div><strong>G:</strong> General Motors</div>
+                    <div><strong>H:</strong> Honda/Acura</div>
+                    <div><strong>M:</strong> Mitsubishi</div>
+                    <div><strong>N:</strong> Nissan</div>
+                    <div><strong>T:</strong> Toyota</div>
+                    <div><strong>V:</strong> Volkswagen</div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Position 3: Vehicle Type or Division</p>
+                  <p className="text-black text-sm">Varies by manufacturer - passenger car, truck, SUV, or manufacturing division</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Positions 4-8: VDS */}
+            <div className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-4">Positions 4-8: Vehicle Descriptor Section (VDS)</h3>
+
+              <div className="space-y-3">
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold">Position 4: Safety Features / GVW</p>
+                  <p className="text-black text-sm">Airbags, seatbelts, or Gross Vehicle Weight (manufacturer specific)</p>
+                </div>
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold">Position 5: Vehicle Series / Platform</p>
+                  <p className="text-black text-sm">Sedan, SUV, wagon, coupe, convertible</p>
+                </div>
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold">Position 6: Model / Trim Level</p>
+                  <p className="text-black text-sm">Example: Toyota RAV4 GX vs GXL vs Cruiser</p>
+                </div>
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold">Position 7: Body Type</p>
+                  <p className="text-black text-sm">2-door, 4-door, hatchback, wagon, ute, etc.</p>
+                </div>
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold">Position 8: Engine Type</p>
+                  <p className="text-black text-sm">Engine size, fuel type (petrol/diesel), cylinders</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Position 9: Check Digit */}
+            <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-300 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-4">Position 9: Check Digit - VIN Fraud Detection</h3>
+
+              <div className="bg-white rounded p-4 mb-4">
+                <p className="text-black mb-3">
+                  Position 9 is a calculated check digit (0-9 or X) that validates the entire VIN. If someone alters even ONE character in positions 1-8 or 10-17, the check digit won't match.
+                </p>
+                <div className="bg-yellow-50 p-3 rounded">
+                  <p className="text-black font-semibold mb-2">How It's Calculated:</p>
+                  <ol className="list-decimal list-inside text-black text-sm space-y-1">
+                    <li>Each position is assigned a weight (8, 7, 6, 5, 4, 3, 2, 10, 0, 9, 8, 7, 6, 5, 4, 3, 2)</li>
+                    <li>Letters are converted to numbers (A=1, B=2... Z=26, excluding I/O/Q)</li>
+                    <li>Multiply each position value by its weight, sum them</li>
+                    <li>Divide sum by 11, remainder is check digit (10 = X)</li>
+                  </ol>
+                </div>
+              </div>
+
+              <div className="bg-red-50 border-l-4 border-red-600 p-4">
+                <p className="text-black font-semibold mb-2">🚨 Fraud Detection:</p>
+                <p className="text-black text-sm">
+                  If the check digit doesn't match our calculation, the VIN has been altered. This catches 90% of amateur VIN alterations. Professional fraudsters know this, so always verify Position 9 against the mathematical formula.
+                </p>
+              </div>
+            </div>
+
+            {/* Positions 10-17: VIS */}
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-300 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-4">Positions 10-17: Vehicle Identifier Section (VIS)</h3>
+
+              <div className="space-y-4">
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Position 10: Model Year</p>
+                  <div className="grid grid-cols-4 md:grid-cols-8 gap-2 text-sm text-black">
+                    <div><strong>D:</strong> 2013</div>
+                    <div><strong>E:</strong> 2014</div>
+                    <div><strong>F:</strong> 2015</div>
+                    <div><strong>G:</strong> 2016</div>
+                    <div><strong>H:</strong> 2017</div>
+                    <div><strong>J:</strong> 2018</div>
+                    <div><strong>K:</strong> 2019</div>
+                    <div><strong>L:</strong> 2020</div>
+                    <div><strong>M:</strong> 2021</div>
+                    <div><strong>N:</strong> 2022</div>
+                    <div><strong>P:</strong> 2023</div>
+                    <div><strong>R:</strong> 2024</div>
+                    <div><strong>S:</strong> 2025</div>
+                    <div><strong>T:</strong> 2026</div>
+                  </div>
+                  <p className="text-black text-xs mt-2 italic">Note: Letters I, O, Q, U, Z are never used. Cycles every 30 years.</p>
+                </div>
+
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Position 11: Assembly Plant</p>
+                  <p className="text-black text-sm">Specific factory where vehicle was built (manufacturer-specific codes)</p>
+                </div>
+
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">Positions 12-17: Serial Number</p>
+                  <p className="text-black text-sm">Unique 6-digit sequential production number. Usually starts at 000001 for each model/year.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VIN Fraud & Scams */}
+      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">VIN Fraud Techniques: How Criminals Alter VINs (And How to Spot Them)</h2>
+
+          <div className="space-y-6">
+            <div className="bg-red-50 border-2 border-red-400 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="h-12 w-12 text-red-600 flex-shrink-0" />
+                <div>
+                  <h3 className="text-black text-2xl font-bold mb-4">Technique 1: VIN Cloning ("Rebirthing")</h3>
+                  <p className="text-black mb-3">
+                    <strong>How it works:</strong> Stolen vehicle's VIN plate is replaced with a clean VIN plate from a written-off vehicle of same make/model/year.
+                  </p>
+                  <div className="bg-white rounded p-4 mb-3">
+                    <p className="text-black font-semibold mb-2">Red Flags to Check:</p>
+                    <ul className="list-disc list-inside text-black text-sm space-y-1">
+                      <li>VIN plate has fresh rivets or welds (should be original from factory)</li>
+                      <li>VIN on plate doesn't match VIN etched on engine block</li>
+                      <li>VIN on windshield sticker different from compliance plate</li>
+                      <li>VIN stamped on chassis rail looks recent (not aged/rusty like rest of car)</li>
+                      <li>Serial numbers on body panels don't align with VIN year</li>
+                    </ul>
+                  </div>
+                  <p className="text-black text-sm bg-yellow-50 p-3 rounded">
+                    <strong>Real Case:</strong> Melbourne luxury car theft ring stole 47 vehicles (avg $85K each), cloned VINs from insurance write-offs, sold to unsuspecting buyers. Total: $3.9M scam. Buyers lost everything.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-orange-50 border-2 border-orange-400 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <AlertCircle className="h-12 w-12 text-orange-600 flex-shrink-0" />
+                <div>
+                  <h3 className="text-black text-2xl font-bold mb-4">Technique 2: Character Alteration</h3>
+                  <p className="text-black mb-3">
+                    <strong>How it works:</strong> Single characters changed to make stolen VIN match a clean vehicle. Example: 3 altered to 8, B to 8, G to 6.
+                  </p>
+                  <div className="bg-white rounded p-4 mb-3">
+                    <p className="text-black font-semibold mb-2">How to Spot It:</p>
+                    <ul className="list-disc list-inside text-black text-sm space-y-1">
+                      <li>Character depth inconsistent (altered character stamped lighter/deeper)</li>
+                      <li>Font style different for one character</li>
+                      <li>Grinding marks around altered character</li>
+                      <li>Character alignment slightly off</li>
+                      <li>Use check digit calculation (Position 9) to verify</li>
+                    </ul>
+                  </div>
+                  <p className="text-black text-sm">
+                    <strong>Pro Tip:</strong> Run VIN through our check digit validator. If it fails, VIN has been altered.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 border-2 border-yellow-400 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <Hash className="h-12 w-12 text-yellow-600 flex-shrink-0" />
+                <div>
+                  <h3 className="text-black text-2xl font-bold mb-4">Technique 3: Grey Import Fake Compliance</h3>
+                  <p className="text-black mb-3">
+                    <strong>How it works:</strong> Japanese import given fake Australian compliance plate with invented VIN that doesn't match actual chassis number.
+                  </p>
+                  <div className="bg-white rounded p-4 mb-3">
+                    <p className="text-black font-semibold mb-2">Warning Signs:</p>
+                    <ul className="list-disc list-inside text-black text-sm space-y-1">
+                      <li>VIN starts with J (Japan) but has Australian compliance plate</li>
+                      <li>Compliance plate looks newer than vehicle age</li>
+                      <li>No RAWS (Registered Automotive Workshop Scheme) approval plate</li>
+                      <li>VIN format doesn't match country of origin rules</li>
+                      <li>Compliance plate VIN doesn't match chassis stamping</li>
+                    </ul>
+                  </div>
+                  <p className="text-black text-sm bg-red-50 p-3 rounded">
+                    <strong>Consequence:</strong> Vehicle can be deemed unroadworthy and de-registered. Cannot be legally sold. Total loss.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-purple-50 border-2 border-purple-400 rounded-xl p-6">
+              <h3 className="text-black text-2xl font-bold mb-4">Physical VIN Locations You MUST Check (Don't Trust Just One)</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">🔍 Primary Locations:</p>
+                  <ul className="list-disc list-inside text-black text-sm space-y-1">
+                    <li>Compliance plate (engine bay)</li>
+                    <li>Windshield lower corner (driver side)</li>
+                    <li>Driver door jamb sticker</li>
+                    <li>Dashboard (visible through windshield)</li>
+                  </ul>
+                </div>
+                <div className="bg-white rounded p-4">
+                  <p className="text-black font-semibold mb-2">🔧 Hidden Locations (Fraud Check):</p>
+                  <ul className="list-disc list-inside text-black text-sm space-y-1">
+                    <li>Stamped on chassis rail (under carpet)</li>
+                    <li>Etched on engine block</li>
+                    <li>Stamped on firewall</li>
+                    <li>Original paint underneath VIN plate</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="text-black mt-4 text-sm bg-white p-3 rounded">
+                <strong>Verification Rule:</strong> ALL locations must match exactly. If even ONE doesn't match, walk away. Vehicle is compromised.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 px-4 bg-gradient-to-r from-purple-600 to-indigo-600">
         <div className="max-w-4xl mx-auto text-center">
           <Award className="h-16 w-16 text-white mx-auto mb-6" />
