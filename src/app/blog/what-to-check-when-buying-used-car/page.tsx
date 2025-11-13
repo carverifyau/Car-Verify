@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'What to Check When Buying a Used Car - Complete Australian Guide',
-    description: 'Don't get ripped off! Complete checklist of everything to check when buying a used car in Australia. PPSR, inspections, test drives & more.',
+    description: 'Complete checklist of everything to check when buying a used car in Australia. PPSR, inspections, test drives and more.',
     url: 'https://carverify.com.au/blog/what-to-check-when-buying-used-car',
     siteName: 'Car Verify Australia',
     type: 'article',
