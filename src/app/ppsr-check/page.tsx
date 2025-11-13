@@ -20,8 +20,60 @@ export const metadata: Metadata = {
 }
 
 export default function PPSRCheckPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does a PPSR check show?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A PPSR check reveals security interests (finance owing), stolen vehicle status, write-off history, and any encumbrances registered against the vehicle. It's the only way to legally verify a car's financial status in Australia."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is a PPSR certificate legally recognized?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. An official PPSR certificate provides legal protection under the PPSR Act 2009. If you get a 'clear' PPSR certificate and later discover hidden finance, you're protected from repossession in most cases."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a PPSR check cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our comprehensive PPSR check costs $34.99 and includes the official government certificate plus additional vehicle history checks. Delivered instantly via email."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a PPSR check if I'm buying from a dealer?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "YES! Even dealer cars can have security interests. Some dealers aren't aware of finance owing. A PPSR check protects you regardless of who's selling the vehicle. Always check before you buy."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does a PPSR check take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Instant! Your official PPSR certificate is delivered to your email within 60 seconds of payment. You can use it immediately when negotiating or finalizing your purchase."
+        }
+      }
+    ]
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       <section className="relative py-16 px-4 max-w-7xl mx-auto overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-100 rounded-full filter blur-3xl opacity-20 -z-10"></div>
         

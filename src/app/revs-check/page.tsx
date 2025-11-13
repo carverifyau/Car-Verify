@@ -25,8 +25,68 @@ export const metadata: Metadata = {
 }
 
 export default function RevsCheckPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a REVS check in Australia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A REVS check is the common name for a PPSR (Personal Property Securities Register) check in Australia. Originally REVS was NSW's Register of Encumbered Vehicles, but since 2012, all states use the national PPSR system. When you do a REVS check, you're searching the PPSR to find finance owing, stolen status, and write-off history for any Australian vehicle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is REVS check the same as PPSR check?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes! REVS and PPSR checks are the same thing. 'REVS' was the old NSW name, while 'PPSR' is the current national system used across all Australian states since 2012. When you order a REVS check today, you're getting a PPSR certificate that's valid Australia-wide, not just in NSW."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a REVS check cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our comprehensive REVS check costs $34.99 and includes the official PPSR certificate, stolen car check, write-off history, vehicle valuation, and full vehicle history report. This is significantly cheaper than paying for separate checks, and you get everything you need in one report."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I do a free REVS check in Australia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No, the official PPSR (REVS) register charges a fee for searches because it provides legal protection against buying vehicles with hidden finance. While some websites claim to offer 'free REVS checks,' they cannot provide the official PPSR certificate that protects you legally. Our $34.99 check includes the official certificate plus additional checks for stolen status, write-offs, and valuation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does a REVS check take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our REVS check is instant! You'll receive your comprehensive report including the official PPSR certificate via email within 60 seconds of completing your order. The certificate is delivered as a PDF that you can save, print, or show to sellers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if the REVS check shows finance owing?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "If finance is registered against the vehicle, DO NOT buy it until the seller clears the debt. The finance company legally owns the vehicle and can repossess it from you even though you paid for it. Ask the seller to pay off the finance first, or walk away and find a different car."
+        }
+      }
+    ]
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero Section with Visual Elements */}
       <section className="relative py-16 px-4 max-w-7xl mx-auto overflow-hidden">
         {/* Background decoration */}

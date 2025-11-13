@@ -20,8 +20,52 @@ export const metadata: Metadata = {
 }
 
 export default function RegoCheckPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is a rego check in Australia?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A rego check verifies your vehicle's registration status and searches for hidden problems like finance owing, stolen status, or write-off history. Our comprehensive rego check includes full PPSR search, not just basic registration details."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does a rego check cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our complete rego check costs $34.99 and includes registration verification, PPSR finance search, stolen vehicle check, write-off history, and full vehicle report. Delivered instantly via email."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I check rego for free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "While some states offer basic rego expiry checks for free, they don't include critical information like finance owing or stolen status. Our $34.99 comprehensive check protects you from $15,400+ potential losses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does a rego check take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Instant! You'll receive your complete rego check report via email within 60 seconds. The report includes registration status, PPSR certificate, and full vehicle history."
+        }
+      }
+    ]
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+
       {/* Hero Section with Visual Elements */}
       <section className="relative py-16 px-4 max-w-7xl mx-auto overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-green-100 rounded-full filter blur-3xl opacity-20 -z-10"></div>
