@@ -32,7 +32,7 @@ export default function RegoCheckPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Rego Check Australia - Instant Vehicle Registration Verification
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
             Check any Australian vehicle registration in seconds. Get PPSR reports, stolen car checks,
             finance owing alerts & comprehensive vehicle history from $34.99
           </p>
@@ -50,7 +50,7 @@ export default function RegoCheckPage() {
               How It Works
             </Link>
           </div>
-          <p className="text-sm text-gray-500 mt-4">✓ Instant Results  ✓ PPSR Certified  ✓ 100% Secure</p>
+          <p className="text-sm text-gray-700 mt-4">✓ Instant Results  ✓ PPSR Certified  ✓ 100% Secure</p>
         </div>
 
         {/* Trust Indicators */}
@@ -58,17 +58,17 @@ export default function RegoCheckPage() {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <Shield className="h-12 w-12 text-blue-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">PPSR Certified Check</h3>
-            <p className="text-gray-600">Official PPSR reports showing finance, stolen status & write-off history</p>
+            <p className="text-gray-800">Official PPSR reports showing finance, stolen status & write-off history</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <CheckCircle className="h-12 w-12 text-green-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">Instant Results</h3>
-            <p className="text-gray-600">Get your comprehensive vehicle report within 60 seconds</p>
+            <p className="text-gray-800">Get your comprehensive vehicle report within 60 seconds</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">Market Valuation</h3>
-            <p className="text-gray-600">AI-powered vehicle valuation based on current Australian market</p>
+            <p className="text-gray-800">AI-powered vehicle valuation based on current Australian market</p>
           </div>
         </div>
       </section>
@@ -142,21 +142,21 @@ export default function RegoCheckPage() {
               <span className="text-2xl font-bold text-blue-600">1</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Enter Rego Number</h3>
-            <p className="text-gray-600">Enter the vehicle's registration number and select the state</p>
+            <p className="text-gray-800">Enter the vehicle's registration number and select the state</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">2</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Instant Search</h3>
-            <p className="text-gray-600">Our system checks PPSR, stolen registers & vehicle databases</p>
+            <p className="text-gray-800">Our system checks PPSR, stolen registers & vehicle databases</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">3</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Get Your Report</h3>
-            <p className="text-gray-600">Receive comprehensive report via email in under 60 seconds</p>
+            <p className="text-gray-800">Receive comprehensive report via email in under 60 seconds</p>
           </div>
         </div>
       </section>

@@ -35,7 +35,7 @@ export default function RevsCheckPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             REVS Check Australia - Official Vehicle Finance & Encumbrance Check
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
             Check any Australian vehicle for money owing, stolen status, write-offs & security interests.
             Get your official REVS/PPSR certificate in 60 seconds - $34.99
           </p>
@@ -53,7 +53,7 @@ export default function RevsCheckPage() {
               What is a REVS Check?
             </Link>
           </div>
-          <p className="text-sm text-gray-500 mt-4">
+          <p className="text-sm text-gray-700 mt-4">
             ✓ Instant Results  ✓ Official PPSR Certificate  ✓ All States Covered  ✓ Money-Back Guarantee
           </p>
         </div>
@@ -77,22 +77,22 @@ export default function RevsCheckPage() {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <Shield className="h-12 w-12 text-blue-600 mb-4 mx-auto" />
             <h3 className="font-semibold text-lg mb-2">Official PPSR</h3>
-            <p className="text-gray-600 text-sm">Government-backed Personal Property Securities Register</p>
+            <p className="text-gray-800 text-sm">Government-backed Personal Property Securities Register</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <CheckCircle className="h-12 w-12 text-green-600 mb-4 mx-auto" />
             <h3 className="font-semibold text-lg mb-2">Instant Certificate</h3>
-            <p className="text-gray-600 text-sm">Receive your official REVS certificate via email in 60 seconds</p>
+            <p className="text-gray-800 text-sm">Receive your official REVS certificate via email in 60 seconds</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <AlertTriangle className="h-12 w-12 text-orange-600 mb-4 mx-auto" />
             <h3 className="font-semibold text-lg mb-2">Finance Check</h3>
-            <p className="text-gray-600 text-sm">See any money owing or security interests on the vehicle</p>
+            <p className="text-gray-800 text-sm">See any money owing or security interests on the vehicle</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <DollarSign className="h-12 w-12 text-purple-600 mb-4 mx-auto" />
             <h3 className="font-semibold text-lg mb-2">Best Price</h3>
-            <p className="text-gray-600 text-sm">Comprehensive check for just $34.99 - cheaper than competitors</p>
+            <p className="text-gray-800 text-sm">Comprehensive check for just $34.99 - cheaper than competitors</p>
           </div>
         </div>
       </section>
@@ -204,7 +204,7 @@ export default function RevsCheckPage() {
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
               <h3 className="font-semibold text-xl mb-2">Enter Vehicle Details</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Enter the VIN number or registration plate and state. Both work for PPSR searches.
               </p>
             </div>
@@ -213,7 +213,7 @@ export default function RevsCheckPage() {
                 <span className="text-2xl font-bold text-blue-600">2</span>
               </div>
               <h3 className="font-semibold text-xl mb-2">Instant PPSR Search</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Our system searches the official PPSR database, stolen car registers & write-off records
               </p>
             </div>
@@ -222,7 +222,7 @@ export default function RevsCheckPage() {
                 <span className="text-2xl font-bold text-blue-600">3</span>
               </div>
               <h3 className="font-semibold text-xl mb-2">Get Your Certificate</h3>
-              <p className="text-gray-600">
+              <p className="text-gray-800">
                 Receive official REVS/PPSR certificate via email within 60 seconds with full results
               </p>
             </div>
@@ -552,7 +552,7 @@ export default function RevsCheckPage() {
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-2xl mx-auto text-center">
           <h3 className="text-2xl font-bold mb-4">Ready to Check Your Vehicle?</h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-800 mb-6">
             Get your official REVS/PPSR certificate in 60 seconds
           </p>
           <Link
