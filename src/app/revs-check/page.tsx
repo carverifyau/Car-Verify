@@ -504,6 +504,300 @@ export default function RevsCheckPage() {
         </div>
       </section>
 
+      {/* Complete REVS History Section */}
+      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">The Complete History: From REVS to PPSR</h2>
+
+          <div className="prose prose-lg max-w-none">
+            <p className="text-black text-lg mb-6">
+              Understanding the evolution of vehicle security registers in Australia helps explain why a REVS check is essential today. Before 2012, each Australian state and territory maintained its own register for tracking encumbered vehicles.
+            </p>
+
+            <div className="bg-blue-50 border-l-4 border-blue-600 p-6 mb-6">
+              <h3 className="text-black text-xl font-bold mb-3">The Old System: State-Based REVS Registers</h3>
+              <p className="text-black mb-3">
+                <strong>NSW's REVS</strong> (Register of Encumbered Vehicles) was the most well-known system, established to track vehicles with finance owing. Other states had similar but separate systems:
+              </p>
+              <ul className="list-disc list-inside text-black space-y-2 mb-3">
+                <li><strong>Victoria</strong> - Victorian REVS</li>
+                <li><strong>Queensland</strong> - Queensland REVS</li>
+                <li><strong>Western Australia</strong> - REVS WA</li>
+                <li><strong>South Australia</strong> - SA REVS</li>
+                <li><strong>Tasmania, NT, ACT</strong> - Limited or no formal registers</li>
+              </ul>
+              <p className="text-black">
+                The major problem? These systems <strong>didn't talk to each other</strong>. A car with finance owing in NSW could be sold in Victoria with a "clean" VIC REVS check. Criminals exploited these gaps, costing honest buyers millions annually.
+              </p>
+            </div>
+
+            <div className="bg-green-50 border-l-4 border-green-600 p-6 mb-6">
+              <h3 className="text-black text-xl font-bold mb-3">January 30, 2012: The Game Changed</h3>
+              <p className="text-black mb-3">
+                On this date, the <strong>Personal Property Securities Register (PPSR)</strong> went live, consolidating all state registers into one national database managed by the Australian Financial Security Authority (AFSA).
+              </p>
+              <p className="text-black mb-3">
+                This wasn't just about vehicles - the PPSR covers <strong>all personal property security interests</strong> including:
+              </p>
+              <ul className="list-disc list-inside text-black space-y-1">
+                <li>Motor vehicles, motorcycles, caravans</li>
+                <li>Boats and watercraft</li>
+                <li>Agricultural equipment and machinery</li>
+                <li>Aircraft</li>
+                <li>Business assets and inventory</li>
+              </ul>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-600 p-6 mb-6">
+              <h3 className="text-black text-xl font-bold mb-3">Why "REVS Check" Still Exists</h3>
+              <p className="text-black mb-3">
+                Even though the official system is now PPSR, Australians still call it a "REVS check" because:
+              </p>
+              <ol className="list-decimal list-inside text-black space-y-2">
+                <li><strong>Brand recognition</strong> - "REVS" was used for 30+ years before PPSR</li>
+                <li><strong>Easier to remember</strong> - "REVS check" is simpler than "PPSR search"</li>
+                <li><strong>Market terminology</strong> - Car buyers, sellers, and dealers all use "REVS"</li>
+              </ol>
+              <p className="text-black mt-3">
+                When you order a "REVS check" today, you're getting an official PPSR certificate - same thing, different name. Both terms are correct and interchangeable.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Understanding Certificate Results */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">How to Read Your REVS Certificate Like a Pro</h2>
+
+          <p className="text-black text-lg mb-8">
+            Your PPSR certificate contains critical information, but knowing how to interpret it is key. Here's what every section means and what to watch for:
+          </p>
+
+          <div className="space-y-6">
+            <div className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-500 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <CheckCircle className="h-8 w-8 text-green-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-black text-xl font-bold mb-3">1. "NO SECURITY INTERESTS FOUND" - The Green Light</h3>
+                  <p className="text-black mb-3">
+                    This is what you want to see. It means:
+                  </p>
+                  <ul className="list-disc list-inside text-black space-y-1 mb-3">
+                    <li>No finance companies have a registered interest</li>
+                    <li>No money is legally owing on the vehicle</li>
+                    <li>No hire-purchase or lease agreements exist</li>
+                    <li>The current owner can sell with clear title</li>
+                  </ul>
+                  <p className="text-black font-semibold">
+                    ✅ Safe to proceed with purchase (pending other checks)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-500 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <AlertTriangle className="h-8 w-8 text-red-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-black text-xl font-bold mb-3">2. "SECURITY INTERESTS REGISTERED" - Major Red Flag</h3>
+                  <p className="text-black mb-3">
+                    This means someone has a legal claim to the vehicle. Common types:
+                  </p>
+                  <div className="space-y-3 mb-3">
+                    <div className="bg-white p-3 rounded">
+                      <p className="text-black font-semibold">Purchase Money Security Interest (PMSI)</p>
+                      <p className="text-black text-sm">Standard car loan or finance. Shows lender name and amount (sometimes). DO NOT buy until paid off.</p>
+                    </div>
+                    <div className="bg-white p-3 rounded">
+                      <p className="text-black font-semibold">Commercial Consignment</p>
+                      <p className="text-black text-sm">Vehicle may be owned by a dealer or fleet company, not the "seller." High scam risk.</p>
+                    </div>
+                    <div className="bg-white p-3 rounded">
+                      <p className="text-black font-semibold">Lease/Hire Purchase</p>
+                      <p className="text-black text-sm">Seller doesn't own it - they're renting it. Cannot legally sell it to you.</p>
+                    </div>
+                  </div>
+                  <p className="text-black font-semibold text-red-600">
+                    ⛔ DO NOT PROCEED - Demand seller clears the debt first or walk away
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-500 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <AlertCircle className="h-8 w-8 text-orange-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-black text-xl font-bold mb-3">3. Write-Off Classifications - Know the Difference</h3>
+                  <p className="text-black mb-3">
+                    If your certificate shows write-off history, check the classification carefully:
+                  </p>
+                  <div className="space-y-2 text-black">
+                    <p><strong className="text-red-600">Statutory Write-Off</strong> - Total loss. Cannot be re-registered in ANY state. Walk away immediately.</p>
+                    <p><strong className="text-orange-600">Repairable Write-Off</strong> - Was written off but has been repaired and re-registered. Get a professional inspection. Resale value is 20-40% lower.</p>
+                    <p><strong className="text-yellow-600">Hail Damage</strong> - Cosmetic damage only. Usually safe if properly repaired, but negotiate price down 10-25%.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-purple-50 to-purple-100 border-2 border-purple-500 rounded-xl p-6">
+              <div className="flex items-start gap-4">
+                <Shield className="h-8 w-8 text-purple-600 flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="text-black text-xl font-bold mb-3">4. Stolen Vehicle Status</h3>
+                  <p className="text-black mb-3">
+                    Your REVS check searches the National Stolen Vehicle Database. If flagged as stolen:
+                  </p>
+                  <ul className="list-disc list-inside text-black space-y-1 mb-3">
+                    <li><strong>Currently stolen</strong> - Report to police immediately. Do not proceed.</li>
+                    <li><strong>Previously stolen, now recovered</strong> - Check police paperwork confirming recovery. Still risky.</li>
+                    <li><strong>Stolen/Recovered with VIN re-stamp</strong> - Extremely high risk. Original VIN may have been altered.</li>
+                  </ul>
+                  <p className="text-black text-sm italic">
+                    Did you know? <strong>Over 150 vehicles are stolen every day in Australia</strong> according to NRMA data. A REVS check is your best protection.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Common Problems Found */}
+      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">5 Most Common Problems Found in REVS Checks (And What They Cost You)</h2>
+
+          <div className="space-y-6">
+            <div className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-red-600">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-black text-xl font-bold">1. Undisclosed Finance Owing</h3>
+                <span className="bg-red-100 text-red-600 px-3 py-1 rounded-full text-sm font-bold">40% of problems</span>
+              </div>
+              <p className="text-black mb-3">
+                <strong className="text-red-600">Average debt amount: $15,400</strong> (ASIC data)
+              </p>
+              <p className="text-black mb-2">What happens:</p>
+              <ul className="list-disc list-inside text-black space-y-1 mb-3 text-sm">
+                <li>Seller owes $18,000 on a car they're selling for $22,000</li>
+                <li>They plan to use your $22,000 to pay it off, but "forget" or abscond</li>
+                <li>Finance company contacts YOU 6 weeks later demanding payment</li>
+                <li>You must pay the $18,000 or lose the car (even though you already paid $22,000)</li>
+              </ul>
+              <p className="text-black text-sm bg-yellow-50 p-3 rounded">
+                <strong>Real case:</strong> Brisbane buyer purchased a Mazda CX-5 for $24,000 privately. Three months later, finance company repossessed it. $19,200 still owing. Buyer lost everything and had to pay a lawyer $4,500 trying to recover funds from seller who'd disappeared.
+              </p>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-orange-600">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-black text-xl font-bold">2. Statutory Write-Offs Illegally Re-Registered</h3>
+                <span className="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-bold">25% of problems</span>
+              </div>
+              <p className="text-black mb-3">
+                <strong className="text-orange-600">Impossible to insure. Potentially lethal safety issues.</strong>
+              </p>
+              <p className="text-black mb-2">What happens:</p>
+              <ul className="list-disc list-inside text-black space-y-1 text-sm">
+                <li>Car was declared a statutory write-off in NSW (severe accident, flood, or fire damage)</li>
+                <li>VIN plate is swapped with a clean car (called "rebirthing")</li>
+                <li>Re-registered in QLD or another state using false documents</li>
+                <li>Structural damage makes it unsafe, but looks perfect externally</li>
+                <li>No insurer will cover it once they discover the real VIN</li>
+              </ul>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-purple-600">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-black text-xl font-bold">3. Grey Import Without ADR Compliance</h3>
+                <span className="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-bold">15% of problems</span>
+              </div>
+              <p className="text-black mb-3">
+                Vehicle imported from Japan/UK but never got Australian Design Rule (ADR) compliance. Cannot be legally registered long-term.
+              </p>
+              <p className="text-black text-sm">
+                <strong>Warning signs:</strong> VIN starts with "J" (Japan), car has RHD but isn't Aus-spec, no compliance plate visible.
+              </p>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-blue-600">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-black text-xl font-bold">4. Odometer Fraud (Clocking)</h3>
+                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-bold">10% of problems</span>
+              </div>
+              <p className="text-black mb-3">
+                PPSR doesn't track odometer readings, BUT your REVS check often includes service history from our data partners. If service records show 180,000 km in 2022 but odometer shows 95,000 km today, you've found fraud.
+              </p>
+            </div>
+
+            <div className="bg-white shadow-lg rounded-xl p-6 border-l-4 border-green-600">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="text-black text-xl font-bold">5. Takata Airbag Recall - The Silent Killer</h3>
+                <span className="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-bold">1 in 4 cars</span>
+              </div>
+              <p className="text-black mb-3">
+                <strong className="text-red-600">1 in 4 Australian vehicles</strong> have defective Takata airbags that can explode and send shrapnel into the cabin, causing death or serious injury.
+              </p>
+              <p className="text-black text-sm">
+                Our REVS check includes Takata recall status. If positive, replacement is FREE but must be done before you buy. Dealers are legally required to fix before sale, but private sellers often don't know.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Legal Protection */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">Legal Protection: Understanding the PPSR Act 2009</h2>
+
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl p-8 mb-8">
+            <div className="flex items-start gap-4">
+              <Shield className="h-12 w-12 text-blue-600 flex-shrink-0" />
+              <div>
+                <h3 className="text-black text-2xl font-bold mb-4">When Your PPSR Certificate Protects You</h3>
+                <p className="text-black mb-4">
+                  Under Section 43 of the PPSR Act 2009, if you obtain an official PPSR certificate showing "no security interests" and later discover hidden finance, you have legal protection in most cases.
+                </p>
+                <div className="bg-white rounded p-4 mb-4">
+                  <p className="text-black font-semibold mb-2">You're Protected When:</p>
+                  <ul className="list-disc list-inside text-black space-y-1 text-sm">
+                    <li>You obtained a PPSR certificate before purchase</li>
+                    <li>The certificate showed clear title (no security interests)</li>
+                    <li>You purchased for valuable consideration (paid market value)</li>
+                    <li>You had no actual knowledge of any security interest</li>
+                  </ul>
+                </div>
+                <p className="text-black text-sm italic">
+                  <strong>Court precedent:</strong> In Maiden Civil (P&E) Pty Ltd v Queensland Excavation Services Pty Ltd [2013], the court ruled that a buyer who obtained a clear PPSR certificate took the equipment free of the undisclosed security interest.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-red-50 border-2 border-red-300 rounded-xl p-8">
+            <div className="flex items-start gap-4">
+              <AlertTriangle className="h-12 w-12 text-red-600 flex-shrink-0" />
+              <div>
+                <h3 className="text-black text-2xl font-bold mb-4">When You're NOT Protected</h3>
+                <div className="bg-white rounded p-4 space-y-2 text-black text-sm">
+                  <p><strong className="text-red-600">1. No PPSR certificate obtained</strong> - If you didn't get a certificate before buying, you have zero legal protection.</p>
+                  <p><strong className="text-red-600">2. Certificate obtained AFTER purchase</strong> - Must be done before money changes hands.</p>
+                  <p><strong className="text-red-600">3. Bought for significantly under market value</strong> - Courts may rule you should have known something was wrong.</p>
+                  <p><strong className="text-red-600">4. Seller told you about the finance</strong> - Verbal disclosure removes protection even if not on certificate.</p>
+                </div>
+                <p className="text-black mt-4">
+                  <strong>Bottom line:</strong> The $34.99 PPSR certificate isn't just information - it's legal insurance that can save you $15,400+. Always get it BEFORE you pay.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section (keeping existing content) */}
       <section id="what-is-revs" className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
