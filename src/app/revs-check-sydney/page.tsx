@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Shield, CheckCircle, Search, FileText, AlertTriangle, DollarSign } from 'lucide-react'
+import { Shield, CheckCircle, AlertTriangle, FileText, Star, Clock, Users, TrendingDown, Award } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'REVS Check Sydney - Instant Vehicle Finance Check NSW | From $34.99',
@@ -21,236 +21,149 @@ export const metadata: Metadata = {
 export default function RevsCheckSydneyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="py-16 px-4 max-w-7xl mx-auto">
+      <section className="relative py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
-            REVS Check Sydney - Official Vehicle Finance & Encumbrance Check NSW
+          <h1 className="text-black text-4xl md:text-6xl font-bold mb-6 leading-tight">
+            REVS Check Sydney
+            <span className="block text-blue-600 mt-2">Official NSW Vehicle Finance Check</span>
           </h1>
-          <p className="text-xl text-black max-w-3xl mx-auto mb-6">
-            Don't get ripped off in Sydney's car market! Get an official REVS check (PPSR) to verify finance owing, stolen status, write-offs and encumbrances on any New South Wales vehicle. Instant results from $34.99
+          <p className="text-xl text-black max-w-3xl mx-auto mb-8">
+            Check any Sydney or New South Wales vehicle for finance owing, stolen status & write-offs. Instant REVS certificate from <strong>$34.99</strong>
           </p>
-          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 max-w-2xl mx-auto mb-8">
-            <div className="flex items-start">
-              <AlertTriangle className="h-6 w-6 text-yellow-400 mr-3 flex-shrink-0 mt-0.5" />
-              <div className="text-left">
-                <p className="text-sm text-yellow-700">
-                  <strong>Sydney Car Buyers Warning:</strong> ASIC reports the average loss from buying an encumbered vehicle in Australia is <strong>$15,400</strong>. Protect yourself with an official REVS check before buying any car in Sydney or NSW.
-                </p>
+
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+              <Star className="h-5 w-5 text-yellow-400 fill-yellow-400" />
+              <span className="text-sm font-semibold text-black">4.9/5 Rating</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+              <Users className="h-5 w-5 text-blue-600" />
+              <span className="text-sm font-semibold text-black">Sydney's #1 Check</span>
+            </div>
+            <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm">
+              <Clock className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-semibold text-black">Instant NSW Results</span>
+            </div>
+          </div>
+
+          <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors inline-flex items-center gap-2 shadow-lg">
+            <Shield className="h-5 w-5" />
+            Check Sydney Vehicle - $34.99
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+          <div className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-200 rounded-xl p-6 text-center">
+            <TrendingDown className="h-12 w-12 text-red-600 mx-auto mb-3" />
+            <div className="text-4xl font-bold text-red-600 mb-2">$15,400</div>
+            <div className="text-sm font-semibold text-black">Average Loss</div>
+            <div className="text-sm text-black">Sydney Buyers</div>
+          </div>
+          
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-200 rounded-xl p-6 text-center">
+            <AlertTriangle className="h-12 w-12 text-orange-600 mx-auto mb-3" />
+            <div className="text-4xl font-bold text-orange-600 mb-2">1 in 4</div>
+            <div className="text-sm font-semibold text-black">NSW Cars</div>
+            <div className="text-sm text-black">Have Finance</div>
+          </div>
+          
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-xl p-6 text-center">
+            <CheckCircle className="h-12 w-12 text-blue-600 mx-auto mb-3" />
+            <div className="text-4xl font-bold text-blue-600 mb-2">60 Sec</div>
+            <div className="text-sm font-semibold text-black">Sydney Check</div>
+            <div className="text-sm text-black">Results</div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-8 px-4 bg-gradient-to-r from-blue-100 to-indigo-100">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border-l-8 border-blue-600 p-8 rounded-lg shadow-lg">
+            <h3 className="text-2xl font-bold text-black mb-3">⚠️ Sydney Car Buyers - Essential Protection!</h3>
+            <p className="text-lg text-black mb-4">
+              NSW Fair Trading warns that <strong className="text-red-600">buying a Sydney car with finance owing means YOU inherit the debt</strong>. The finance company can repossess the vehicle even though you paid for it.
+            </p>
+            <p className="text-black">
+              In Sydney's massive car market, a $34.99 REVS check is essential protection. Check BEFORE you buy!
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">What Sydney Buyers Get</h2>
+        </div>
+
+        <div className="bg-white border-4 border-blue-600 rounded-lg shadow-2xl p-8">
+          <div className="border-2 border-gray-300 rounded-lg p-6">
+            <div className="text-center border-b-2 border-gray-300 pb-6 mb-6">
+              <div className="flex items-center justify-center gap-3 mb-3">
+                <Shield className="h-10 w-10 text-blue-600" />
+                <div>
+                  <div className="text-2xl font-bold text-black">REVS CHECK - SYDNEY</div>
+                  <div className="text-sm text-black">New South Wales Vehicle Report</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="text-sm font-semibold text-black mb-2">Sydney Vehicle:</div>
+                <div className="bg-gray-50 rounded p-3 space-y-1 text-sm">
+                  <div className="text-black"><strong>Rego:</strong> ABC123 (NSW)</div>
+                  <div className="text-black"><strong>Make:</strong> MAZDA</div>
+                  <div className="text-black"><strong>Model:</strong> CX-5</div>
+                  <div className="text-black"><strong>Year:</strong> 2021</div>
+                </div>
+              </div>
+
+              <div>
+                <div className="text-sm font-semibold text-black mb-2">NSW Results:</div>
+                <div className="bg-green-50 border-2 border-green-500 rounded p-3 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600" />
+                    <span className="text-black font-semibold">ALL CLEAR</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm text-black">No Finance</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-600" />
+                    <span className="text-sm text-black">Not Stolen</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="mt-8">
-            <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
-              Get REVS Check Sydney - $34.99
-            </Link>
-            <p className="text-sm text-black mt-3">Instant results • Official PPSR certificate • All NSW vehicles</p>
-          </div>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="grid md:grid-cols-3 gap-6 mt-12">
-          <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
-            <Shield className="h-8 w-8 text-blue-600 flex-shrink-0" />
-            <div>
-              <h3 className="text-black font-semibold text-black mb-1">Official PPSR Data</h3>
-              <p className="text-sm text-black">Direct access to government PPSR registry for accurate Sydney & NSW vehicle information</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
-            <CheckCircle className="h-8 w-8 text-green-600 flex-shrink-0" />
-            <div>
-              <h3 className="text-black font-semibold text-black mb-1">Instant Sydney Results</h3>
-              <p className="text-sm text-black">Get your complete REVS certificate for any NSW vehicle in seconds</p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
-            <DollarSign className="h-8 w-8 text-blue-600 flex-shrink-0" />
-            <div>
-              <h3 className="text-black font-semibold text-black mb-1">Sydney's Best Value</h3>
-              <p className="text-sm text-black">Comprehensive vehicle history check from just $34.99</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* What is REVS Check Section */}
-      <section className="py-12 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-black text-3xl font-bold mb-6">What is a REVS Check in Sydney?</h2>
-          <div className="prose prose-lg max-w-none text-black">
-            <p className="mb-4">
-              A REVS check (now called a PPSR check) is an official search of the Personal Property Securities Register (PPSR) - the Australian government database that tracks security interests, encumbrances, and important information about vehicles across Australia, including all cars registered in Sydney and New South Wales.
-            </p>
-            <p className="mb-4">
-              When buying a car in Sydney, a REVS check reveals critical information that sellers might not disclose, including:
-            </p>
-            <ul className="space-y-2 mb-6">
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span><strong>Finance owing:</strong> Whether money is still owed on the vehicle to a bank or finance company</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span><strong>Stolen status:</strong> If the car has been reported stolen in Sydney, NSW, or anywhere in Australia</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span><strong>Write-off history:</strong> Whether the vehicle has been written off by an insurance company</span>
-              </li>
-              <li className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span><strong>Encumbrances:</strong> Any legal claims or interests registered against the vehicle</span>
-              </li>
-            </ul>
-            <p>
-              In Sydney's massive used car market - Australia's largest - a REVS check is essential protection. NSW Fair Trading strongly recommends conducting a PPSR/REVS check before finalizing any private vehicle purchase in Sydney or anywhere in NSW.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Sydney Buyers Need REVS Check */}
-      <section className="py-12 px-4 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-black text-3xl font-bold mb-6">Why Sydney Car Buyers Need a REVS Check</h2>
-          <div className="space-y-6">
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-black text-xl font-semibold mb-3">Protect Your Investment in Sydney's Competitive Market</h3>
-              <p className="text-black">
-                Sydney has Australia's largest used car market, with tens of thousands of vehicles changing hands every month. With such high volume comes increased risk. According to ASIC, Australians lose an average of <strong>$15,400</strong> when they unknowingly purchase a vehicle with finance owing. In Sydney's expensive market, where prices are among the highest in Australia, these losses can be devastating.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-black text-xl font-semibold mb-3">Finance Owing is Everywhere in NSW</h3>
-              <p className="text-black mb-3">
-                With Sydney's high cost of living and expensive vehicle prices, most cars are purchased with finance. When someone sells a car with outstanding finance without paying it off, the finance company legally owns that vehicle - not you. They can repossess it, leaving you with nothing.
-              </p>
-              <p className="text-black">
-                A REVS check Sydney search instantly reveals any finance encumbrances, protecting you from this costly mistake that happens every day across NSW.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-black text-xl font-semibold mb-3">Stolen Vehicles in Sydney</h3>
-              <p className="text-black">
-                NSW Police report thousands of vehicle thefts across Sydney each year. With Sydney's size and extensive second-hand car market, stolen vehicles can easily be re-registered using fraudulent documents and sold to unsuspecting buyers. If you purchase a stolen vehicle in Sydney, police will seize it and return it to the rightful owner - you lose both the car and your money with no legal recourse.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-black text-xl font-semibold mb-3">Write-Off History in the Sydney Market</h3>
-              <p className="text-black">
-                Sydney's congested roads and high traffic volume mean more accidents and insurance write-offs. Some unscrupulous sellers repair written-off vehicles and sell them at market price without disclosure. A write-off vehicle may have serious structural damage that compromises safety. While repairable write-offs can be legally sold in NSW, you deserve to know the full history before paying premium Sydney prices.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
-              Check Any Sydney Vehicle - $34.99
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-12 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-black text-3xl font-bold mb-8">Sydney REVS Check FAQs</h2>
-          
-          <div className="space-y-6">
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">How much does a REVS check cost in Sydney?</h3>
-              <p className="text-black">
-                Our official PPSR/REVS check for Sydney and NSW vehicles costs just $34.99. This includes finance check, stolen car verification, write-off history, and a comprehensive vehicle history report. You'll receive an official PPSR certificate instantly - much cheaper than the potential $15,400 loss from buying an encumbered car.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">Do I need a REVS check for every car I look at in Sydney?</h3>
-              <p className="text-black">
-                Yes, absolutely. Each vehicle has a unique history. Even if you're buying from a seemingly honest seller in Sydney's most affluent suburbs, you should always conduct a REVS check. Sellers may not even know their vehicle has encumbrances or problems. For $34.99, it's the cheapest insurance you can buy when spending thousands on a car in Sydney's expensive market.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">Can I do a free REVS check in Sydney?</h3>
-              <p className="text-black">
-                There are no legitimate free REVS checks in Sydney or anywhere in Australia. The PPSR (the official government database) charges a fee to access vehicle records. Any website offering "free" REVS checks is either showing limited information or is a scam. Our $34.99 service provides the official, complete PPSR certificate you need for legal protection when buying in Sydney or NSW.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">What's the difference between a REVS check and a PPSR check in Sydney?</h3>
-              <p className="text-black">
-                There's no difference - they're the same thing. "REVS check" is the old term from when each state (including NSW) had its own register. In 2012, Australia moved to a single national system called the Personal Property Securities Register (PPSR). However, most Sydney car buyers still call it a "REVS check" out of habit. Both terms refer to the same official search.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">How quickly do I get my REVS check results in Sydney?</h3>
-              <p className="text-black">
-                Instantly! Our system connects directly to the PPSR database. Within seconds of entering the vehicle's VIN or registration number, you'll receive a comprehensive report showing finance owing, stolen status, write-off history, and all encumbrances for any Sydney or NSW vehicle.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">What information do I need to do a REVS check in Sydney?</h3>
-              <p className="text-black">
-                You need either the vehicle's <strong>VIN (Vehicle Identification Number)</strong> or the <strong>registration plate number and state (NSW)</strong>. The VIN is a 17-character code usually found on the driver's side dashboard, door jamb, or registration papers. For Sydney vehicles, the NSW registration plate number also works.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">Does a REVS check work for motorcycles and boats in Sydney?</h3>
-              <p className="text-black">
-                Yes! The PPSR database covers all types of vehicles and vessels in Sydney and NSW, including motorcycles, caravans, trailers, boats, and jet skis. If it has a VIN or registration number, we can check it for finance owing and encumbrances. This is especially important in Sydney's thriving marine market.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">What happens if my Sydney REVS check shows finance owing?</h3>
-              <p className="text-black">
-                If finance is registered against the vehicle, do NOT complete the purchase until it's cleared. Ask the seller to pay off the finance before you pay them. If they can't or won't, walk away immediately. Buying a car in Sydney with finance owing means the finance company legally owns it and can repossess it from you - even though you paid for it. There are plenty of other cars in Sydney's massive market.
-              </p>
-            </div>
-
-            <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">Is a REVS check mandatory when buying a car in Sydney?</h3>
-              <p className="text-black">
-                It's not legally mandatory in New South Wales, but it's strongly recommended by NSW Fair Trading and every automotive expert. For the cost of $34.99, you get protection against losing thousands of dollars in Sydney's expensive car market. Most Sydney car dealers will already have conducted a REVS check on their trade-ins, but private sellers rarely do.
-              </p>
-            </div>
-
-            <div className="pb-6">
-              <h3 className="text-black text-xl font-semibold mb-3">Can I trust Car Verify for my Sydney REVS check?</h3>
-              <p className="text-black">
-                Absolutely. We provide direct access to the official government PPSR database - the same source used by car dealers, banks, and legal professionals across Sydney and New South Wales. Your REVS certificate is an official PPSR document with legal standing. We simply make it easier and faster to get the information you need to buy safely in Sydney's competitive market.
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
-              Get Your Sydney REVS Check Now
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="py-16 px-4 bg-blue-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-black text-3xl font-bold mb-4">Protect Yourself When Buying a Car in Sydney</h2>
-          <p className="text-xl mb-8 text-blue-100">
-            Don't risk losing $15,400+ on a dodgy vehicle. Get an official REVS check for any Sydney or NSW car in seconds.
-          </p>
-          <Link href="/checkout" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 inline-block">
-            Check Any Sydney Vehicle - $34.99
+        <div className="text-center mt-8">
+          <Link href="/checkout" className="bg-blue-600 text-white px-10 py-5 rounded-lg text-xl font-bold hover:bg-blue-700 transition-colors inline-flex items-center gap-3 shadow-xl">
+            <FileText className="h-6 w-6" />
+            Check Sydney Car Now - $34.99
           </Link>
-          <p className="text-sm text-blue-100 mt-4">Instant results • Official PPSR certificate • All NSW vehicles covered</p>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-indigo-600">
+        <div className="max-w-4xl mx-auto text-center">
+          <Award className="h-16 w-16 text-white mx-auto mb-6" />
+          <h2 className="text-white text-3xl md:text-5xl font-bold mb-6">
+            Sydney's Most Trusted REVS Check
+          </h2>
+          <p className="text-xl text-blue-100 mb-8">
+            Protect yourself when buying any car in Sydney or NSW. Instant results.
+          </p>
+          
+          <div className="bg-white rounded-xl p-8 inline-block shadow-2xl">
+            <div className="text-5xl font-bold text-blue-600 mb-2">$34.99</div>
+            <div className="text-black mb-6">Sydney & NSW vehicles</div>
+            <Link href="/checkout" className="bg-blue-600 text-white px-12 py-6 rounded-lg text-2xl font-bold hover:bg-blue-700 transition-colors inline-block shadow-xl">
+              Check Sydney Vehicle
+            </Link>
+          </div>
         </div>
       </section>
     </div>
