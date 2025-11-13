@@ -1,17 +1,16 @@
+'use client'
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Shield, CheckCircle, TrendingUp, FileText, AlertTriangle, Clock, Award } from 'lucide-react'
-
-export const metadata: Metadata = {
-  title: 'Get Your Full Car History Report - Instant Results | $34.99',
-  description: 'Complete car history check in 60 seconds. REVS check, stolen status, write-offs, price valuation & market research. Protect yourself from buying a problem car.',
-  robots: 'noindex, nofollow', // Don't index landing page - only for paid traffic
-}
+import { Shield, CheckCircle, TrendingUp, FileText, AlertTriangle, Award } from 'lucide-react'
+import { useState } from 'react'
 
 export default function CheckNowPage() {
+  const [searchType, setSearchType] = useState<'rego' | 'vin'>('rego')
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Minimal Header - No distractions */}
+    <div className="min-h-screen bg-white">
+      {/* Minimal Header */}
       <header className="bg-white border-b border-gray-200 py-4 px-4">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="text-2xl font-bold text-red-600">
@@ -19,243 +18,337 @@ export default function CheckNowPage() {
           </Link>
           <div className="flex items-center gap-2">
             <Award className="h-5 w-5 text-yellow-400 fill-yellow-400" />
-            <span className="text-sm font-semibold text-black">4.9/5 Rating</span>
+            <span className="text-sm font-semibold text-gray-700">4.9/5 Rating</span>
           </div>
         </div>
       </header>
 
-      {/* Hero Section - Above the fold */}
-      <section className="py-12 px-4 max-w-5xl mx-auto">
-        <div className="text-center mb-8">
-          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4 leading-tight">
-            Don't Buy a Car With Hidden Problems
+      {/* Hero Section */}
+      <section className="py-16 px-4 max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <h1 className="text-gray-900 text-4xl md:text-5xl font-bold mb-6 leading-tight">
+            Protect Yourself From Buying a<br />Car With Hidden Problems
           </h1>
-          <p className="text-xl text-gray-700 mb-6 max-w-2xl mx-auto">
-            Get a complete car history report in 60 seconds. Check finance owing, stolen status, write-offs, and get expert price valuation.
+          <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Get a complete vehicle history report including finance checks, stolen status, write-off history, and expert market valuation.
           </p>
 
           {/* Trust Badges */}
-          <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div className="flex items-center gap-2 bg-green-50 px-4 py-2 rounded-lg border border-green-200">
-              <Clock className="h-5 w-5 text-green-600" />
-              <span className="text-sm font-semibold text-green-700">Results in 60 Seconds</span>
-            </div>
-            <div className="flex items-center gap-2 bg-blue-50 px-4 py-2 rounded-lg border border-blue-200">
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
               <Shield className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-semibold text-blue-700">Official PPSR Database</span>
+              <span className="text-sm font-medium text-gray-700">Official PPSR Database</span>
             </div>
-            <div className="flex items-center gap-2 bg-purple-50 px-4 py-2 rounded-lg border border-purple-200">
-              <CheckCircle className="h-5 w-5 text-purple-600" />
-              <span className="text-sm font-semibold text-purple-700">10,000+ Reports Delivered</span>
+            <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+              <CheckCircle className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-medium text-gray-700">10,000+ Reports Delivered</span>
+            </div>
+            <div className="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+              <FileText className="h-5 w-5 text-purple-600" />
+              <span className="text-sm font-medium text-gray-700">Instant Digital Delivery</span>
             </div>
           </div>
         </div>
 
         {/* Main CTA Form */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 border-4 border-red-600 max-w-2xl mx-auto">
+        <div className="bg-white rounded-xl shadow-xl p-8 border border-gray-200 max-w-2xl mx-auto">
           <div className="text-center mb-6">
-            <div className="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
-              LIMITED TIME: $34.99 (Normally $49.99)
-            </div>
-            <h2 className="text-2xl font-bold text-black mb-2">Enter Your Car Details</h2>
-            <p className="text-gray-600">VIN or Registration Number</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Check Any Australian Vehicle</h2>
+            <p className="text-gray-600">Enter your details below to get started</p>
           </div>
 
-          <form action="/" method="GET" className="space-y-4">
-            <div>
-              <input
-                type="text"
-                name="vin"
-                placeholder="Enter VIN or Rego Number (e.g., ABC123 or 1HGBH41JXMN109186)"
-                className="w-full px-6 py-4 text-lg border-2 border-gray-300 rounded-lg focus:border-red-600 focus:outline-none"
-                required
-              />
+          <form action="/" method="GET" className="space-y-5">
+            {/* Search Type Toggle */}
+            <div className="flex gap-3 p-1 bg-gray-100 rounded-lg">
+              <button
+                type="button"
+                onClick={() => setSearchType('rego')}
+                className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${
+                  searchType === 'rego'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                Registration Number
+              </button>
+              <button
+                type="button"
+                onClick={() => setSearchType('vin')}
+                className={`flex-1 py-3 px-4 rounded-md font-medium transition-all ${
+                  searchType === 'vin'
+                    ? 'bg-white text-gray-900 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                VIN Number
+              </button>
             </div>
 
+            {searchType === 'rego' ? (
+              <>
+                {/* State Selector */}
+                <div>
+                  <label htmlFor="state" className="block text-sm font-medium text-gray-700 mb-2">
+                    Select State
+                  </label>
+                  <select
+                    id="state"
+                    name="state"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white text-gray-900"
+                    required
+                  >
+                    <option value="">Choose your state...</option>
+                    <option value="NSW">NSW - New South Wales</option>
+                    <option value="VIC">VIC - Victoria</option>
+                    <option value="QLD">QLD - Queensland</option>
+                    <option value="SA">SA - South Australia</option>
+                    <option value="WA">WA - Western Australia</option>
+                    <option value="TAS">TAS - Tasmania</option>
+                    <option value="ACT">ACT - Australian Capital Territory</option>
+                    <option value="NT">NT - Northern Territory</option>
+                  </select>
+                </div>
+
+                {/* Rego Number */}
+                <div>
+                  <label htmlFor="rego" className="block text-sm font-medium text-gray-700 mb-2">
+                    Registration Number
+                  </label>
+                  <input
+                    type="text"
+                    id="rego"
+                    name="rego"
+                    placeholder="e.g., ABC123 or 1ABC123"
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white text-gray-900 placeholder-gray-400"
+                    required
+                  />
+                </div>
+              </>
+            ) : (
+              <>
+                {/* VIN Number */}
+                <div>
+                  <label htmlFor="vin" className="block text-sm font-medium text-gray-700 mb-2">
+                    VIN Number (17 characters)
+                  </label>
+                  <input
+                    type="text"
+                    id="vin"
+                    name="vin"
+                    placeholder="e.g., 1HGBH41JXMN109186"
+                    maxLength={17}
+                    className="w-full px-4 py-3 text-base border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white text-gray-900 placeholder-gray-400 font-mono"
+                    required
+                  />
+                  <p className="mt-2 text-sm text-gray-500">
+                    Find your VIN on the dashboard, door jamb, or registration papers
+                  </p>
+                </div>
+              </>
+            )}
+
+            {/* Submit Button */}
             <button
               type="submit"
-              className="w-full bg-red-600 text-white py-5 rounded-lg text-xl font-bold hover:bg-red-700 transition-colors shadow-lg flex items-center justify-center gap-3"
+              className="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-md flex items-center justify-center gap-2"
             >
-              <Shield className="h-6 w-6" />
-              Get My Car Report Now - $34.99
+              <Shield className="h-5 w-5" />
+              Get My Vehicle Report
             </button>
           </form>
 
-          <div className="mt-6 flex items-center justify-center gap-4 text-sm text-gray-600">
-            <CheckCircle className="h-5 w-5 text-green-600" />
-            <span>Instant digital delivery</span>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 text-sm text-gray-500">
+            <div className="flex items-center gap-1">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Secure checkout</span>
+            </div>
             <span>•</span>
-            <span>Secure checkout</span>
+            <div className="flex items-center gap-1">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Instant delivery</span>
+            </div>
             <span>•</span>
-            <span>Money-back guarantee</span>
+            <div className="flex items-center gap-1">
+              <CheckCircle className="h-4 w-4 text-green-600" />
+              <span>Money-back guarantee</span>
+            </div>
           </div>
-        </div>
-
-        {/* What's Included */}
-        <div className="mt-12 text-center">
-          <p className="text-sm text-gray-500 mb-2">↓ Here's what you get in your report ↓</p>
         </div>
       </section>
 
       {/* What's Included Section */}
-      <section className="py-12 px-4 bg-gradient-to-r from-gray-100 to-gray-50">
+      <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-black text-center mb-10">Your Complete Car History Report Includes:</h2>
+          <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Your Complete Vehicle History Report Includes</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Finance Check */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <div className="flex items-start gap-4">
-                <div className="bg-red-100 rounded-full p-3">
-                  <AlertTriangle className="h-8 w-8 text-red-600" />
+                <div className="bg-red-50 rounded-lg p-3 flex-shrink-0">
+                  <AlertTriangle className="h-7 w-7 text-red-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Finance & Encumbrance Check</h3>
-                  <p className="text-gray-700 text-sm mb-2">
-                    Check if there's money owing on the car. If there is, the finance company can repossess it from YOU even after you've paid.
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Finance & Security Interest Check</h3>
+                  <p className="text-gray-600 mb-3">
+                    Discover if there's outstanding finance or money owing on the vehicle. If there is, the lender can legally repossess the car from you—even after you've paid for it.
                   </p>
-                  <p className="text-sm text-red-600 font-semibold">
-                    Average loss from undisclosed finance: $15,400
-                  </p>
+                  <div className="bg-red-50 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-red-700">
+                      1 in 4 used cars in Australia has finance owing
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Stolen Check */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <div className="flex items-start gap-4">
-                <div className="bg-orange-100 rounded-full p-3">
-                  <Shield className="h-8 w-8 text-orange-600" />
+                <div className="bg-orange-50 rounded-lg p-3 flex-shrink-0">
+                  <Shield className="h-7 w-7 text-orange-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Stolen Vehicle Check</h3>
-                  <p className="text-gray-700 text-sm mb-2">
-                    Verify the car hasn't been reported stolen. Buying a stolen car means police will seize it and you lose everything.
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Stolen Vehicle Status</h3>
+                  <p className="text-gray-600 mb-3">
+                    Verify the vehicle hasn't been reported stolen. Buying a stolen car means police will seize it immediately and you'll lose your money with no recourse.
                   </p>
-                  <p className="text-sm text-orange-600 font-semibold">
-                    28,922 cars stolen in Australia in 2024
-                  </p>
+                  <div className="bg-orange-50 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-orange-700">
+                      Over 50,000 vehicles stolen in Australia annually
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Write-Off Check */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <div className="flex items-start gap-4">
-                <div className="bg-yellow-100 rounded-full p-3">
-                  <FileText className="h-8 w-8 text-yellow-600" />
+                <div className="bg-yellow-50 rounded-lg p-3 flex-shrink-0">
+                  <FileText className="h-7 w-7 text-yellow-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Written-Off Vehicle Check</h3>
-                  <p className="text-gray-700 text-sm mb-2">
-                    Discover if the car was previously written off by insurance. Repairable write-offs can have hidden damage that costs thousands to fix.
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Written-Off Vehicle History</h3>
+                  <p className="text-gray-600 mb-3">
+                    Check if the vehicle was previously declared a total loss by an insurance company. Write-offs can have hidden structural damage that costs thousands to repair.
                   </p>
-                  <p className="text-sm text-yellow-600 font-semibold">
-                    Some write-offs can never be re-registered
-                  </p>
+                  <div className="bg-yellow-50 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-yellow-700">
+                      Statutory write-offs cannot be re-registered
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Price Valuation */}
-            <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-gray-200">
+            <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
               <div className="flex items-start gap-4">
-                <div className="bg-green-100 rounded-full p-3">
-                  <TrendingUp className="h-8 w-8 text-green-600" />
+                <div className="bg-green-50 rounded-lg p-3 flex-shrink-0">
+                  <TrendingUp className="h-7 w-7 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-black mb-2">Expert Price Valuation</h3>
-                  <p className="text-gray-700 text-sm mb-2">
-                    Get the real market value based on make, model, year, and condition. Know if you're paying too much or getting a great deal.
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">Expert Market Valuation</h3>
+                  <p className="text-gray-600 mb-3">
+                    Get an accurate market value based on make, model, year, condition, and mileage. Know if you're paying a fair price or being overcharged.
                   </p>
-                  <p className="text-sm text-green-600 font-semibold">
-                    Compare against 100,000+ similar vehicles
-                  </p>
+                  <div className="bg-green-50 rounded-lg p-3">
+                    <p className="text-sm font-semibold text-green-700">
+                      Benchmarked against 100,000+ vehicle sales
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Secondary CTA */}
-          <div className="text-center mt-10">
-            <Link
+          <div className="text-center mt-12">
+            <a
               href="#top"
-              className="inline-block bg-red-600 text-white px-12 py-5 rounded-lg text-xl font-bold hover:bg-red-700 transition-colors shadow-xl"
+              className="inline-block bg-blue-600 text-white px-10 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-md"
             >
-              Get My Report Now - $34.99
-            </Link>
-            <p className="text-sm text-gray-600 mt-4">Results delivered instantly via email</p>
+              Check My Vehicle Now
+            </a>
           </div>
         </div>
       </section>
 
       {/* Social Proof */}
-      <section className="py-12 px-4 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold text-black text-center mb-10">Trusted by 10,000+ Australian Car Buyers</h2>
+      <section className="py-16 px-4 max-w-5xl mx-auto">
+        <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Trusted by 10,000+ Australian Car Buyers</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
-            <div className="flex gap-1 mb-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex gap-1 mb-4">
               {[1,2,3,4,5].map(i => (
                 <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
               ))}
             </div>
-            <p className="text-gray-700 mb-4 text-sm">
-              "Saved me from buying a car with $18,000 finance owing. The seller never mentioned it. This report saved my life!"
+            <p className="text-gray-700 mb-4">
+              "Report showed $18,000 in outstanding finance that the seller didn't mention. This check literally saved me from financial disaster."
             </p>
-            <p className="text-sm font-semibold text-black">- Michael T., Melbourne</p>
+            <p className="text-sm font-semibold text-gray-900">Michael T., Melbourne VIC</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
-            <div className="flex gap-1 mb-3">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex gap-1 mb-4">
               {[1,2,3,4,5].map(i => (
                 <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
               ))}
             </div>
-            <p className="text-gray-700 mb-4 text-sm">
-              "Found out the car was a repairable write-off. Negotiated $5,000 off the price. Best $35 I ever spent!"
+            <p className="text-gray-700 mb-4">
+              "Discovered the car was a repairable write-off. Used the report to negotiate $5,000 off the asking price. Absolutely worth it."
             </p>
-            <p className="text-sm font-semibold text-black">- Sarah L., Sydney</p>
+            <p className="text-sm font-semibold text-gray-900">Sarah L., Sydney NSW</p>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
-            <div className="flex gap-1 mb-3">
+          <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="flex gap-1 mb-4">
               {[1,2,3,4,5].map(i => (
                 <Award key={i} className="h-5 w-5 text-yellow-400 fill-yellow-400" />
               ))}
             </div>
-            <p className="text-gray-700 mb-4 text-sm">
-              "Report came through in under a minute. Clear, detailed, and exactly what I needed to make an informed decision."
+            <p className="text-gray-700 mb-4">
+              "Report arrived within minutes. Clear, detailed, and gave me complete confidence in my purchase decision. Highly recommend."
             </p>
-            <p className="text-sm font-semibold text-black">- James K., Brisbane</p>
+            <p className="text-sm font-semibold text-gray-900">James K., Brisbane QLD</p>
           </div>
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-r from-red-600 to-orange-600">
+      {/* Final CTA */}
+      <section className="py-16 px-4 bg-gradient-to-br from-blue-600 to-blue-700">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-white text-4xl md:text-5xl font-bold mb-6">
-            Don't Risk Losing $15,400+
+            Protect Your Investment
           </h2>
-          <p className="text-xl text-red-100 mb-8">
-            One in four cars in Australia has finance owing. Protect yourself before you buy.
+          <p className="text-xl text-blue-100 mb-10 max-w-2xl mx-auto">
+            Don't risk losing thousands on a car with hidden problems. Get the full history before you commit.
           </p>
 
-          <div className="bg-white rounded-2xl p-8 inline-block shadow-2xl">
-            <div className="text-5xl font-bold text-red-600 mb-2">$34.99</div>
-            <div className="text-gray-700 mb-6">Complete Car History Report</div>
-            <Link
-              href="#top"
-              className="bg-red-600 text-white px-12 py-6 rounded-lg text-2xl font-bold hover:bg-red-700 transition-colors inline-block shadow-xl"
-            >
-              Get My Report Now
-            </Link>
-            <div className="mt-6 flex items-center justify-center gap-4 text-sm text-gray-600">
-              <CheckCircle className="h-5 w-5 text-green-600" />
-              <span>60 second delivery</span>
-              <span>•</span>
-              <span>Money-back guarantee</span>
+          <a
+            href="#top"
+            className="inline-block bg-white text-blue-600 px-12 py-5 rounded-lg text-xl font-bold hover:bg-gray-50 transition-colors shadow-xl"
+          >
+            Get My Vehicle Report Now
+          </a>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-4 text-blue-100">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5" />
+              <span>Official PPSR data</span>
+            </div>
+            <span>•</span>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5" />
+              <span>Instant delivery</span>
+            </div>
+            <span>•</span>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5" />
+              <span>Secure checkout</span>
             </div>
           </div>
         </div>
@@ -264,11 +357,11 @@ export default function CheckNowPage() {
       {/* Trust Footer */}
       <footer className="bg-gray-900 text-gray-400 py-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-sm mb-4">
-            © 2024 Car Verify Australia. All rights reserved. | Secure checkout with Stripe | Money-back guarantee
+          <p className="text-sm mb-2">
+            © 2024 Car Verify Australia. All rights reserved.
           </p>
           <p className="text-xs">
-            Official PPSR (Personal Property Securities Register) reports. Trusted by 10,000+ Australian car buyers.
+            Official PPSR (Personal Property Securities Register) reports. Secure payment processing. Money-back guarantee.
           </p>
         </div>
       </footer>
