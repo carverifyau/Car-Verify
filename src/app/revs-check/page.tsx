@@ -32,7 +32,7 @@ export default function RevsCheckPage() {
           <div className="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
             Official PPSR Certificate Provider
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
             REVS Check Australia - Official Vehicle Finance & Encumbrance Check
           </h1>
           <p className="text-xl text-black max-w-3xl mx-auto">
@@ -63,7 +63,7 @@ export default function RevsCheckPage() {
           <div className="flex items-start">
             <AlertCircle className="h-6 w-6 text-orange-500 mt-1 mr-3 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-orange-900 mb-2">⚠️ Don't Risk $15,400+ Loss!</h3>
+              <h3 className="text-black font-semibold text-orange-900 mb-2">⚠️ Don't Risk $15,400+ Loss!</h3>
               <p className="text-orange-800">
                 ASIC reports the average loss from buying a car with hidden finance is over $15,400.
                 A REVS check costs $34.99 and could save you thousands. Don't buy without checking!
@@ -76,22 +76,22 @@ export default function RevsCheckPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-12">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <Shield className="h-12 w-12 text-blue-600 mb-4 mx-auto" />
-            <h3 className="font-semibold text-lg mb-2">Official PPSR</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Official PPSR</h3>
             <p className="text-black text-sm">Government-backed Personal Property Securities Register</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <CheckCircle className="h-12 w-12 text-green-600 mb-4 mx-auto" />
-            <h3 className="font-semibold text-lg mb-2">Instant Certificate</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Instant Certificate</h3>
             <p className="text-black text-sm">Receive your official REVS certificate via email in 60 seconds</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <AlertTriangle className="h-12 w-12 text-orange-600 mb-4 mx-auto" />
-            <h3 className="font-semibold text-lg mb-2">Finance Check</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Finance Check</h3>
             <p className="text-black text-sm">See any money owing or security interests on the vehicle</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 text-center">
             <DollarSign className="h-12 w-12 text-purple-600 mb-4 mx-auto" />
-            <h3 className="font-semibold text-lg mb-2">Best Price</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Best Price</h3>
             <p className="text-black text-sm">Comprehensive check for just $34.99 - cheaper than competitors</p>
           </div>
         </div>
@@ -100,7 +100,7 @@ export default function RevsCheckPage() {
       {/* What is REVS Section */}
       <section id="what-is-revs" className="py-16 px-4 bg-blue-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">What is a REVS Check?</h2>
+          <h2 className="text-black text-3xl font-bold text-center mb-8">What is a REVS Check?</h2>
           <div className="bg-white p-8 rounded-lg shadow-sm">
             <p className="text-black mb-4 text-lg">
               A <strong>REVS check</strong> (Register of Encumbered Vehicles) is now officially known as a
@@ -134,10 +134,10 @@ export default function RevsCheckPage() {
 
       {/* What You Get Section */}
       <section className="py-16 px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">What's Included in Your REVS Check</h2>
+        <h2 className="text-black text-3xl font-bold text-center mb-12">What's Included in Your REVS Check</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="font-semibold text-xl mb-4 flex items-center">
+            <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
               <Shield className="h-6 w-6 text-blue-600 mr-2" />
               Official PPSR Certificate
             </h3>
@@ -151,7 +151,7 @@ export default function RevsCheckPage() {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="font-semibold text-xl mb-4 flex items-center">
+            <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
               <AlertTriangle className="h-6 w-6 text-orange-600 mr-2" />
               Stolen Car Check
             </h3>
@@ -165,7 +165,7 @@ export default function RevsCheckPage() {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="font-semibold text-xl mb-4 flex items-center">
+            <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
               <FileText className="h-6 w-6 text-green-600 mr-2" />
               Write-Off History
             </h3>
@@ -179,7 +179,7 @@ export default function RevsCheckPage() {
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <h3 className="font-semibold text-xl mb-4 flex items-center">
+            <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
               <DollarSign className="h-6 w-6 text-purple-600 mr-2" />
               Vehicle Valuation
             </h3>
@@ -197,13 +197,13 @@ export default function RevsCheckPage() {
       {/* How It Works */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">How to Do a REVS Check in 3 Easy Steps</h2>
+          <h2 className="text-black text-3xl font-bold text-center mb-12">How to Do a REVS Check in 3 Easy Steps</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">1</span>
               </div>
-              <h3 className="font-semibold text-xl mb-2">Enter Vehicle Details</h3>
+              <h3 className="text-black font-semibold text-xl mb-2">Enter Vehicle Details</h3>
               <p className="text-black">
                 Enter the VIN number or registration plate and state. Both work for PPSR searches.
               </p>
@@ -212,7 +212,7 @@ export default function RevsCheckPage() {
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">2</span>
               </div>
-              <h3 className="font-semibold text-xl mb-2">Instant PPSR Search</h3>
+              <h3 className="text-black font-semibold text-xl mb-2">Instant PPSR Search</h3>
               <p className="text-black">
                 Our system searches the official PPSR database, stolen car registers & write-off records
               </p>
@@ -221,7 +221,7 @@ export default function RevsCheckPage() {
               <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">3</span>
               </div>
-              <h3 className="font-semibold text-xl mb-2">Get Your Certificate</h3>
+              <h3 className="text-black font-semibold text-xl mb-2">Get Your Certificate</h3>
               <p className="text-black">
                 Receive official REVS/PPSR certificate via email within 60 seconds with full results
               </p>
@@ -232,7 +232,7 @@ export default function RevsCheckPage() {
 
       {/* FAQ Section */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">REVS Check Questions Answered</h2>
+        <h2 className="text-black text-3xl font-bold text-center mb-12">REVS Check Questions Answered</h2>
         <div className="space-y-6">
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <summary className="font-semibold text-lg cursor-pointer">What is a REVS check in Australia?</summary>
@@ -336,7 +336,7 @@ export default function RevsCheckPage() {
       {/* CTA Section */}
       <section className="py-16 px-4 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Protect Your Investment with a REVS Check</h2>
+          <h2 className="text-black text-3xl font-bold mb-4">Protect Your Investment with a REVS Check</h2>
           <p className="text-xl mb-2">
             Official PPSR certificate + stolen car check + vehicle history
           </p>
@@ -358,9 +358,9 @@ export default function RevsCheckPage() {
       {/* SEO Content Section */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
         <div className="prose max-w-none">
-          <h2 className="text-2xl font-bold mb-4">Complete Guide to REVS Checks in Australia 2024</h2>
+          <h2 className="text-black text-2xl font-bold mb-4">Complete Guide to REVS Checks in Australia 2024</h2>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">Understanding REVS and PPSR in Australia</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">Understanding REVS and PPSR in Australia</h3>
           <p className="text-black mb-4">
             If you're buying a used car in Australia, you'll hear people talk about "REVS checks" and "PPSR checks"
             - but what's the difference? The short answer: they're the same thing. REVS (Register of Encumbered
@@ -373,7 +373,7 @@ export default function RevsCheckPage() {
             it was used for over 25 years before the national system came in.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">Why You Must Do a REVS Check Before Buying</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">Why You Must Do a REVS Check Before Buying</h3>
           <p className="text-black mb-4">
             According to ASIC (Australian Securities and Investments Commission), thousands of Australians lose money
             every year by purchasing vehicles with encumbrances. The average loss? Over $15,400. Here's why this happens:
@@ -389,7 +389,7 @@ export default function RevsCheckPage() {
             hand over thousands of dollars for a vehicle.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">What Does a REVS Check Reveal?</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">What Does a REVS Check Reveal?</h3>
           <p className="text-black mb-4">
             When you run a comprehensive REVS check through Car Verify, you get:
           </p>
@@ -420,7 +420,7 @@ export default function RevsCheckPage() {
             </li>
           </ul>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">REVS Check for Every Australian State</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">REVS Check for Every Australian State</h3>
           <p className="text-black mb-4">
             Because the PPSR is a national register, one REVS check covers vehicles from all Australian states and
             territories. Whether you're buying a car that was previously registered in:
@@ -440,7 +440,7 @@ export default function RevsCheckPage() {
             vehicle was registered or where you're buying it.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">How to Read Your REVS Certificate</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">How to Read Your REVS Certificate</h3>
           <p className="text-black mb-4">
             When you receive your REVS/PPSR certificate, you'll see several sections:
           </p>
@@ -460,7 +460,7 @@ export default function RevsCheckPage() {
             re-registered but may have reduced value.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">Common REVS Check Mistakes to Avoid</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">Common REVS Check Mistakes to Avoid</h3>
           <p className="text-black mb-4">
             Don't make these costly errors when buying a used car:
           </p>
@@ -487,7 +487,7 @@ export default function RevsCheckPage() {
             </li>
           </ul>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">What If the REVS Check Shows Money Owing?</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">What If the REVS Check Shows Money Owing?</h3>
           <p className="text-black mb-4">
             If your REVS check reveals finance owing, you have several options:
           </p>
@@ -509,7 +509,7 @@ export default function RevsCheckPage() {
             how people lose $15,000+.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">REVS Check for Motorcycles, Caravans, and Boats</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">REVS Check for Motorcycles, Caravans, and Boats</h3>
           <p className="text-black mb-4">
             REVS/PPSR checks aren't just for cars! The PPSR covers all motor vehicles, including:
           </p>
@@ -525,7 +525,7 @@ export default function RevsCheckPage() {
             and our system searches the PPSR for encumbrances, stolen status, and write-off history.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">How Much Should You Pay for a REVS Check?</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">How Much Should You Pay for a REVS Check?</h3>
           <p className="text-black mb-4">
             Official PPSR searches through the government website cost around $15-25 for just the basic certificate.
             However, this doesn't include stolen car checks, write-off searches, or vehicle valuations.
@@ -551,7 +551,7 @@ export default function RevsCheckPage() {
       {/* Final CTA */}
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-2xl mx-auto text-center">
-          <h3 className="text-2xl font-bold mb-4">Ready to Check Your Vehicle?</h3>
+          <h3 className="text-black text-2xl font-bold mb-4">Ready to Check Your Vehicle?</h3>
           <p className="text-black mb-6">
             Get your official REVS/PPSR certificate in 60 seconds
           </p>

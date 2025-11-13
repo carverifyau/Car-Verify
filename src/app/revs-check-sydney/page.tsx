@@ -24,7 +24,7 @@ export default function RevsCheckSydneyPage() {
       {/* Hero Section */}
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
             REVS Check Sydney - Official Vehicle Finance & Encumbrance Check NSW
           </h1>
           <p className="text-xl text-black max-w-3xl mx-auto mb-6">
@@ -53,21 +53,21 @@ export default function RevsCheckSydneyPage() {
           <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
             <Shield className="h-8 w-8 text-blue-600 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Official PPSR Data</h3>
+              <h3 className="text-black font-semibold text-black mb-1">Official PPSR Data</h3>
               <p className="text-sm text-black">Direct access to government PPSR registry for accurate Sydney & NSW vehicle information</p>
             </div>
           </div>
           <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
             <CheckCircle className="h-8 w-8 text-green-600 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Instant Sydney Results</h3>
+              <h3 className="text-black font-semibold text-black mb-1">Instant Sydney Results</h3>
               <p className="text-sm text-black">Get your complete REVS certificate for any NSW vehicle in seconds</p>
             </div>
           </div>
           <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
             <DollarSign className="h-8 w-8 text-blue-600 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-gray-900 mb-1">Sydney's Best Value</h3>
+              <h3 className="text-black font-semibold text-black mb-1">Sydney's Best Value</h3>
               <p className="text-sm text-black">Comprehensive vehicle history check from just $34.99</p>
             </div>
           </div>
@@ -77,7 +77,7 @@ export default function RevsCheckSydneyPage() {
       {/* What is REVS Check Section */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">What is a REVS Check in Sydney?</h2>
+          <h2 className="text-black text-3xl font-bold mb-6">What is a REVS Check in Sydney?</h2>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               A REVS check (now called a PPSR check) is an official search of the Personal Property Securities Register (PPSR) - the Australian government database that tracks security interests, encumbrances, and important information about vehicles across Australia, including all cars registered in Sydney and New South Wales.
@@ -113,17 +113,17 @@ export default function RevsCheckSydneyPage() {
       {/* Why Sydney Buyers Need REVS Check */}
       <section className="py-12 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Why Sydney Car Buyers Need a REVS Check</h2>
+          <h2 className="text-black text-3xl font-bold mb-6">Why Sydney Car Buyers Need a REVS Check</h2>
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Protect Your Investment in Sydney's Competitive Market</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Protect Your Investment in Sydney's Competitive Market</h3>
               <p className="text-black">
                 Sydney has Australia's largest used car market, with tens of thousands of vehicles changing hands every month. With such high volume comes increased risk. According to ASIC, Australians lose an average of <strong>$15,400</strong> when they unknowingly purchase a vehicle with finance owing. In Sydney's expensive market, where prices are among the highest in Australia, these losses can be devastating.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Finance Owing is Everywhere in NSW</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Finance Owing is Everywhere in NSW</h3>
               <p className="text-black mb-3">
                 With Sydney's high cost of living and expensive vehicle prices, most cars are purchased with finance. When someone sells a car with outstanding finance without paying it off, the finance company legally owns that vehicle - not you. They can repossess it, leaving you with nothing.
               </p>
@@ -133,14 +133,14 @@ export default function RevsCheckSydneyPage() {
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Stolen Vehicles in Sydney</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Stolen Vehicles in Sydney</h3>
               <p className="text-black">
                 NSW Police report thousands of vehicle thefts across Sydney each year. With Sydney's size and extensive second-hand car market, stolen vehicles can easily be re-registered using fraudulent documents and sold to unsuspecting buyers. If you purchase a stolen vehicle in Sydney, police will seize it and return it to the rightful owner - you lose both the car and your money with no legal recourse.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Write-Off History in the Sydney Market</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Write-Off History in the Sydney Market</h3>
               <p className="text-black">
                 Sydney's congested roads and high traffic volume mean more accidents and insurance write-offs. Some unscrupulous sellers repair written-off vehicles and sell them at market price without disclosure. A write-off vehicle may have serious structural damage that compromises safety. While repairable write-offs can be legally sold in NSW, you deserve to know the full history before paying premium Sydney prices.
               </p>
@@ -158,74 +158,74 @@ export default function RevsCheckSydneyPage() {
       {/* FAQ Section */}
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">Sydney REVS Check FAQs</h2>
+          <h2 className="text-black text-3xl font-bold mb-8">Sydney REVS Check FAQs</h2>
           
           <div className="space-y-6">
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">How much does a REVS check cost in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">How much does a REVS check cost in Sydney?</h3>
               <p className="text-black">
                 Our official PPSR/REVS check for Sydney and NSW vehicles costs just $34.99. This includes finance check, stolen car verification, write-off history, and a comprehensive vehicle history report. You'll receive an official PPSR certificate instantly - much cheaper than the potential $15,400 loss from buying an encumbered car.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Do I need a REVS check for every car I look at in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Do I need a REVS check for every car I look at in Sydney?</h3>
               <p className="text-black">
                 Yes, absolutely. Each vehicle has a unique history. Even if you're buying from a seemingly honest seller in Sydney's most affluent suburbs, you should always conduct a REVS check. Sellers may not even know their vehicle has encumbrances or problems. For $34.99, it's the cheapest insurance you can buy when spending thousands on a car in Sydney's expensive market.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Can I do a free REVS check in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Can I do a free REVS check in Sydney?</h3>
               <p className="text-black">
                 There are no legitimate free REVS checks in Sydney or anywhere in Australia. The PPSR (the official government database) charges a fee to access vehicle records. Any website offering "free" REVS checks is either showing limited information or is a scam. Our $34.99 service provides the official, complete PPSR certificate you need for legal protection when buying in Sydney or NSW.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">What's the difference between a REVS check and a PPSR check in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">What's the difference between a REVS check and a PPSR check in Sydney?</h3>
               <p className="text-black">
                 There's no difference - they're the same thing. "REVS check" is the old term from when each state (including NSW) had its own register. In 2012, Australia moved to a single national system called the Personal Property Securities Register (PPSR). However, most Sydney car buyers still call it a "REVS check" out of habit. Both terms refer to the same official search.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">How quickly do I get my REVS check results in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">How quickly do I get my REVS check results in Sydney?</h3>
               <p className="text-black">
                 Instantly! Our system connects directly to the PPSR database. Within seconds of entering the vehicle's VIN or registration number, you'll receive a comprehensive report showing finance owing, stolen status, write-off history, and all encumbrances for any Sydney or NSW vehicle.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">What information do I need to do a REVS check in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">What information do I need to do a REVS check in Sydney?</h3>
               <p className="text-black">
                 You need either the vehicle's <strong>VIN (Vehicle Identification Number)</strong> or the <strong>registration plate number and state (NSW)</strong>. The VIN is a 17-character code usually found on the driver's side dashboard, door jamb, or registration papers. For Sydney vehicles, the NSW registration plate number also works.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Does a REVS check work for motorcycles and boats in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Does a REVS check work for motorcycles and boats in Sydney?</h3>
               <p className="text-black">
                 Yes! The PPSR database covers all types of vehicles and vessels in Sydney and NSW, including motorcycles, caravans, trailers, boats, and jet skis. If it has a VIN or registration number, we can check it for finance owing and encumbrances. This is especially important in Sydney's thriving marine market.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">What happens if my Sydney REVS check shows finance owing?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">What happens if my Sydney REVS check shows finance owing?</h3>
               <p className="text-black">
                 If finance is registered against the vehicle, do NOT complete the purchase until it's cleared. Ask the seller to pay off the finance before you pay them. If they can't or won't, walk away immediately. Buying a car in Sydney with finance owing means the finance company legally owns it and can repossess it from you - even though you paid for it. There are plenty of other cars in Sydney's massive market.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Is a REVS check mandatory when buying a car in Sydney?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Is a REVS check mandatory when buying a car in Sydney?</h3>
               <p className="text-black">
                 It's not legally mandatory in New South Wales, but it's strongly recommended by NSW Fair Trading and every automotive expert. For the cost of $34.99, you get protection against losing thousands of dollars in Sydney's expensive car market. Most Sydney car dealers will already have conducted a REVS check on their trade-ins, but private sellers rarely do.
               </p>
             </div>
 
             <div className="pb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Can I trust Car Verify for my Sydney REVS check?</h3>
+              <h3 className="text-black text-xl font-semibold mb-3">Can I trust Car Verify for my Sydney REVS check?</h3>
               <p className="text-black">
                 Absolutely. We provide direct access to the official government PPSR database - the same source used by car dealers, banks, and legal professionals across Sydney and New South Wales. Your REVS certificate is an official PPSR document with legal standing. We simply make it easier and faster to get the information you need to buy safely in Sydney's competitive market.
               </p>
@@ -243,7 +243,7 @@ export default function RevsCheckSydneyPage() {
       {/* Final CTA */}
       <section className="py-16 px-4 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Protect Yourself When Buying a Car in Sydney</h2>
+          <h2 className="text-black text-3xl font-bold mb-4">Protect Yourself When Buying a Car in Sydney</h2>
           <p className="text-xl mb-8 text-blue-100">
             Don't risk losing $15,400+ on a dodgy vehicle. Get an official REVS check for any Sydney or NSW car in seconds.
           </p>

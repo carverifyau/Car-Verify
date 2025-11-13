@@ -23,7 +23,7 @@ export default function VINCheckPage() {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
             VIN Check Australia - Instant Vehicle Identification Number Lookup
           </h1>
           <p className="text-xl text-black max-w-3xl mx-auto">

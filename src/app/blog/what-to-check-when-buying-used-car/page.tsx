@@ -25,7 +25,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
       <article className="py-16 px-4 max-w-4xl mx-auto">
         <header className="mb-12">
           <div className="text-sm text-blue-600 font-semibold mb-3">CAR BUYING GUIDE</div>
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
             What to Check When Buying a Used Car in Australia - Complete 2025 Checklist
           </h1>
           <p className="text-xl text-black">
@@ -45,7 +45,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
 
         {/* Table of Contents */}
         <nav className="bg-blue-50 rounded-lg p-6 mb-12">
-          <h2 className="text-xl font-bold text-gray-900 mb-4">Complete Used Car Buying Checklist:</h2>
+          <h2 className="text-black text-xl font-bold mb-4">Complete Used Car Buying Checklist:</h2>
           <ol className="space-y-2 text-black">
             <li>1. PPSR Check (Finance & Stolen Status)</li>
             <li>2. Exterior Inspection</li>
@@ -64,7 +64,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Shield className="h-8 w-8 text-blue-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">1. PPSR Check - Your First and Most Important Step</h2>
+            <h2 className="text-black text-3xl font-bold">1. PPSR Check - Your First and Most Important Step</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
@@ -108,14 +108,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Eye className="h-8 w-8 text-purple-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">2. Exterior Inspection - What to Look For</h2>
+            <h2 className="text-black text-3xl font-bold">2. Exterior Inspection - What to Look For</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Walk around the car in good lighting (daylight is best) and check systematically:
             </p>
             
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Paint and Panels</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Paint and Panels</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Colour consistency:</strong> Look for mismatched paint colours between panels (indicates accident repair)</li>
               <li><strong>Orange peel texture:</strong> Uneven paint texture suggests poor quality respray work</li>
@@ -123,14 +123,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Overspray:</strong> Paint on rubber seals, trim, or windows indicates careless repair work</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Body Damage</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Body Damage</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Rust:</strong> Check wheel arches, door sills, under doors, and boot floor for rust bubbles</li>
               <li><strong>Dents and scratches:</strong> Minor cosmetic damage is normal, but major dents may indicate accident history</li>
               <li><strong>Cracked or chipped windscreen:</strong> Can be expensive to replace, use as negotiation leverage</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Tyres and Wheels</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Tyres and Wheels</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Tread depth:</strong> Minimum legal tread is 1.6mm in Australia, but 3mm+ is ideal</li>
               <li><strong>Even wear:</strong> Uneven tyre wear suggests alignment issues or suspension problems</li>
@@ -138,7 +138,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Wheel damage:</strong> Curb rash, dents, or buckles indicate poor driving or accidents</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Lights and Glass</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Lights and Glass</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>All lights working:</strong> Headlights (high and low beam), indicators, brake lights, reverse lights</li>
               <li><strong>Condensation in lights:</strong> Moisture inside headlights or tail lights indicates seal failure</li>
@@ -151,14 +151,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Eye className="h-8 w-8 text-orange-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">3. Interior Inspection - Signs of True Condition</h2>
+            <h2 className="text-black text-3xl font-bold">3. Interior Inspection - Signs of True Condition</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               The interior reveals how well the previous owner maintained the car. Here's what to check:
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Odometer and Mileage</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Odometer and Mileage</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Check the odometer:</strong> Average is 15,000-20,000km per year in Australia</li>
               <li><strong>Service history:</strong> Compare odometer reading with service book stamps</li>
@@ -166,7 +166,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Digital odometer check:</strong> Some mechanics can verify if it's been rolled back</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Seats and Upholstery</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Seats and Upholstery</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Tears and stains:</strong> Check all seats for rips, burns, or permanent stains</li>
               <li><strong>Seat adjustment:</strong> All power seat functions should work smoothly</li>
@@ -174,7 +174,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Carpet wetness:</strong> Feel carpets for dampness, especially in boot and under floor mats</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Dashboard and Controls</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Dashboard and Controls</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Warning lights:</strong> When you turn ignition on, all warning lights should illuminate then go off</li>
               <li><strong>Air conditioning:</strong> Test both heating and cooling - should blow cold within 30 seconds</li>
@@ -189,14 +189,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Wrench className="h-8 w-8 text-red-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">4. Under the Hood - Engine Bay Inspection</h2>
+            <h2 className="text-black text-3xl font-bold">4. Under the Hood - Engine Bay Inspection</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Even if you're not mechanically minded, there are clear warning signs to look for under the bonnet:
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Engine Condition</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Engine Condition</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Oil level and colour:</strong> Check dipstick - oil should be golden brown, not black or milky</li>
               <li><strong>Coolant level:</strong> Should be between min and max marks, green/pink colour (not brown or rusty)</li>
@@ -205,7 +205,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Battery:</strong> Check for corrosion on terminals, loose connections, or bulging case</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Leak Detection</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Leak Detection</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Oil leaks:</strong> Dark stains on engine or ground underneath indicate oil leaks</li>
               <li><strong>Coolant leaks:</strong> Green/pink puddles or stains mean cooling system leak</li>
@@ -213,7 +213,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Engine bay cleanliness:</strong> Suspiciously clean engine may be hiding leaks</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Start the Engine</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Start the Engine</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Cold start:</strong> Engine should start within 2-3 seconds without hesitation</li>
               <li><strong>Idle:</strong> Should idle smoothly without shaking or unusual noises</li>
@@ -227,21 +227,21 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Key className="h-8 w-8 text-green-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">5. Test Drive - Critical Performance Checks</h2>
+            <h2 className="text-black text-3xl font-bold">5. Test Drive - Critical Performance Checks</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Always insist on a proper test drive of at least 15-20 minutes. Here's what to evaluate:
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Before You Start Driving</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Before You Start Driving</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Insurance check:</strong> Verify you're covered to drive it (bring your license)</li>
               <li><strong>Seat position:</strong> Adjust seat, mirrors, steering wheel for comfort</li>
               <li><strong>Warning lights:</strong> Check dashboard - any warnings that stay on after start?</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">During the Drive</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">During the Drive</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Acceleration:</strong> Car should accelerate smoothly without jerking or hesitation</li>
               <li><strong>Transmission:</strong> Automatic should shift smoothly; manual clutch shouldn't slip or judder</li>
@@ -251,7 +251,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Highway test:</strong> Drive at 100km/h to check for vibrations or pulling</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">What to Listen For</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">What to Listen For</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Grinding when turning:</strong> CV joint or differential issues</li>
               <li><strong>Clunking over bumps:</strong> Worn suspension bushes or ball joints</li>
@@ -265,14 +265,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <FileCheck className="h-8 w-8 text-blue-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">6. Documentation - What Paperwork to Verify</h2>
+            <h2 className="text-black text-3xl font-bold">6. Documentation - What Paperwork to Verify</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Proper documentation proves the car's history and legal status. Always verify:
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Essential Documents</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Essential Documents</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Registration papers:</strong> Should match seller's ID and car's VIN/chassis number</li>
               <li><strong>Service history:</strong> Logbook with stamps from dealers/mechanics showing regular servicing</li>
@@ -281,7 +281,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <li><strong>Previous registration transfers:</strong> Shows how many owners the car has had</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">VIN Verification</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">VIN Verification</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Check VIN matches everywhere:</strong> Registration papers, chassis plate, windscreen, engine bay</li>
               <li><strong>No signs of tampering:</strong> VIN plate should be securely riveted, not screwed on</li>
@@ -301,14 +301,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <Wrench className="h-8 w-8 text-orange-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">7. Professional Mechanical Inspection</h2>
+            <h2 className="text-black text-3xl font-bold">7. Professional Mechanical Inspection</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Before finalizing any purchase over $10,000, always get a pre-purchase mechanical inspection from a qualified mechanic. This costs $150-$300 but can save you thousands.
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">What a Mechanic Checks</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">What a Mechanic Checks</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Compression test:</strong> Reveals engine wear and potential rebuilds needed</li>
               <li><strong>Brake measurements:</strong> Exact pad and rotor thickness remaining</li>
@@ -330,21 +330,21 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <DollarSign className="h-8 w-8 text-green-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">8. Price Negotiation - Getting Fair Value</h2>
+            <h2 className="text-black text-3xl font-bold">8. Price Negotiation - Getting Fair Value</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Armed with your inspection findings, you can negotiate confidently:
             </p>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Research Market Value</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Research Market Value</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>RedBook/GlassGuide:</strong> Get an official market valuation for the exact make/model/year</li>
               <li><strong>Similar listings:</strong> Check Carsales, Facebook Marketplace for comparable vehicles</li>
               <li><strong>Dealer vs private:</strong> Private sales should be 10-15% cheaper than dealer prices</li>
             </ul>
 
-            <h3 className="text-xl font-semibold text-gray-900 mt-6 mb-3">Negotiation Leverage</h3>
+            <h3 className="text-black text-xl font-semibold mt-6 mb-3">Negotiation Leverage</h3>
             <ul className="space-y-2 mb-4">
               <li><strong>Issues found:</strong> Any problems found during inspection justify lower offers</li>
               <li><strong>Cash buyer advantage:</strong> Immediate cash payment is worth a discount</li>
@@ -365,7 +365,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <AlertTriangle className="h-8 w-8 text-red-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">9. Red Flags - When to Walk Away</h2>
+            <h2 className="text-black text-3xl font-bold">9. Red Flags - When to Walk Away</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
@@ -376,7 +376,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Finance Owing on PPSR Check</p>
+                  <p className="font-semibold text-black">Finance Owing on PPSR Check</p>
                   <p className="text-sm text-black">Never buy a car with registered finance. You inherit the debt.</p>
                 </div>
               </div>
@@ -384,7 +384,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Seller Refuses Mechanic Inspection</p>
+                  <p className="font-semibold text-black">Seller Refuses Mechanic Inspection</p>
                   <p className="text-sm text-black">This always means they're hiding expensive problems.</p>
                 </div>
               </div>
@@ -392,7 +392,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">VIN Doesn't Match Papers</p>
+                  <p className="font-semibold text-black">VIN Doesn't Match Papers</p>
                   <p className="text-sm text-black">Could be stolen, rebirthed, or written off.</p>
                 </div>
               </div>
@@ -400,7 +400,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">No Service History</p>
+                  <p className="font-semibold text-black">No Service History</p>
                   <p className="text-sm text-black">Especially on European cars, this means big bills are coming.</p>
                 </div>
               </div>
@@ -408,7 +408,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Seller Pressures Quick Sale</p>
+                  <p className="font-semibold text-black">Seller Pressures Quick Sale</p>
                   <p className="text-sm text-black">"Must sell today" = they know about problems you haven't found yet.</p>
                 </div>
               </div>
@@ -416,7 +416,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Written-Off on PPSR</p>
+                  <p className="font-semibold text-black">Written-Off on PPSR</p>
                   <p className="text-sm text-black">Statutory write-offs cannot be re-registered. Repairable write-offs need disclosure.</p>
                 </div>
               </div>
@@ -424,7 +424,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Mismatched Paint or Panels</p>
+                  <p className="font-semibold text-black">Mismatched Paint or Panels</p>
                   <p className="text-sm text-black">Major accident repairs often hide frame damage.</p>
                 </div>
               </div>
@@ -432,7 +432,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <div className="flex items-start">
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-semibold text-gray-900">Mouldy or Damp Smell</p>
+                  <p className="font-semibold text-black">Mouldy or Damp Smell</p>
                   <p className="text-sm text-black">Indicates flood damage - electrical nightmares ahead.</p>
                 </div>
               </div>
@@ -444,7 +444,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
         <section className="mb-12">
           <div className="flex items-center mb-4">
             <CheckCircle className="h-8 w-8 text-green-600 mr-3" />
-            <h2 className="text-3xl font-bold text-gray-900">10. Final Purchase Checklist</h2>
+            <h2 className="text-black text-3xl font-bold">10. Final Purchase Checklist</h2>
           </div>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
@@ -452,7 +452,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             </p>
 
             <div className="bg-green-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">✅ Pre-Purchase Must-Do List:</h3>
+              <h3 className="text-black text-lg font-semibold mb-4">✅ Pre-Purchase Must-Do List:</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
@@ -501,7 +501,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
 
         {/* Conclusion */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">Conclusion: Knowledge is Your Best Protection</h2>
+          <h2 className="text-black text-3xl font-bold mb-6">Conclusion: Knowledge is Your Best Protection</h2>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Buying a used car in Australia doesn't have to be risky. By following this comprehensive checklist, you'll avoid the most common pitfalls that cost buyers thousands of dollars every year.
@@ -517,7 +517,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
 
         {/* Final CTA */}
         <div className="bg-blue-600 rounded-xl p-8 text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">Start Your Used Car Check Today</h2>
+          <h2 className="text-black text-3xl font-bold mb-4">Start Your Used Car Check Today</h2>
           <p className="text-xl mb-6 text-blue-100">
             Get an official PPSR check plus comprehensive market valuation for any Australian vehicle
           </p>

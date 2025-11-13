@@ -29,7 +29,7 @@ export default function RegoCheckPage() {
       {/* Hero Section */}
       <section className="py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-black text-4xl md:text-5xl font-bold mb-4">
             Rego Check Australia - Instant Vehicle Registration Verification
           </h1>
           <p className="text-xl text-black max-w-3xl mx-auto">
@@ -57,17 +57,17 @@ export default function RegoCheckPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <Shield className="h-12 w-12 text-blue-600 mb-4" />
-            <h3 className="font-semibold text-lg mb-2">PPSR Certified Check</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">PPSR Certified Check</h3>
             <p className="text-black">Official PPSR reports showing finance, stolen status & write-off history</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <CheckCircle className="h-12 w-12 text-green-600 mb-4" />
-            <h3 className="font-semibold text-lg mb-2">Instant Results</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Instant Results</h3>
             <p className="text-black">Get your comprehensive vehicle report within 60 seconds</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
-            <h3 className="font-semibold text-lg mb-2">Market Valuation</h3>
+            <h3 className="text-black font-semibold text-lg mb-2">Market Valuation</h3>
             <p className="text-black">AI-powered vehicle valuation based on current Australian market</p>
           </div>
         </div>
@@ -76,10 +76,10 @@ export default function RegoCheckPage() {
       {/* What You Get Section */}
       <section className="py-16 px-4 bg-blue-50">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">What's Included in Your Rego Check Report</h2>
+          <h2 className="text-black text-3xl font-bold text-center mb-12">What's Included in Your Rego Check Report</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="font-semibold text-xl mb-4 flex items-center">
+              <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
                 <Shield className="h-6 w-6 text-blue-600 mr-2" />
                 PPSR Security Check
               </h3>
@@ -92,7 +92,7 @@ export default function RegoCheckPage() {
             </div>
 
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="font-semibold text-xl mb-4 flex items-center">
+              <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
                 <AlertTriangle className="h-6 w-6 text-orange-600 mr-2" />
                 Write-Off History
               </h3>
@@ -105,7 +105,7 @@ export default function RegoCheckPage() {
             </div>
 
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="font-semibold text-xl mb-4 flex items-center">
+              <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
                 <FileText className="h-6 w-6 text-green-600 mr-2" />
                 Vehicle Details
               </h3>
@@ -118,7 +118,7 @@ export default function RegoCheckPage() {
             </div>
 
             <div className="bg-white p-6 rounded-lg">
-              <h3 className="font-semibold text-xl mb-4 flex items-center">
+              <h3 className="text-black font-semibold text-xl mb-4 flex items-center">
                 <DollarSign className="h-6 w-6 text-purple-600 mr-2" />
                 Market Valuation
               </h3>
@@ -135,27 +135,27 @@ export default function RegoCheckPage() {
 
       {/* How It Works */}
       <section id="how-it-works" className="py-16 px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">How to Do a Rego Check in 3 Easy Steps</h2>
+        <h2 className="text-black text-3xl font-bold text-center mb-12">How to Do a Rego Check in 3 Easy Steps</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">1</span>
             </div>
-            <h3 className="font-semibold text-xl mb-2">Enter Rego Number</h3>
+            <h3 className="text-black font-semibold text-xl mb-2">Enter Rego Number</h3>
             <p className="text-black">Enter the vehicle's registration number and select the state</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">2</span>
             </div>
-            <h3 className="font-semibold text-xl mb-2">Instant Search</h3>
+            <h3 className="text-black font-semibold text-xl mb-2">Instant Search</h3>
             <p className="text-black">Our system checks PPSR, stolen registers & vehicle databases</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">3</span>
             </div>
-            <h3 className="font-semibold text-xl mb-2">Get Your Report</h3>
+            <h3 className="text-black font-semibold text-xl mb-2">Get Your Report</h3>
             <p className="text-black">Receive comprehensive report via email in under 60 seconds</p>
           </div>
         </div>
@@ -164,7 +164,7 @@ export default function RegoCheckPage() {
       {/* FAQ Section */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions About Rego Checks</h2>
+          <h2 className="text-black text-3xl font-bold text-center mb-12">Frequently Asked Questions About Rego Checks</h2>
           <div className="space-y-6">
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">What is a rego check?</summary>
@@ -242,7 +242,7 @@ export default function RegoCheckPage() {
       {/* CTA Section */}
       <section className="py-16 px-4 bg-blue-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Check Your Vehicle Registration?</h2>
+          <h2 className="text-black text-3xl font-bold mb-4">Ready to Check Your Vehicle Registration?</h2>
           <p className="text-xl mb-8">
             Get instant access to comprehensive vehicle history, PPSR check, and market valuation
           </p>
@@ -259,7 +259,7 @@ export default function RegoCheckPage() {
       {/* Additional Content for SEO */}
       <section className="py-16 px-4 max-w-4xl mx-auto">
         <div className="prose max-w-none">
-          <h2 className="text-2xl font-bold mb-4">Why You Need a Rego Check Before Buying a Used Car</h2>
+          <h2 className="text-black text-2xl font-bold mb-4">Why You Need a Rego Check Before Buying a Used Car</h2>
           <p className="text-black mb-4">
             Buying a used car in Australia is a significant investment, often ranging from $10,000 to $50,000 or more.
             Without proper due diligence, you could end up purchasing a vehicle with hidden problems, outstanding finance,
@@ -267,14 +267,14 @@ export default function RegoCheckPage() {
             before you hand over your money.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">The Risks of Skipping a Rego Check</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">The Risks of Skipping a Rego Check</h3>
           <p className="text-black mb-4">
             According to ASIC (Australian Securities and Investments Commission), thousands of Australians lose money
             each year by purchasing vehicles with encumbrances. When you buy a car with money owing, you could lose
             both the car AND your money if the original owner defaults on their loan. The average loss? Over $15,400.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">What Our Rego Check Reveals</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">What Our Rego Check Reveals</h3>
           <p className="text-black mb-4">
             Our comprehensive rego check service searches multiple databases to provide you with complete peace of mind:
           </p>
@@ -286,28 +286,28 @@ export default function RegoCheckPage() {
             <li><strong>Market Valuation:</strong> AI-powered pricing based on current Australian market conditions</li>
           </ul>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">State-Specific Rego Checks</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">State-Specific Rego Checks</h3>
           <p className="text-black mb-4">
             Each Australian state and territory has its own vehicle registration system, but our rego check service
             covers all of them. Whether you're buying a car in Sydney, Melbourne, Brisbane, Perth, Adelaide, Hobart,
             Darwin, or Canberra, we provide the same comprehensive check with instant results.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">How Much Does a Rego Check Cost?</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">How Much Does a Rego Check Cost?</h3>
           <p className="text-black mb-4">
             At just $34.99, our rego check is one of the most affordable comprehensive vehicle checks in Australia.
             Compare this to the potential loss of $15,400+ if you buy a car with hidden finance owing, and it's clear
             that a rego check is essential insurance for any used car purchase.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">When Should You Do a Rego Check?</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">When Should You Do a Rego Check?</h3>
           <p className="text-black mb-4">
             Always perform a rego check BEFORE you commit to buying a vehicle. Ideally, run the check before you even
             go to inspect the car. This way, you can avoid wasting time on vehicles with serious problems. If you're
             buying from a private seller, never hand over money until you've received and reviewed your rego check report.
           </p>
 
-          <h3 className="text-xl font-semibold mb-3 mt-8">Understanding Your Rego Check Report</h3>
+          <h3 className="text-black text-xl font-semibold mb-3 mt-8">Understanding Your Rego Check Report</h3>
           <p className="text-black mb-4">
             Your comprehensive rego check report includes multiple sections, each providing critical information:
           </p>
