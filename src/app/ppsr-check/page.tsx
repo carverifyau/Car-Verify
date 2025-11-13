@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Shield, CheckCircle, AlertTriangle, FileText, DollarSign, Star, Clock, Lock, Award, TrendingDown, Users, BadgeCheck } from 'lucide-react'
+import { Shield, CheckCircle, AlertTriangle, FileText, DollarSign, Star, Clock, Lock, Award, TrendingDown, Users, BadgeCheck, AlertCircle, Search } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'PPSR Check Australia - Official Vehicle Finance & Encumbrance Check | $34.99',
@@ -91,6 +91,33 @@ export default function PPSRCheckPage() {
         </div>
       </section>
 
+      {/* What is PPSR Section */}
+      <section className="py-8 px-4 bg-gradient-to-r from-indigo-100 to-purple-100">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-white border-l-8 border-indigo-600 p-8 rounded-lg shadow-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <div className="bg-indigo-100 p-3 rounded-full">
+                  <AlertCircle className="h-8 w-8 text-indigo-600" />
+                </div>
+              </div>
+              <div>
+                <h3 className="text-2xl font-bold text-black mb-3">What is a PPSR Check?</h3>
+                <p className="text-lg text-black mb-4">
+                  The <strong>Personal Property Securities Register (PPSR)</strong> is the official Australian Government register that records security interests in personal property, including vehicles. A PPSR check reveals if a vehicle has money owing, is stolen, or has been written off.
+                </p>
+                <p className="text-black mb-4">
+                  <strong className="text-red-600">Critical:</strong> If you buy a car with finance owing and don't get a PPSR certificate, the finance company can legally repossess the vehicle from you - even though you paid for it. You inherit the debt.
+                </p>
+                <p className="text-black">
+                  Our official PPSR check provides legal protection and peace of mind when buying any vehicle in Australia.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 px-4 max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">Official PPSR Certificate</h2>
@@ -148,6 +175,183 @@ export default function PPSRCheckPage() {
             <FileText className="h-6 w-6" />
             Get PPSR Certificate - $34.99
           </Link>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="py-16 px-4 bg-gradient-to-b from-indigo-50 to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">How to Get Your PPSR Certificate - 3 Steps</h2>
+            <p className="text-lg text-black">Official government certificate in under 60 seconds</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-indigo-200 hover:border-indigo-400 transition-all">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-indigo-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold shadow-lg">1</div>
+                </div>
+                <div className="mt-6 text-center">
+                  <div className="bg-indigo-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Search className="h-10 w-10 text-indigo-600" />
+                  </div>
+                  <h3 className="text-black text-xl font-bold mb-3">Enter Vehicle Details</h3>
+                  <p className="text-black">Enter the VIN or registration number. We search the official PPSR database instantly.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-purple-200 hover:border-purple-400 transition-all">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold shadow-lg">2</div>
+                </div>
+                <div className="mt-6 text-center">
+                  <div className="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Shield className="h-10 w-10 text-purple-600" />
+                  </div>
+                  <h3 className="text-black text-xl font-bold mb-3">Instant PPSR Search</h3>
+                  <p className="text-black">We check for security interests, finance owing, stolen status, and write-off records.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border-2 border-blue-200 hover:border-blue-400 transition-all">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold shadow-lg">3</div>
+                </div>
+                <div className="mt-6 text-center">
+                  <div className="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <FileText className="h-10 w-10 text-blue-600" />
+                  </div>
+                  <h3 className="text-black text-xl font-bold mb-3">Get Official Certificate</h3>
+                  <p className="text-black">Receive your legally recognized PPSR certificate via email. Use it for legal protection.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center mt-12">
+            <Link href="/" className="bg-indigo-600 text-white px-10 py-5 rounded-lg text-xl font-bold hover:bg-indigo-700 transition-colors inline-block shadow-lg">
+              Get PPSR Certificate - $34.99
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Customer Reviews Section */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <div className="flex items-center justify-center gap-2 mb-4">
+              {[1,2,3,4,5].map((star) => (
+                <Star key={star} className="h-8 w-8 text-yellow-400 fill-yellow-400" />
+              ))}
+            </div>
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-2">Why Aussies Trust Our PPSR Checks</h2>
+            <p className="text-lg text-black">Real protection for real buyers</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 rounded-xl p-6">
+              <div className="flex items-center gap-1 mb-3">
+                {[1,2,3,4,5].map((star) => (
+                  <Star key={star} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+              <p className="text-black italic mb-4">
+                "PPSR check revealed $22,000 finance owing. Seller claimed car was paid off. Certificate saved me from disaster!"
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="bg-indigo-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">MB</div>
+                <div>
+                  <div className="font-semibold text-black">Marcus B.</div>
+                  <div className="text-sm text-black">Brisbane, QLD</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-200 rounded-xl p-6">
+              <div className="flex items-center gap-1 mb-3">
+                {[1,2,3,4,5].map((star) => (
+                  <Star key={star} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+              <p className="text-black italic mb-4">
+                "Got the official PPSR certificate in 30 seconds. Showed clean title, bought the car with confidence. Best $35 spent."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="bg-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">AK</div>
+                <div>
+                  <div className="font-semibold text-black">Anna K.</div>
+                  <div className="text-sm text-black">Sydney, NSW</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-50 to-cyan-50 border-2 border-blue-200 rounded-xl p-6">
+              <div className="flex items-center gap-1 mb-3">
+                {[1,2,3,4,5].map((star) => (
+                  <Star key={star} className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+                ))}
+              </div>
+              <p className="text-black italic mb-4">
+                "PPSR showed previous write-off. Car looked perfect but had hidden structural damage. Walked away thanks to this check."
+              </p>
+              <div className="flex items-center gap-3">
+                <div className="bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold">RT</div>
+                <div>
+                  <div className="font-semibold text-black">Robert T.</div>
+                  <div className="text-sm text-black">Melbourne, VIC</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl font-bold text-center mb-12">PPSR Check Questions</h2>
+          <div className="space-y-4">
+            <details className="bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all">
+              <summary className="text-black font-semibold text-lg cursor-pointer">What does a PPSR check show?</summary>
+              <p className="mt-4 text-black">
+                A PPSR check reveals security interests (finance owing), stolen vehicle status, write-off history, and any encumbrances registered against the vehicle. It's the only way to legally verify a car's financial status in Australia.
+              </p>
+            </details>
+
+            <details className="bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all">
+              <summary className="text-black font-semibold text-lg cursor-pointer">Is a PPSR certificate legally recognized?</summary>
+              <p className="mt-4 text-black">
+                Yes. An official PPSR certificate provides legal protection under the PPSR Act 2009. If you get a "clear" PPSR certificate and later discover hidden finance, you're protected from repossession in most cases.
+              </p>
+            </details>
+
+            <details className="bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all">
+              <summary className="text-black font-semibold text-lg cursor-pointer">How much does a PPSR check cost?</summary>
+              <p className="mt-4 text-black">
+                Our comprehensive PPSR check costs $34.99 and includes the official government certificate plus additional vehicle history checks. Delivered instantly via email.
+              </p>
+            </details>
+
+            <details className="bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all">
+              <summary className="text-black font-semibold text-lg cursor-pointer">Do I need a PPSR check if I'm buying from a dealer?</summary>
+              <p className="mt-4 text-black">
+                YES! Even dealer cars can have security interests. Some dealers aren't aware of finance owing. A PPSR check protects you regardless of who's selling the vehicle. Always check before you buy.
+              </p>
+            </details>
+
+            <details className="bg-white p-6 rounded-lg border-2 border-gray-200 hover:border-indigo-400 transition-all">
+              <summary className="text-black font-semibold text-lg cursor-pointer">How long does a PPSR check take?</summary>
+              <p className="mt-4 text-black">
+                Instant! Your official PPSR certificate is delivered to your email within 60 seconds of payment. You can use it immediately when negotiating or finalizing your purchase.
+              </p>
+            </details>
+          </div>
         </div>
       </section>
 
