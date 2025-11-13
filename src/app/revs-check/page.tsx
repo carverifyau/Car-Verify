@@ -235,7 +235,7 @@ export default function RevsCheckPage() {
         <h2 className="text-black text-3xl font-bold text-center mb-12">REVS Check Questions Answered</h2>
         <div className="space-y-6">
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">What is a REVS check in Australia?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">What is a REVS check in Australia?</summary>
             <p className="mt-4 text-black">
               A REVS check is the common name for a PPSR (Personal Property Securities Register) check in Australia.
               Originally REVS was NSW's Register of Encumbered Vehicles, but since 2012, all states use the national
@@ -245,7 +245,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">Is REVS check the same as PPSR check?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">Is REVS check the same as PPSR check?</summary>
             <p className="mt-4 text-black">
               Yes! REVS and PPSR checks are the same thing. "REVS" was the old NSW name, while "PPSR" is the current
               national system used across all Australian states since 2012. When you order a REVS check today, you're
@@ -254,7 +254,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">How much does a REVS check cost?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">How much does a REVS check cost?</summary>
             <p className="mt-4 text-black">
               Our comprehensive REVS check costs $34.99 and includes the official PPSR certificate, stolen car check,
               write-off history, vehicle valuation, and full vehicle history report. This is significantly cheaper
@@ -263,7 +263,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">Can I do a free REVS check in Australia?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">Can I do a free REVS check in Australia?</summary>
             <p className="mt-4 text-black">
               No, the official PPSR (REVS) register charges a fee for searches because it provides legal protection
               against buying vehicles with hidden finance. While some websites claim to offer "free REVS checks,"
@@ -273,7 +273,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">How long does a REVS check take?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">How long does a REVS check take?</summary>
             <p className="mt-4 text-black">
               Our REVS check is instant! You'll receive your comprehensive report including the official PPSR
               certificate via email within 60 seconds of completing your order. The certificate is delivered as
@@ -282,7 +282,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">Will a REVS check show money owing on a car?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">Will a REVS check show money owing on a car?</summary>
             <p className="mt-4 text-black">
               Yes! This is the primary purpose of a REVS/PPSR check. The official certificate shows any money owing
               on the vehicle, including car loans, finance agreements, and security interests. If someone hasn't paid
@@ -292,7 +292,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">Can a REVS check tell if a car is stolen?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">Can a REVS check tell if a car is stolen?</summary>
             <p className="mt-4 text-black">
               Yes. Our REVS check searches both the PPSR and national stolen vehicle databases. If a vehicle has been
               reported stolen anywhere in Australia, it will show in your report. We also check for VIN tampering and
@@ -302,7 +302,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">Do I need a REVS check for a car in NSW, Victoria, QLD, or WA?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">Do I need a REVS check for a car in NSW, Victoria, QLD, or WA?</summary>
             <p className="mt-4 text-black">
               Yes! Every state in Australia uses the PPSR (commonly called REVS check). Whether you're buying in New
               South Wales, Victoria, Queensland, Western Australia, South Australia, Tasmania, Northern Territory, or
@@ -312,7 +312,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">What's the difference between REVS check and write-off check?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">What's the difference between REVS check and write-off check?</summary>
             <p className="mt-4 text-black">
               A REVS/PPSR check includes both finance checks AND write-off history. You don't need separate checks.
               Our comprehensive REVS check shows statutory write-offs (cannot be re-registered), repairable write-offs
@@ -322,7 +322,7 @@ export default function RevsCheckPage() {
           </details>
 
           <details className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-            <summary className="font-semibold text-lg cursor-pointer">When should I do a REVS check?</summary>
+            <summary className="text-black font-semibold text-lg cursor-pointer">When should I do a REVS check?</summary>
             <p className="mt-4 text-black">
               Run a REVS check BEFORE you commit to buying any used car - ideally before even inspecting it. This
               saves you time by filtering out vehicles with hidden problems. Never hand over money until you've seen

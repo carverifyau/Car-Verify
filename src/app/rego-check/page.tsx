@@ -167,7 +167,7 @@ export default function RegoCheckPage() {
           <h2 className="text-black text-3xl font-bold text-center mb-12">Frequently Asked Questions About Rego Checks</h2>
           <div className="space-y-6">
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">What is a rego check?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">What is a rego check?</summary>
               <p className="mt-4 text-black">
                 A rego check (registration check) verifies vehicle registration details and provides comprehensive
                 history including PPSR status, stolen car check, finance owing, write-off history, and market valuation.
@@ -176,7 +176,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">Can I do a free rego check in Australia?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">Can I do a free rego check in Australia?</summary>
               <p className="mt-4 text-black">
                 While you can check basic registration expiry for free on some state government websites, comprehensive
                 PPSR checks, stolen car verification, and finance owing searches require paid services. Our $34.99 report
@@ -185,7 +185,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">How long does a rego check take?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">How long does a rego check take?</summary>
               <p className="mt-4 text-black">
                 Our rego check system provides instant results. You'll receive your comprehensive vehicle report via
                 email within 60 seconds of completing your order. The report includes PPSR certificate, vehicle history,
@@ -194,7 +194,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">What information do I need for a rego check?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">What information do I need for a rego check?</summary>
               <p className="mt-4 text-black">
                 You only need two pieces of information: the vehicle's registration number (license plate) and the
                 state/territory where it's registered (NSW, VIC, QLD, SA, WA, TAS, NT, or ACT).
@@ -202,7 +202,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">Will a rego check show if a car has finance owing?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">Will a rego check show if a car has finance owing?</summary>
               <p className="mt-4 text-black">
                 Yes! Our rego check includes a full PPSR (Personal Property Securities Register) search, which shows
                 any money owed on the vehicle, security interests, and encumbrances. This protects you from buying a
@@ -211,7 +211,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">Can I check if a car is stolen with a rego check?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">Can I check if a car is stolen with a rego check?</summary>
               <p className="mt-4 text-black">
                 Yes, absolutely. Our rego check searches national stolen vehicle databases and PPSR records to verify
                 if the vehicle has been reported stolen. This is crucial before purchasing any used car in Australia.
@@ -219,7 +219,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">What states can I do a rego check for?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">What states can I do a rego check for?</summary>
               <p className="mt-4 text-black">
                 We provide rego checks for all Australian states and territories: New South Wales (NSW), Victoria (VIC),
                 Queensland (QLD), South Australia (SA), Western Australia (WA), Tasmania (TAS), Northern Territory (NT),
@@ -228,7 +228,7 @@ export default function RegoCheckPage() {
             </details>
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
-              <summary className="font-semibold text-lg cursor-pointer">Is a rego check the same as a PPSR check?</summary>
+              <summary className="text-black font-semibold text-lg cursor-pointer">Is a rego check the same as a PPSR check?</summary>
               <p className="mt-4 text-black">
                 A rego check is more comprehensive. While a PPSR check only shows finance and security interests, our
                 rego check includes PPSR data PLUS stolen car verification, write-off history, vehicle specifications,
