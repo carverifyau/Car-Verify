@@ -398,6 +398,311 @@ export default function RegoCheckPage() {
         </div>
       </section>
 
+      {/* State-by-State Rego Differences */}
+      <section className="py-16 px-4 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">State-by-State Registration Rules: What You Need to Know Before Buying</h2>
+
+          <p className="text-black text-lg mb-8">
+            Australia doesn't have national vehicle registration - each state and territory manages its own system with different rules, costs, and requirements. This creates significant problems when buying interstate vehicles. Here's the complete breakdown:
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            {/* NSW */}
+            <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">NSW</div>
+                <h3 className="text-black text-xl font-bold">New South Wales</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p>Pink Slip required BEFORE transfer (but seller doesn't need one to sell)</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p>Must be purchased SEPARATELY before rego. NOT included in registration fee.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$300-400/year + CTP $350-600/year = <strong>$650-1,000 total</strong></p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>Pink Slips only valid 42 days. Expired rego vehicles must pass Blue Slip (stricter).</p>
+                </div>
+              </div>
+            </div>
+
+            {/* VIC */}
+            <div className="bg-gradient-to-br from-purple-50 to-purple-100 border-2 border-purple-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">VIC</div>
+                <h3 className="text-black text-xl font-bold">Victoria</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p>RWC (Roadworthy Certificate) REQUIRED by seller before sale. No sale without it.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p><strong>INCLUDED</strong> in rego price. Called TAC (Transport Accident Commission).</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$800-950/year (includes CTP/TAC). Most expensive state.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>VIC plates stay with car (not owner). Unroadworthy penalties: $9,913 fine.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* QLD */}
+            <div className="bg-gradient-to-br from-teal-50 to-teal-100 border-2 border-teal-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-teal-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">QLD</div>
+                <h3 className="text-black text-xl font-bold">Queensland</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p>Safety Certificate REQUIRED by seller before sale. Must be done.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p><strong>INCLUDED</strong> in rego price automatically.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$700-850/year (includes CTP). Second most expensive.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>Stolen vehicle database publicly accessible. QLD Police update daily.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* WA */}
+            <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-yellow-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">WA</div>
+                <h3 className="text-black text-xl font-bold">Western Australia</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p>Vehicle Examination Certificate (VEC) NOT required for private sales.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p>Purchased separately but usually paid with rego renewal.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$350-450/year + CTP $300-500 = <strong>$650-950 total</strong></p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>WA has oldest vehicle fleet (avg 10.6 years). Higher risk of mechanical issues.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* SA */}
+            <div className="bg-gradient-to-br from-red-50 to-red-100 border-2 border-red-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-red-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">SA</div>
+                <h3 className="text-black text-xl font-bold">South Australia</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p>Vehicle Inspection Report (VIR) NOT mandatory for private sales.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p>Separate purchase required. NOT included in rego.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$500-650/year + CTP $350-550 = <strong>$850-1,200 total</strong></p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>SA highest CTP costs in Australia. Factor this into interstate transfers.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* TAS */}
+            <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center font-bold text-lg">TAS</div>
+                <h3 className="text-black text-xl font-bold">Tasmania</h3>
+              </div>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
+                  <p">Vehicle Inspection Report required for vehicles over 5 years old.</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
+                  <p>INCLUDED in rego price (Motor Accidents Insurance Board).</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">💰 Rego Cost (Avg):</p>
+                  <p>$400-550/year (includes CTP). Cheapest in Australia!</p>
+                </div>
+                <div className="bg-white rounded p-3">
+                  <p className="font-semibold mb-1">⚠️ Unique Issues:</p>
+                  <p>TAS stolen vehicle data NOT available on PPSR. Limited verification options.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 bg-orange-50 border-l-4 border-orange-600 p-6">
+            <h3 className="text-black text-xl font-bold mb-3">🚨 Interstate Transfer Problems That Cost Buyers $1,000s</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-4">
+                <p className="text-black font-semibold mb-2">Problem 1: "Roadworthy" Means Different Things</p>
+                <p className="text-black text-sm">
+                  Buy car in WA (no roadworthy required). Transfer to VIC (roadworthy mandatory). Fails VIC RWC with $3,200 repairs needed. <strong className="text-red-600">You're stuck with the cost.</strong> Always get pre-purchase inspection regardless of state laws.
+                </p>
+              </div>
+              <div className="bg-white rounded p-4">
+                <p className="text-black font-semibold mb-2">Problem 2: CTP Insurance Shock</p>
+                <p className="text-black text-sm">
+                  NSW car with $350 CTP. Transfer to SA = $600 CTP (75% more expensive). Budget for CTP differences when buying interstate. SA buyers pay 40-70% more than other states.
+                </p>
+              </div>
+              <div className="bg-white rounded p-4">
+                <p className="text-black font-semibold mb-2">Problem 3: Expired Rego Hidden Costs</p>
+                <p className="text-black text-sm">
+                  Buy NSW car with expired rego. Need Blue Slip (not Pink Slip). Blue Slip inspections are 3x stricter and cost $200+ vs $40 Pink Slip. Factor $500-2,000 extra for expired NSW rego vehicles.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* NEVDIS Explained */}
+      <section className="py-16 px-4 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-8">NEVDIS: The Hidden Database That Checks Your Rego</h2>
+
+          <div className="bg-indigo-50 border-2 border-indigo-300 rounded-xl p-8 mb-8">
+            <div className="flex items-start gap-4">
+              <div className="bg-indigo-600 p-3 rounded-full flex-shrink-0">
+                <Search className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h3 className="text-black text-2xl font-bold mb-4">What is NEVDIS?</h3>
+                <p className="text-black mb-3">
+                  <strong>NEVDIS</strong> (National Exchange of Vehicle and Driver Information System) is the behind-the-scenes database that connects all 8 state and territory vehicle registers. Managed by Austroads, it allows information sharing between:
+                </p>
+                <div className="grid md:grid-cols-2 gap-3 text-sm">
+                  <ul className="list-disc list-inside text-black space-y-1">
+                    <li>Transport NSW (NSW)</li>
+                    <li>VicRoads (VIC)</li>
+                    <li>Transport & Main Roads (QLD)</li>
+                    <li>Transport WA (WA)</li>
+                  </ul>
+                  <ul className="list-disc list-inside text-black space-y-1">
+                    <li>Service SA (SA)</li>
+                    <li>Transport Tasmania (TAS)</li>
+                    <li>NT Motor Vehicle Registry (NT)</li>
+                    <li>Access Canberra (ACT)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-white border-2 border-gray-300 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-3">What NEVDIS Contains:</h3>
+              <div className="grid md:grid-cols-2 gap-4 text-black text-sm">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Registration status</strong> - Current, expired, cancelled</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Stolen vehicle reports</strong> - All 8 jurisdictions</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Written-off vehicles</strong> - Stat & repairable</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Vehicle make/model/year</strong> - Confirmed specs</span>
+                  </li>
+                </ul>
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>VIN/Chassis number</strong> - Verified identity</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Engine number</strong> - Original vs replaced</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Color changes</strong> - Factory vs resprayed</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <span><strong>Registration plate history</strong> - Transfers</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 border-l-4 border-yellow-600 p-6">
+              <h3 className="text-black text-xl font-bold mb-3">⚠️ What NEVDIS Does NOT Show (Critical Gap)</h3>
+              <p className="text-black mb-3">
+                NEVDIS is registration data only. It <strong>DOES NOT include</strong>:
+              </p>
+              <ul className="list-disc list-inside text-black space-y-1 text-sm">
+                <li><strong>Finance owing</strong> - You need PPSR for this (not NEVDIS)</li>
+                <li><strong>Odometer readings</strong> - Clocking isn't tracked federally</li>
+                <li><strong>Accident history</strong> - Unless vehicle was written off</li>
+                <li><strong>Ownership history</strong> - How many previous owners</li>
+                <li><strong>Service records</strong> - Maintenance history not recorded</li>
+              </ul>
+              <p className="text-black mt-3 text-sm bg-white p-3 rounded">
+                <strong>This is why our $34.99 check is comprehensive:</strong> We query NEVDIS (rego status, stolen, write-offs) AND PPSR (finance owing) AND service history databases. You get the complete picture, not just one data source.
+              </p>
+            </div>
+
+            <div className="bg-red-50 border-2 border-red-400 rounded-xl p-6">
+              <h3 className="text-black text-xl font-bold mb-3">🚨 Tasmania Data Gap - Critical Warning</h3>
+              <p className="text-black mb-3">
+                <strong>TAS stolen vehicle information is currently unavailable from NEVDIS and PPSR.</strong> This creates a massive security gap:
+              </p>
+              <div className="bg-white rounded p-4 space-y-2 text-black text-sm">
+                <p>• Cars stolen in Tasmania won't show as stolen in national databases</p>
+                <p>• TAS-registered vehicles have higher fraud risk when sold interstate</p>
+                <p>• Criminal syndicates exploit this gap by "washing" stolen vehicles through TAS</p>
+                <p>• Always demand extra proof of ownership for TAS vehicles</p>
+              </div>
+              <p className="text-black mt-3 text-sm">
+                <strong>Extra checks for TAS vehicles:</strong> Verify seller ID matches rego documents. Request original purchase invoice. Check service history at authorized dealers. Get independent VIN etching verification.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
