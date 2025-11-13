@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://car-verify.vercel.app'
+  // Use production domain - carverify.com.au
+  const baseUrl = 'https://carverify.com.au'
 
   return [
     {
@@ -35,12 +36,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.9,
     },
-    // Service-specific pages
+    // SEO Landing Pages (HIGH PRIORITY - Target keywords)
+    {
+      url: `${baseUrl}/rego-check`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.95,
+    },
     {
       url: `${baseUrl}/vin-check`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.95,
     },
     {
       url: `${baseUrl}/ppsr-check`,
