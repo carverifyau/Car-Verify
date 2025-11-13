@@ -327,7 +327,7 @@ export default function RevsCheckSydneyPage() {
               </div>
               <div className="bg-white rounded p-3">
                 <div className="font-bold text-green-700">Blue Slip (Vehicle Identity)</div>
-                <p className="text-sm text-black">Required if: NSW rego expired >3 months, interstate vehicle, or rebuilt write-off. Stricter than Pink Slip. Cost: $40-$60.</p>
+                <p className="text-sm text-black">Required if: NSW rego expired &gt;3 months, interstate vehicle, or rebuilt write-off. Stricter than Pink Slip. Cost: $40-$60.</p>
               </div>
               <div className="bg-white rounded p-3">
                 <div className="font-bold text-green-700">CTP Insurance (Green Slip)</div>

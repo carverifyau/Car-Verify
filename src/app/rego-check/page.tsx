@@ -547,7 +547,7 @@ export default function RegoCheckPage() {
               <div className="space-y-3 text-black text-sm">
                 <div className="bg-white rounded p-3">
                   <p className="font-semibold mb-1">🚗 Roadworthy Certificate:</p>
-                  <p">Vehicle Inspection Report required for vehicles over 5 years old.</p>
+                  <p className="text-sm text-black">Vehicle Inspection Report required for vehicles over 5 years old.</p>
                 </div>
                 <div className="bg-white rounded p-3">
                   <p className="font-semibold mb-1">🏥 CTP Insurance:</p>
