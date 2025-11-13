@@ -175,6 +175,262 @@ export default function RevsCheckSydneyPage() {
         </div>
       </section>
 
+      <section className="py-16 px-4 bg-red-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">🚨 Sydney Car Theft: 70% Stolen With Keys</h2>
+            <p className="text-black text-lg max-w-3xl mx-auto">
+              NSW Bureau of Crime Statistics reveals a shocking trend: 70% of Sydney car thefts involve the owner's keys. Western Sydney leads NSW in vehicle theft. Know the risks before buying.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-gradient-to-br from-red-100 to-red-200 border-2 border-red-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-red-700 mb-2">14,516</div>
+              <div className="text-sm font-semibold text-black">Cars Stolen (2023-24)</div>
+              <div className="text-sm text-black">NSW Total</div>
+              <div className="text-xs text-red-700 font-semibold mt-2">+2.1% vs 5 years ago</div>
+            </div>
+            <div className="bg-gradient-to-br from-orange-100 to-orange-200 border-2 border-orange-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-orange-700 mb-2">70%</div>
+              <div className="text-sm font-semibold text-black">Stolen With Keys</div>
+              <div className="text-sm text-black">Sydney Cars</div>
+              <div className="text-xs text-orange-700 font-semibold mt-2">Home break-ins rising</div>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 border-2 border-yellow-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-yellow-700 mb-2">+36%</div>
+              <div className="text-sm font-semibold text-black">Penrith Thefts</div>
+              <div className="text-sm text-black">2022 to 2023</div>
+              <div className="text-xs text-yellow-700 font-semibold mt-2">Fastest growing</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-8 shadow-xl border-2 border-gray-200">
+            <h3 className="text-black text-2xl font-bold mb-6">High-Risk Sydney Suburbs (2023 Data)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="space-y-3">
+                  <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Blacktown City</span>
+                      <span className="text-red-600 font-bold">799 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+24.4% from 2022 - Western Sydney epicenter</p>
+                  </div>
+                  <div className="bg-orange-50 border-l-4 border-orange-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Central Coast</span>
+                      <span className="text-orange-600 font-bold">587 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+35.2% from 2022 - Sharp spike in coastal area</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Penrith</span>
+                      <span className="text-yellow-600 font-bold">535 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+36.1% from 2022 - Highest growth in Sydney</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Canterbury-Bankstown</span>
+                      <span className="text-yellow-600 font-bold">527 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">South-West Sydney hotspot</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="space-y-3">
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Lake Macquarie</span>
+                      <span className="text-yellow-600 font-bold">503 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+22.6% from 2022 - Hunter region risk</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Cumberland</span>
+                      <span className="text-yellow-600 font-bold">458 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+21.4% from 2022 - Western Sydney growth</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Parramatta</span>
+                      <span className="text-yellow-600 font-bold">443 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">+20.7% from 2022 - CBD area elevated risk</p>
+                  </div>
+                  <div className="bg-orange-50 border-l-4 border-orange-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Liverpool & Campbelltown</span>
+                      <span className="text-orange-600 font-bold">High Risk</span>
+                    </div>
+                    <p className="text-sm text-black">Consistently high theft rates</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 rounded-lg p-6 mt-6">
+              <p className="text-black font-semibold mb-3">⚠️ Sydney Western Suburbs Warning:</p>
+              <p className="text-black text-sm mb-2">
+                <strong>Western and South-Western Sydney account for over 50% of NSW vehicle thefts.</strong> If buying a car from Blacktown, Penrith, Canterbury-Bankstown, Cumberland, Parramatta, Liverpool, or Campbelltown, always run a REVS check.
+              </p>
+              <p className="text-black text-sm">
+                <strong>70% of Sydney cars stolen with keys:</strong> Thieves break into homes to steal car keys. If the seller has a recent model (2018+), ask where they park overnight. Cars parked on street in Western Sydney have 3x higher theft risk.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">Most Targeted Vehicles in Sydney</h2>
+          <p className="text-black text-lg max-w-3xl mx-auto">
+            NSW Police data shows these brands and models are prime targets for Sydney car thieves. Run a REVS check if buying any of these.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 rounded-xl p-6">
+            <h3 className="text-black text-xl font-bold mb-4">🚗 High-Theft Brands & Models</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-blue-700">#1 Toyota</div>
+                <p className="text-sm text-black">Most stolen brand in NSW. HiLux, Camry, Corolla, RAV4 targeted. Strong resale value drives theft demand.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-blue-700">#2 Holden</div>
+                <p className="text-sm text-black">Commodore VE (2006-2013) consistently most stolen car in Australia. Easy to steal, high parts demand.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-blue-700">#3 Ford</div>
+                <p className="text-sm text-black">Ranger utes targeted for parts and export. Strong theft market across Western Sydney.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-blue-700">Fastest Growing Thefts</div>
+                <p className="text-sm text-black"><strong>Kia, Jeep, Isuzu, Land Rover, Volkswagen</strong> - Largest percentage increases in 5 years to March 2023.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-6">
+            <h3 className="text-black text-xl font-bold mb-4">🔍 NSW Pink Slip Requirements</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Pink Slip (eSafety Check)</div>
+                <p className="text-sm text-black">Required BEFORE transfer. Valid 42 days. Costs $40-$60 from authorized inspection station. Seller doesn't need one to sell.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Blue Slip (Vehicle Identity)</div>
+                <p className="text-sm text-black">Required if: NSW rego expired >3 months, interstate vehicle, or rebuilt write-off. Stricter than Pink Slip. Cost: $40-$60.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">CTP Insurance (Green Slip)</div>
+                <p className="text-sm text-black">Compulsory Third Party. Must be purchased SEPARATELY before rego. NOT included in registration fee. Sydney: $350-$600/year.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Written-Off Vehicles</div>
+                <p className="text-sm text-black">Statutory write-offs CANNOT be re-registered in NSW. Repairable write-offs need Blue Slip identity inspection.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-gradient-to-r from-blue-100 to-indigo-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">Sydney Car Market Intelligence</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-black text-xl font-bold mb-4">📊 Sydney Market Size</h3>
+              <div className="space-y-3 text-black">
+                <p className="text-sm">
+                  <strong>NSW is Australia's second-largest used car market.</strong> Over 720,000 used vehicles change hands in NSW annually, with Greater Sydney accounting for ~550,000 of these sales.
+                </p>
+                <p className="text-sm">
+                  <strong>Private sales dominate:</strong> 58% of Sydney used car sales are private (not dealer). Private sellers don't have the same disclosure obligations as licensed dealers - REVS checks are critical.
+                </p>
+                <p className="text-sm">
+                  <strong>Average Sydney used car price:</strong> $31,800 (2024). With 70% of stolen Sydney cars taken with keys (often sold quickly), a $34.99 REVS check protects against a $15,400+ average loss.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-black text-xl font-bold mb-4">🏙️ Sydney Dealership Zones</h3>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-blue-50 rounded p-3">
+                  <p className="font-semibold mb-1">Parramatta Road Corridor</p>
+                  <p>Australia's longest car dealer strip. Mix of reputable and dodgy dealers. Check REVS on ALL cars here.</p>
+                </div>
+                <div className="bg-blue-50 rounded p-3">
+                  <p className="font-semibold mb-1">Western Sydney (Liverpool, Blacktown)</p>
+                  <p>Budget dealers, higher risk of vehicles with undisclosed finance. Walk away if paperwork isn't perfect.</p>
+                </div>
+                <div className="bg-blue-50 rounded p-3">
+                  <p className="font-semibold mb-1">North Shore (Chatswood, St Leonards)</p>
+                  <p>Prestige dealers. Check for grey imports with fake compliance. VIN verification critical.</p>
+                </div>
+                <div className="bg-blue-50 rounded p-3">
+                  <p className="font-semibold mb-1">Online Marketplaces (Gumtree, Facebook)</p>
+                  <p>Highest scam risk. Never inspect at night. Always meet at seller's registered address.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white border-l-8 border-blue-600 rounded-lg p-8 mt-8 shadow-xl">
+            <h3 className="text-black text-2xl font-bold mb-4">💡 Sydney Buyer's Checklist</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Run REVS check on VIN + Rego number (NSW rego format: ABC123 or AB12CD)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Verify seller ID matches rego papers exactly</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Get Pink Slip (42-day validity) - walk away if seller refuses</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Check VIN plate for tampering (rivets should be original factory)</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Avoid cars from Blacktown, Penrith, Liverpool with unclear history</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Ask where car is parked overnight (street parking = higher theft risk)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Never pay cash - use bank transfer for paper trail</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Verify BOTH keys present (70% of Sydney thefts use stolen keys)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 px-4 bg-gradient-to-r from-blue-600 to-indigo-600">
         <div className="max-w-4xl mx-auto text-center">
           <Award className="h-16 w-16 text-white mx-auto mb-6" />
