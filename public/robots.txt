@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://rego-reports.vercel.app/sitemap.xml
+Sitemap: https://carverify.com.au/sitemap.xml
 
 # Block admin areas
 Disallow: /admin

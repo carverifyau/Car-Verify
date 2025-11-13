@@ -6,6 +6,16 @@ export const metadata: Metadata = {
   title: 'VIN Check Australia - Free VIN Number Lookup & Decoder | Car Verify',
   description: 'Free VIN check & decoder for Australian vehicles. Verify VIN number, check stolen status, find finance owing, decode specs & get full vehicle history. Instant results.',
   keywords: 'vin check, vin number check, vin decoder, vin lookup, vin check australia, vehicle identification number, vin verification',
+  alternates: {
+    canonical: 'https://carverify.com.au/vin-check',
+  },
+  openGraph: {
+    title: 'VIN Check Australia - Free VIN Number Lookup & Decoder',
+    description: 'Decode any VIN number instantly. PPSR check, stolen car verification & full vehicle history from $34.99',
+    url: 'https://carverify.com.au/vin-check',
+    siteName: 'Car Verify Australia',
+    type: 'website',
+  },
 }
 
 export default function VINCheckPage() {

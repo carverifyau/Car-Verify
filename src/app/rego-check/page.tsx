@@ -6,10 +6,20 @@ export const metadata: Metadata = {
   title: 'Rego Check Australia - Instant Vehicle Registration Search | $34.99',
   description: 'Free rego check for Australian vehicles. Verify registration details, check if a car is stolen, find finance owing & get comprehensive vehicle history. Instant results.',
   keywords: 'rego check, registration check, rego check australia, vehicle registration check, car rego check, check rego, rego lookup',
+  alternates: {
+    canonical: 'https://carverify.com.au/rego-check',
+  },
   openGraph: {
     title: 'Rego Check Australia - Instant Vehicle Registration Search',
     description: 'Check any Australian vehicle registration instantly. PPSR check, stolen car check, finance check & full vehicle history from $34.99',
+    url: 'https://carverify.com.au/rego-check',
+    siteName: 'Car Verify Australia',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Rego Check Australia - Instant Vehicle Registration Search',
+    description: 'Check any Australian vehicle registration instantly. PPSR check, stolen car check, finance check & full vehicle history from $34.99',
   },
 }
 
