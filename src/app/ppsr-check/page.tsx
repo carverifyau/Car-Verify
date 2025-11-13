@@ -57,7 +57,7 @@ export default function PPSRCheckPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link href="/checkout" className="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors inline-flex items-center justify-center gap-2 shadow-lg">
+            <Link href="/" className="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors inline-flex items-center justify-center gap-2 shadow-lg">
               <Shield className="h-5 w-5" />
               Get PPSR Certificate - $34.99
             </Link>
@@ -144,7 +144,7 @@ export default function PPSRCheckPage() {
         </div>
 
         <div className="text-center mt-8">
-          <Link href="/checkout" className="bg-indigo-600 text-white px-10 py-5 rounded-lg text-xl font-bold hover:bg-indigo-700 transition-colors inline-flex items-center gap-3 shadow-xl">
+          <Link href="/" className="bg-indigo-600 text-white px-10 py-5 rounded-lg text-xl font-bold hover:bg-indigo-700 transition-colors inline-flex items-center gap-3 shadow-xl">
             <FileText className="h-6 w-6" />
             Get PPSR Certificate - $34.99
           </Link>
@@ -164,7 +164,7 @@ export default function PPSRCheckPage() {
           <div className="bg-white rounded-xl p-8 inline-block shadow-2xl">
             <div className="text-5xl font-bold text-indigo-600 mb-2">$34.99</div>
             <div className="text-black mb-6">Official PPSR Certificate</div>
-            <Link href="/checkout" className="bg-indigo-600 text-white px-12 py-6 rounded-lg text-2xl font-bold hover:bg-indigo-700 transition-colors inline-block shadow-xl">
+            <Link href="/" className="bg-indigo-600 text-white px-12 py-6 rounded-lg text-2xl font-bold hover:bg-indigo-700 transition-colors inline-block shadow-xl">
               Get Certificate Now
             </Link>
             <div className="mt-6 flex items-center justify-center gap-6 text-sm text-black flex-wrap">
