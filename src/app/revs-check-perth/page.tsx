@@ -175,6 +175,262 @@ export default function RevsCheckPerthPage() {
         </div>
       </section>
 
+      <section className="py-16 px-4 bg-red-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">🚨 Perth Vehicle Theft Hotspots 2024</h2>
+            <p className="text-black text-lg max-w-3xl mx-auto">
+              WA Police data reveals 6,261 vehicles stolen in Western Australia in 2023. Mirrabooka, Gosnells, and Fremantle lead Perth theft statistics. Know your risk before buying.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div className="bg-gradient-to-br from-red-100 to-red-200 border-2 border-red-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-red-700 mb-2">6,261</div>
+              <div className="text-sm font-semibold text-black">Vehicles Stolen</div>
+              <div className="text-sm text-black">WA 2023</div>
+              <div className="text-xs text-red-700 font-semibold mt-2">State-wide total</div>
+            </div>
+            <div className="bg-gradient-to-br from-orange-100 to-orange-200 border-2 border-orange-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-orange-700 mb-2">651</div>
+              <div className="text-sm font-semibold text-black">Mirrabooka District</div>
+              <div className="text-sm text-black">Highest in Perth</div>
+              <div className="text-xs text-orange-700 font-semibold mt-2">2023 thefts</div>
+            </div>
+            <div className="bg-gradient-to-br from-yellow-100 to-yellow-200 border-2 border-yellow-400 rounded-xl p-6 text-center">
+              <div className="text-5xl font-bold text-yellow-700 mb-2">VE</div>
+              <div className="text-sm font-semibold text-black">Holden Commodore</div>
+              <div className="text-sm text-black">Most Stolen WA</div>
+              <div className="text-xs text-yellow-700 font-semibold mt-2">3 years running</div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-xl p-8 shadow-xl border-2 border-gray-200">
+            <h3 className="text-black text-2xl font-bold mb-6">High-Risk Perth Suburbs & Districts (2023 Data)</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <div className="space-y-3">
+                  <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Mirrabooka District</span>
+                      <span className="text-red-600 font-bold">651 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Highest theft district in Perth metro area</p>
+                  </div>
+                  <div className="bg-orange-50 border-l-4 border-orange-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Fremantle</span>
+                      <span className="text-orange-600 font-bold">569 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Port area - second highest in Perth</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Joondalup</span>
+                      <span className="text-yellow-600 font-bold">467 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Northern suburbs district - consistent activity</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Midland</span>
+                      <span className="text-yellow-600 font-bold">465 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Eastern suburbs - elevated risk area</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="space-y-3">
+                  <div className="bg-red-50 border-l-4 border-red-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Gosnells</span>
+                      <span className="text-red-600 font-bold">84 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Highest individual suburb theft rate in Perth</p>
+                  </div>
+                  <div className="bg-orange-50 border-l-4 border-orange-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Bayswater</span>
+                      <span className="text-orange-600 font-bold">65 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Inner eastern suburbs - second highest suburb</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Baldivis</span>
+                      <span className="text-yellow-600 font-bold">61 thefts</span>
+                    </div>
+                    <p className="text-sm text-black">Southern suburbs - third highest suburb</p>
+                  </div>
+                  <div className="bg-yellow-50 border-l-4 border-yellow-600 p-4 rounded">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-black font-bold">Other High-Risk Areas</span>
+                      <span className="text-yellow-600 font-bold">Multiple hotspots</span>
+                    </div>
+                    <p className="text-sm text-black">Armadale, Rockingham showing elevated rates</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 rounded-lg p-6 mt-6">
+              <p className="text-black font-semibold mb-3">⚠️ Perth Theft Hotspot Warning:</p>
+              <p className="text-black text-sm mb-2">
+                <strong>Mirrabooka district (including Gosnells, Girrawheen, Balga) leads Perth vehicle theft.</strong> If buying a car from these areas or Fremantle, Joondalup, Midland, Bayswater, or Baldivis, always verify seller identity and run a REVS check.
+              </p>
+              <p className="text-black text-sm">
+                <strong>Holden Commodore VE dominates:</strong> The Commodore VE (2006-2013) has been WA's most stolen car for 3 consecutive years. Easy to steal + high parts demand = theft magnet. Mandatory REVS check on all Commodores.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">Most Targeted Vehicles in Perth</h2>
+          <p className="text-black text-lg max-w-3xl mx-auto">
+            Western Australia Police data shows Holden Commodore leads Perth theft statistics. Toyota and Ford also heavily targeted.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-300 rounded-xl p-6">
+            <h3 className="text-black text-xl font-bold mb-4">🚗 High-Theft Models in WA</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-orange-700">#1 Holden Commodore VE</div>
+                <p className="text-sm text-black">2006-2013 models. Most stolen car in WA for 3 years. Easy to steal, high parts demand. Perth has large Commodore population.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-orange-700">#2 Toyota HiLux</div>
+                <p className="text-sm text-black">All model years targeted. WA's mining industry creates strong parts demand. Organized theft rings target utes.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-orange-700">#3 Ford Ranger</div>
+                <p className="text-sm text-black">Popular work vehicle in WA. Targeted for parts stripping and resale. High value drives theft.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-orange-700">Mining Industry Impact</div>
+                <p className="text-sm text-black">WA's mining boom drives 4WD/ute theft. Parts in high demand for regional/mine site vehicles. Check all work vehicles.</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-300 rounded-xl p-6">
+            <h3 className="text-black text-xl font-bold mb-4">🔍 WA Vehicle Licensing Requirements</h3>
+            <div className="space-y-3">
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Vehicle Inspection (Yellow Slip)</div>
+                <p className="text-sm text-black">Required for vehicles over 20 years old, interstate transfers, or rebuilt write-offs. Valid 30 days. Cost: $45 (DoT) + inspection fee.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">CTP Insurance</div>
+                <p className="text-sm text-black">Compulsory Third Party included IN WA license fee (like QLD/SA). Simplifies vehicle licensing process.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Written-Off Vehicles</div>
+                <p className="text-sm text-black">Statutory write-offs CANNOT be re-registered in WA. Repairable write-offs need DoT approval + vehicle inspection.</p>
+              </div>
+              <div className="bg-white rounded p-3">
+                <div className="font-bold text-green-700">Interstate Transfers</div>
+                <p className="text-sm text-black">Vehicles from interstate need Yellow Slip inspection. VIN verification included. Check NEVDIS before licensing.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16 px-4 bg-gradient-to-r from-orange-100 to-red-100">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-black text-3xl md:text-4xl font-bold mb-4">Perth Car Market Intelligence</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-black text-xl font-bold mb-4">📊 Perth Market Size</h3>
+              <div className="space-y-3 text-black">
+                <p className="text-sm">
+                  <strong>Western Australia's used car market is robust.</strong> Over 240,000 used vehicles change hands in WA annually, with Greater Perth accounting for ~190,000 of these sales.
+                </p>
+                <p className="text-sm">
+                  <strong>Mining industry effect:</strong> WA's resources boom drives demand for 4WDs and utes. Higher average vehicle prices than eastern states. Also drives targeted theft of work vehicles.
+                </p>
+                <p className="text-sm">
+                  <strong>Average Perth used car price:</strong> $34,600 (2024) - highest in Australia due to mining demand. A $34.99 REVS check protects against $15,400+ loss from undisclosed finance.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl p-6 shadow-lg">
+              <h3 className="text-black text-xl font-bold mb-4">🏙️ Perth Dealership Zones</h3>
+              <div className="space-y-3 text-black text-sm">
+                <div className="bg-orange-50 rounded p-3">
+                  <p className="font-semibold mb-1">Great Eastern Highway</p>
+                  <p>Major dealer corridor (Midvale, Belmont). Mix of reputable and budget dealers. Run REVS on every vehicle.</p>
+                </div>
+                <div className="bg-orange-50 rounded p-3">
+                  <p className="font-semibold mb-1">Mirrabooka & Balcatta</p>
+                  <p>Budget dealer concentration. Higher risk area. Walk away if paperwork isn't perfect or seller hesitates.</p>
+                </div>
+                <div className="bg-orange-50 rounded p-3">
+                  <p className="font-semibold mb-1">Fremantle & Osborne Park</p>
+                  <p>Established dealer hubs. Check for grey imports and ex-mine vehicles with hidden damage.</p>
+                </div>
+                <div className="bg-orange-50 rounded p-3">
+                  <p className="font-semibold mb-1">Online Marketplaces</p>
+                  <p>Growing market. Meet at seller's registered address. Gosnells/Mirrabooka online listings = extra caution.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white border-l-8 border-orange-600 rounded-lg p-8 mt-8 shadow-xl">
+            <h3 className="text-black text-2xl font-bold mb-4">💡 Perth Buyer's Checklist</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Run REVS check on VIN + Rego (WA format: 1ABC123)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Verify seller ID matches vehicle license (WA rego)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Check if Yellow Slip required (20+ years, interstate, rebuilt)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Holden Commodore VE = mandatory REVS check (most stolen)</span>
+                </div>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Avoid Gosnells, Mirrabooka vehicles with unclear history</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Check for ex-mine vehicles (hidden damage common)</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Never pay cash - use bank transfer for paper trail</span>
+                </div>
+                <div className="flex items-start gap-2">
+                  <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-black">Inspect VIN plate for tampering (check rivets are original)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 px-4 bg-gradient-to-r from-orange-600 to-red-600">
         <div className="max-w-4xl mx-auto text-center">
           <Award className="h-16 w-16 text-white mx-auto mb-6" />
