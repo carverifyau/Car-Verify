@@ -20,8 +20,35 @@ export const metadata: Metadata = {
 }
 
 export default function VINCheckPage() {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "VIN Check Australia",
+    "description": "Free VIN check & decoder for Australian vehicles. Verify VIN number, check stolen status, find finance owing, decode specs & get full vehicle history.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Car Verify Australia"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "34.99",
+      "priceCurrency": "AUD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "10000"
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
+
       <section className="relative py-16 px-4 max-w-7xl mx-auto overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-purple-100 rounded-full filter blur-3xl opacity-20 -z-10"></div>
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-100 rounded-full filter blur-3xl opacity-20 -z-10"></div>

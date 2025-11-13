@@ -20,8 +20,35 @@ export const metadata: Metadata = {
 }
 
 export default function RevsCheckPerthPage() {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "REVS Check Perth",
+    "description": "Official REVS check for Perth & WA vehicles. Check finance owing, stolen status, write-offs & encumbrances on any car in Perth.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Car Verify Australia"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "34.99",
+      "priceCurrency": "AUD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "10000"
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
+
       <section className="relative py-16 px-4 max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-black text-4xl md:text-6xl font-bold mb-6 leading-tight">

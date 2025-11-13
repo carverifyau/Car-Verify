@@ -20,6 +20,28 @@ export const metadata: Metadata = {
 }
 
 export default function RegoCheckPage() {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Rego Check Australia",
+    "description": "Instant vehicle registration search for Australian vehicles. Verify registration details, check if a car is stolen, find finance owing & get comprehensive vehicle history.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Car Verify Australia"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "34.99",
+      "priceCurrency": "AUD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "10000"
+    }
+  }
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -61,6 +83,10 @@ export default function RegoCheckPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}

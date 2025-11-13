@@ -20,6 +20,28 @@ export const metadata: Metadata = {
 }
 
 export default function PPSRCheckPage() {
+  const reviewSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "PPSR Check Australia",
+    "description": "Official PPSR check (Personal Property Securities Register) for all Australian vehicles. Check finance owing, security interests, write-offs & stolen status.",
+    "brand": {
+      "@type": "Brand",
+      "name": "Car Verify Australia"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "34.99",
+      "priceCurrency": "AUD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "10000"
+    }
+  }
+
   const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -69,6 +91,10 @@ export default function PPSRCheckPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
