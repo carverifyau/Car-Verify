@@ -32,7 +32,7 @@ export default function RegoCheckPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Rego Check Australia - Instant Vehicle Registration Verification
           </h1>
-          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+          <p className="text-xl text-black max-w-3xl mx-auto">
             Check any Australian vehicle registration in seconds. Get PPSR reports, stolen car checks,
             finance owing alerts & comprehensive vehicle history from $34.99
           </p>
@@ -50,7 +50,7 @@ export default function RegoCheckPage() {
               How It Works
             </Link>
           </div>
-          <p className="text-sm text-gray-700 mt-4">✓ Instant Results  ✓ PPSR Certified  ✓ 100% Secure</p>
+          <p className="text-sm text-black mt-4">✓ Instant Results  ✓ PPSR Certified  ✓ 100% Secure</p>
         </div>
 
         {/* Trust Indicators */}
@@ -58,17 +58,17 @@ export default function RegoCheckPage() {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <Shield className="h-12 w-12 text-blue-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">PPSR Certified Check</h3>
-            <p className="text-gray-800">Official PPSR reports showing finance, stolen status & write-off history</p>
+            <p className="text-black">Official PPSR reports showing finance, stolen status & write-off history</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <CheckCircle className="h-12 w-12 text-green-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">Instant Results</h3>
-            <p className="text-gray-800">Get your comprehensive vehicle report within 60 seconds</p>
+            <p className="text-black">Get your comprehensive vehicle report within 60 seconds</p>
           </div>
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <DollarSign className="h-12 w-12 text-purple-600 mb-4" />
             <h3 className="font-semibold text-lg mb-2">Market Valuation</h3>
-            <p className="text-gray-800">AI-powered vehicle valuation based on current Australian market</p>
+            <p className="text-black">AI-powered vehicle valuation based on current Australian market</p>
           </div>
         </div>
       </section>
@@ -83,7 +83,7 @@ export default function RegoCheckPage() {
                 <Shield className="h-6 w-6 text-blue-600 mr-2" />
                 PPSR Security Check
               </h3>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-2 text-black">
                 <li>✓ Finance owing status</li>
                 <li>✓ Stolen vehicle check</li>
                 <li>✓ Security interests registered</li>
@@ -96,7 +96,7 @@ export default function RegoCheckPage() {
                 <AlertTriangle className="h-6 w-6 text-orange-600 mr-2" />
                 Write-Off History
               </h3>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-2 text-black">
                 <li>✓ Statutory write-off status</li>
                 <li>✓ Repairable write-off history</li>
                 <li>✓ Damage assessment records</li>
@@ -109,7 +109,7 @@ export default function RegoCheckPage() {
                 <FileText className="h-6 w-6 text-green-600 mr-2" />
                 Vehicle Details
               </h3>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-2 text-black">
                 <li>✓ Registration expiry date</li>
                 <li>✓ Make, model & year</li>
                 <li>✓ VIN verification</li>
@@ -122,7 +122,7 @@ export default function RegoCheckPage() {
                 <DollarSign className="h-6 w-6 text-purple-600 mr-2" />
                 Market Valuation
               </h3>
-              <ul className="space-y-2 text-gray-700">
+              <ul className="space-y-2 text-black">
                 <li>✓ Current market value</li>
                 <li>✓ Trade-in estimate</li>
                 <li>✓ Private sale value</li>
@@ -142,21 +142,21 @@ export default function RegoCheckPage() {
               <span className="text-2xl font-bold text-blue-600">1</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Enter Rego Number</h3>
-            <p className="text-gray-800">Enter the vehicle's registration number and select the state</p>
+            <p className="text-black">Enter the vehicle's registration number and select the state</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">2</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Instant Search</h3>
-            <p className="text-gray-800">Our system checks PPSR, stolen registers & vehicle databases</p>
+            <p className="text-black">Our system checks PPSR, stolen registers & vehicle databases</p>
           </div>
           <div className="text-center">
             <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-2xl font-bold text-blue-600">3</span>
             </div>
             <h3 className="font-semibold text-xl mb-2">Get Your Report</h3>
-            <p className="text-gray-800">Receive comprehensive report via email in under 60 seconds</p>
+            <p className="text-black">Receive comprehensive report via email in under 60 seconds</p>
           </div>
         </div>
       </section>
@@ -168,7 +168,7 @@ export default function RegoCheckPage() {
           <div className="space-y-6">
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">What is a rego check?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 A rego check (registration check) verifies vehicle registration details and provides comprehensive
                 history including PPSR status, stolen car check, finance owing, write-off history, and market valuation.
                 It's essential before buying any used vehicle in Australia.
@@ -177,7 +177,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">Can I do a free rego check in Australia?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 While you can check basic registration expiry for free on some state government websites, comprehensive
                 PPSR checks, stolen car verification, and finance owing searches require paid services. Our $34.99 report
                 includes everything you need in one comprehensive check.
@@ -186,7 +186,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">How long does a rego check take?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 Our rego check system provides instant results. You'll receive your comprehensive vehicle report via
                 email within 60 seconds of completing your order. The report includes PPSR certificate, vehicle history,
                 and market valuation.
@@ -195,7 +195,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">What information do I need for a rego check?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 You only need two pieces of information: the vehicle's registration number (license plate) and the
                 state/territory where it's registered (NSW, VIC, QLD, SA, WA, TAS, NT, or ACT).
               </p>
@@ -203,7 +203,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">Will a rego check show if a car has finance owing?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 Yes! Our rego check includes a full PPSR (Personal Property Securities Register) search, which shows
                 any money owed on the vehicle, security interests, and encumbrances. This protects you from buying a
                 car with hidden debts.
@@ -212,7 +212,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">Can I check if a car is stolen with a rego check?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 Yes, absolutely. Our rego check searches national stolen vehicle databases and PPSR records to verify
                 if the vehicle has been reported stolen. This is crucial before purchasing any used car in Australia.
               </p>
@@ -220,7 +220,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">What states can I do a rego check for?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 We provide rego checks for all Australian states and territories: New South Wales (NSW), Victoria (VIC),
                 Queensland (QLD), South Australia (SA), Western Australia (WA), Tasmania (TAS), Northern Territory (NT),
                 and Australian Capital Territory (ACT).
@@ -229,7 +229,7 @@ export default function RegoCheckPage() {
 
             <details className="bg-white p-6 rounded-lg shadow-sm">
               <summary className="font-semibold text-lg cursor-pointer">Is a rego check the same as a PPSR check?</summary>
-              <p className="mt-4 text-gray-700">
+              <p className="mt-4 text-black">
                 A rego check is more comprehensive. While a PPSR check only shows finance and security interests, our
                 rego check includes PPSR data PLUS stolen car verification, write-off history, vehicle specifications,
                 and AI-powered market valuation - all in one report.
@@ -260,7 +260,7 @@ export default function RegoCheckPage() {
       <section className="py-16 px-4 max-w-4xl mx-auto">
         <div className="prose max-w-none">
           <h2 className="text-2xl font-bold mb-4">Why You Need a Rego Check Before Buying a Used Car</h2>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             Buying a used car in Australia is a significant investment, often ranging from $10,000 to $50,000 or more.
             Without proper due diligence, you could end up purchasing a vehicle with hidden problems, outstanding finance,
             or even a stolen car. A comprehensive rego check protects your investment by revealing critical information
@@ -268,17 +268,17 @@ export default function RegoCheckPage() {
           </p>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">The Risks of Skipping a Rego Check</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             According to ASIC (Australian Securities and Investments Commission), thousands of Australians lose money
             each year by purchasing vehicles with encumbrances. When you buy a car with money owing, you could lose
             both the car AND your money if the original owner defaults on their loan. The average loss? Over $15,400.
           </p>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">What Our Rego Check Reveals</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             Our comprehensive rego check service searches multiple databases to provide you with complete peace of mind:
           </p>
-          <ul className="list-disc pl-6 text-gray-700 mb-4">
+          <ul className="list-disc pl-6 text-black mb-4">
             <li><strong>PPSR Register:</strong> Shows any finance owing, security interests, or legal encumbrances</li>
             <li><strong>Stolen Vehicle Database:</strong> Confirms whether the car has been reported stolen</li>
             <li><strong>Written-Off Vehicle Register:</strong> Reveals statutory and repairable write-offs</li>
@@ -287,31 +287,31 @@ export default function RegoCheckPage() {
           </ul>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">State-Specific Rego Checks</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             Each Australian state and territory has its own vehicle registration system, but our rego check service
             covers all of them. Whether you're buying a car in Sydney, Melbourne, Brisbane, Perth, Adelaide, Hobart,
             Darwin, or Canberra, we provide the same comprehensive check with instant results.
           </p>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">How Much Does a Rego Check Cost?</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             At just $34.99, our rego check is one of the most affordable comprehensive vehicle checks in Australia.
             Compare this to the potential loss of $15,400+ if you buy a car with hidden finance owing, and it's clear
             that a rego check is essential insurance for any used car purchase.
           </p>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">When Should You Do a Rego Check?</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             Always perform a rego check BEFORE you commit to buying a vehicle. Ideally, run the check before you even
             go to inspect the car. This way, you can avoid wasting time on vehicles with serious problems. If you're
             buying from a private seller, never hand over money until you've received and reviewed your rego check report.
           </p>
 
           <h3 className="text-xl font-semibold mb-3 mt-8">Understanding Your Rego Check Report</h3>
-          <p className="text-gray-700 mb-4">
+          <p className="text-black mb-4">
             Your comprehensive rego check report includes multiple sections, each providing critical information:
           </p>
-          <ul className="list-disc pl-6 text-gray-700 mb-4">
+          <ul className="list-disc pl-6 text-black mb-4">
             <li><strong>Vehicle Summary:</strong> Make, model, year, VIN, and registration details</li>
             <li><strong>PPSR Certificate:</strong> Official document showing any encumbrances or security interests</li>
             <li><strong>Stolen Status:</strong> Confirmation whether the vehicle appears on stolen vehicle databases</li>

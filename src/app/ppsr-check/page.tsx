@@ -27,7 +27,7 @@ export default function PPSRCheckPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             PPSR Check Australia - Official Personal Property Securities Register Search
           </h1>
-          <p className="text-xl text-gray-800 max-w-3xl mx-auto mb-6">
+          <p className="text-xl text-black max-w-3xl mx-auto mb-6">
             Get an official PPSR certificate for any Australian vehicle. Check finance owing, security interests, encumbrances, write-offs and stolen status. Instant results from $34.99
           </p>
           <div className="bg-red-50 border-l-4 border-red-400 p-4 max-w-2xl mx-auto mb-8">
@@ -44,7 +44,7 @@ export default function PPSRCheckPage() {
             <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
               Get Official PPSR Certificate - $34.99
             </Link>
-            <p className="text-sm text-gray-700 mt-3">Instant results • Official government certificate • All Australian vehicles</p>
+            <p className="text-sm text-black mt-3">Instant results • Official government certificate • All Australian vehicles</p>
           </div>
         </div>
 
@@ -54,21 +54,21 @@ export default function PPSRCheckPage() {
             <FileCheck className="h-8 w-8 text-blue-600 flex-shrink-0" />
             <div>
               <h3 className="font-semibold text-gray-900 mb-1">Official PPSR Certificate</h3>
-              <p className="text-sm text-gray-800">Government-issued certificate from the official PPSR database</p>
+              <p className="text-sm text-black">Government-issued certificate from the official PPSR database</p>
             </div>
           </div>
           <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
             <CheckCircle className="h-8 w-8 text-green-600 flex-shrink-0" />
             <div>
               <h3 className="font-semibold text-gray-900 mb-1">Instant Results</h3>
-              <p className="text-sm text-gray-800">Get your PPSR certificate for any Australian vehicle in seconds</p>
+              <p className="text-sm text-black">Get your PPSR certificate for any Australian vehicle in seconds</p>
             </div>
           </div>
           <div className="flex items-start space-x-3 bg-white p-6 rounded-lg shadow-sm">
             <DollarSign className="h-8 w-8 text-blue-600 flex-shrink-0" />
             <div>
               <h3 className="font-semibold text-gray-900 mb-1">Best Value</h3>
-              <p className="text-sm text-gray-800">Comprehensive PPSR check with vehicle history from just $34.99</p>
+              <p className="text-sm text-black">Comprehensive PPSR check with vehicle history from just $34.99</p>
             </div>
           </div>
         </div>
@@ -78,7 +78,7 @@ export default function PPSRCheckPage() {
       <section className="py-12 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">What is a PPSR Check?</h2>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               The Personal Property Securities Register (PPSR) is the Australian government's official national database that records security interests (encumbrances) against personal property, including all motor vehicles registered in Australia. The PPSR replaced the old state-based REVS registers in 2012.
             </p>
@@ -121,37 +121,37 @@ export default function PPSRCheckPage() {
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Legal Protection Against Inherited Debt</h3>
-              <p className="text-gray-800 mb-3">
+              <p className="text-black mb-3">
                 Under Australian law, security interests registered on the PPSR "travel with the goods." This means if you buy a vehicle with finance owing, <strong>you inherit the debt</strong> - even if you were unaware of it and paid full market price. The finance company retains legal ownership and can repossess the vehicle from you.
               </p>
-              <p className="text-gray-800">
+              <p className="text-black">
                 According to ASIC (Australian Securities and Investments Commission), consumers who unknowingly purchase encumbered vehicles lose an average of $15,400. A PPSR check is your only legal defense against this scenario.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Finance Owing is Common</h3>
-              <p className="text-gray-800 mb-3">
+              <p className="text-black mb-3">
                 Industry estimates suggest that approximately 1 in 4 used vehicles for sale in Australia have some form of finance or security interest registered on the PPSR. Many sellers don't deliberately hide this information - they simply don't know about it themselves, especially if they recently purchased the vehicle or acquired it through trade.
               </p>
-              <p className="text-gray-800">
+              <p className="text-black">
                 A PPSR check instantly reveals any registered security interests, the parties holding those interests, and the nature of the encumbrance.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Write-Offs and Stolen Vehicles</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 A PPSR check also cross-references the Written-Off Vehicle Register (WOVR) to identify vehicles that have been deemed total losses by insurance companies. Vehicles can be written off due to accident damage, flood, fire, hail, or other incidents. While some write-offs can be legally repaired and re-registered, you deserve to know this history.
               </p>
-              <p className="text-gray-800 mt-3">
+              <p className="text-black mt-3">
                 Additionally, the PPSR connects with stolen vehicle databases across Australia. If a vehicle is stolen, purchasing it makes you liable - police will seize the vehicle and return it to the rightful owner, leaving you with nothing.
               </p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Required for Insurance and Finance</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 Most insurance companies and vehicle finance providers require a clear PPSR certificate before they'll insure or finance a used vehicle. Having an official PPSR certificate ready can expedite the insurance and financing process and may even help you negotiate better rates.
               </p>
             </div>
@@ -173,70 +173,70 @@ export default function PPSRCheckPage() {
           <div className="space-y-6">
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">How much does an official PPSR check cost?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 Our PPSR check costs $34.99 and includes an official PPSR certificate, finance check, security interest search, write-off verification, stolen vehicle check, and comprehensive vehicle history report. This is significantly cheaper than the potential $15,400+ loss from buying an encumbered vehicle.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">What's the difference between PPSR and REVS?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 PPSR (Personal Property Securities Register) is the current national system that replaced the old state-based REVS registers in 2012. Before PPSR, each state had its own register (REVS in NSW, VIC, SA; REVS Check WA; PPSR in QLD; VSEC in Tasmania, etc.). Now there's one single PPSR database covering all Australian vehicles. Many people still use the term "REVS check" but they're referring to the same PPSR search.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Can I do a free PPSR check?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 No. There are no legitimate free PPSR checks in Australia. The PPSR is a government-operated database that charges a statutory fee for every search. Any website claiming to offer "free PPSR checks" is either providing incomplete information, outdated data, or is potentially a scam. Our $34.99 service provides the official, complete PPSR certificate with legal standing.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">How quickly do I get my PPSR certificate?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 Instantly! Our system connects directly to the official PPSR database. Within seconds of submitting your search, you'll receive a comprehensive report including your official PPSR certificate as a downloadable PDF.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">What information do I need for a PPSR check?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 You need either the vehicle's <strong>VIN (Vehicle Identification Number)</strong> or the <strong>registration plate number and state</strong>. The VIN is a unique 17-character identifier usually found on the driver's side dashboard (visible through windscreen), driver's door jamb, or on registration and insurance documents.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Does a PPSR check work for motorcycles, caravans, and boats?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 Yes! The PPSR database covers all types of personal property including motorcycles, caravans, trailers, boats, jet skis, and even some aircraft. If it has a VIN, chassis number, or Hull Identification Number (HIN), you can conduct a PPSR check on it.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">What happens if my PPSR check shows finance owing?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 If the PPSR certificate reveals a registered security interest (finance owing), do NOT proceed with the purchase until it's resolved. The seller must pay off the finance and have the security interest discharged from the PPSR before you complete the transaction. If they refuse or can't pay it off, walk away - there are plenty of other vehicles available. Never assume you can "sort it out later" as you'll inherit the debt legally.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">Is a PPSR check mandatory when buying a car?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 While not legally mandatory in most states, a PPSR check is strongly recommended by every consumer protection agency in Australia, including ASIC, ACCC, and all state-based fair trading departments. For $34.99, it's the cheapest insurance policy you can buy when spending thousands on a vehicle. Most professional car buyers, dealers, and auctioneers conduct PPSR checks on every vehicle they purchase.
               </p>
             </div>
 
             <div className="border-b border-gray-200 pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">What is a security interest on the PPSR?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 A security interest is a legal claim over property (like a vehicle) that secures payment of a debt or performance of an obligation. Common security interests include car loans, chattel mortgages, lease agreements, and consignment arrangements. When registered on the PPSR, the security interest holder (usually a bank or finance company) has legal rights over the vehicle, including the right to repossess it if the debt isn't paid - even if you're the new owner.
               </p>
             </div>
 
             <div className="pb-6">
               <h3 className="text-xl font-semibold text-gray-900 mb-3">How do I read a PPSR certificate?</h3>
-              <p className="text-gray-800">
+              <p className="text-black">
                 An official PPSR certificate lists all registered security interests and encumbrances against the vehicle. The ideal result is "No Security Interests Found" - meaning the vehicle is clear. If security interests are listed, the certificate will show: the secured party (who the money is owed to), the registration date, the type of security interest, and registration details. Our comprehensive report explains these findings in plain English and highlights any concerns.
               </p>
             </div>
@@ -260,7 +260,7 @@ export default function PPSRCheckPage() {
                 <FileCheck className="h-6 w-6 text-blue-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Official PPSR Certificate</h3>
               </div>
-              <p className="text-sm text-gray-800">Government-issued certificate with legal standing, accepted by insurance companies, banks, and legal professionals</p>
+              <p className="text-sm text-black">Government-issued certificate with legal standing, accepted by insurance companies, banks, and legal professionals</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -268,7 +268,7 @@ export default function PPSRCheckPage() {
                 <CreditCard className="h-6 w-6 text-red-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Finance Owing Check</h3>
               </div>
-              <p className="text-sm text-gray-800">Complete search of all registered security interests, loans, and financial encumbrances</p>
+              <p className="text-sm text-black">Complete search of all registered security interests, loans, and financial encumbrances</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -276,7 +276,7 @@ export default function PPSRCheckPage() {
                 <AlertTriangle className="h-6 w-6 text-orange-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Write-Off History</h3>
               </div>
-              <p className="text-sm text-gray-800">Written-Off Vehicle Register (WOVR) check for insurance write-offs due to accident, flood, fire, or hail damage</p>
+              <p className="text-sm text-black">Written-Off Vehicle Register (WOVR) check for insurance write-offs due to accident, flood, fire, or hail damage</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -284,7 +284,7 @@ export default function PPSRCheckPage() {
                 <Shield className="h-6 w-6 text-purple-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Stolen Vehicle Check</h3>
               </div>
-              <p className="text-sm text-gray-800">Cross-reference with Australian stolen vehicle databases to verify the car isn't reported stolen</p>
+              <p className="text-sm text-black">Cross-reference with Australian stolen vehicle databases to verify the car isn't reported stolen</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -292,7 +292,7 @@ export default function PPSRCheckPage() {
                 <CheckCircle className="h-6 w-6 text-green-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Vehicle Specifications</h3>
               </div>
-              <p className="text-sm text-gray-800">Complete vehicle details including make, model, year, engine, transmission, and registration history</p>
+              <p className="text-sm text-black">Complete vehicle details including make, model, year, engine, transmission, and registration history</p>
             </div>
 
             <div className="bg-white p-6 rounded-lg shadow-sm">
@@ -300,7 +300,7 @@ export default function PPSRCheckPage() {
                 <DollarSign className="h-6 w-6 text-blue-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">Market Valuation</h3>
               </div>
-              <p className="text-sm text-gray-800">Expert market research showing current market value range based on condition, mileage, and location</p>
+              <p className="text-sm text-black">Expert market research showing current market value range based on condition, mileage, and location</p>
             </div>
           </div>
 

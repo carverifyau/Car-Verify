@@ -28,7 +28,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             What to Check When Buying a Used Car in Australia - Complete 2025 Checklist
           </h1>
-          <p className="text-xl text-gray-800">
+          <p className="text-xl text-black">
             Buying a used car can save you thousands, but only if you know what to check. This comprehensive guide covers everything you need to verify before handing over your money - from PPSR checks to test drives.
           </p>
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-6">
@@ -46,7 +46,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
         {/* Table of Contents */}
         <nav className="bg-blue-50 rounded-lg p-6 mb-12">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Complete Used Car Buying Checklist:</h2>
-          <ol className="space-y-2 text-gray-700">
+          <ol className="space-y-2 text-black">
             <li>1. PPSR Check (Finance & Stolen Status)</li>
             <li>2. Exterior Inspection</li>
             <li>3. Interior Inspection</li>
@@ -66,7 +66,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Shield className="h-8 w-8 text-blue-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">1. PPSR Check - Your First and Most Important Step</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Before you even look at the car in person, conduct a PPSR check (Personal Property Securities Register). This official government database search reveals:
             </p>
@@ -99,7 +99,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
                 Run PPSR Check Now - $34.99
               </Link>
-              <p className="text-sm text-gray-700 mt-2">Instant results • Official certificate • Essential first step</p>
+              <p className="text-sm text-black mt-2">Instant results • Official certificate • Essential first step</p>
             </div>
           </div>
         </section>
@@ -110,7 +110,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Eye className="h-8 w-8 text-purple-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">2. Exterior Inspection - What to Look For</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Walk around the car in good lighting (daylight is best) and check systematically:
             </p>
@@ -153,7 +153,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Eye className="h-8 w-8 text-orange-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">3. Interior Inspection - Signs of True Condition</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               The interior reveals how well the previous owner maintained the car. Here's what to check:
             </p>
@@ -191,7 +191,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Wrench className="h-8 w-8 text-red-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">4. Under the Hood - Engine Bay Inspection</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Even if you're not mechanically minded, there are clear warning signs to look for under the bonnet:
             </p>
@@ -229,7 +229,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Key className="h-8 w-8 text-green-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">5. Test Drive - Critical Performance Checks</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Always insist on a proper test drive of at least 15-20 minutes. Here's what to evaluate:
             </p>
@@ -267,7 +267,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <FileCheck className="h-8 w-8 text-blue-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">6. Documentation - What Paperwork to Verify</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Proper documentation proves the car's history and legal status. Always verify:
             </p>
@@ -292,7 +292,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
                 Verify VIN with PPSR Check - $34.99
               </Link>
-              <p className="text-sm text-gray-700 mt-2">Instant verification • Official government check</p>
+              <p className="text-sm text-black mt-2">Instant verification • Official government check</p>
             </div>
           </div>
         </section>
@@ -303,7 +303,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <Wrench className="h-8 w-8 text-orange-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">7. Professional Mechanical Inspection</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Before finalizing any purchase over $10,000, always get a pre-purchase mechanical inspection from a qualified mechanic. This costs $150-$300 but can save you thousands.
             </p>
@@ -332,7 +332,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <DollarSign className="h-8 w-8 text-green-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">8. Price Negotiation - Getting Fair Value</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Armed with your inspection findings, you can negotiate confidently:
             </p>
@@ -356,7 +356,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
               <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
                 Get Market Valuation + PPSR - $34.99
               </Link>
-              <p className="text-sm text-gray-700 mt-2">Know exactly what the car is worth</p>
+              <p className="text-sm text-black mt-2">Know exactly what the car is worth</p>
             </div>
           </div>
         </section>
@@ -367,7 +367,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <AlertTriangle className="h-8 w-8 text-red-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">9. Red Flags - When to Walk Away</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Some warning signs mean you should immediately walk away, no matter how good the price seems:
             </p>
@@ -377,7 +377,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Finance Owing on PPSR Check</p>
-                  <p className="text-sm text-gray-800">Never buy a car with registered finance. You inherit the debt.</p>
+                  <p className="text-sm text-black">Never buy a car with registered finance. You inherit the debt.</p>
                 </div>
               </div>
 
@@ -385,7 +385,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Seller Refuses Mechanic Inspection</p>
-                  <p className="text-sm text-gray-800">This always means they're hiding expensive problems.</p>
+                  <p className="text-sm text-black">This always means they're hiding expensive problems.</p>
                 </div>
               </div>
 
@@ -393,7 +393,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">VIN Doesn't Match Papers</p>
-                  <p className="text-sm text-gray-800">Could be stolen, rebirthed, or written off.</p>
+                  <p className="text-sm text-black">Could be stolen, rebirthed, or written off.</p>
                 </div>
               </div>
 
@@ -401,7 +401,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">No Service History</p>
-                  <p className="text-sm text-gray-800">Especially on European cars, this means big bills are coming.</p>
+                  <p className="text-sm text-black">Especially on European cars, this means big bills are coming.</p>
                 </div>
               </div>
 
@@ -409,7 +409,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Seller Pressures Quick Sale</p>
-                  <p className="text-sm text-gray-800">"Must sell today" = they know about problems you haven't found yet.</p>
+                  <p className="text-sm text-black">"Must sell today" = they know about problems you haven't found yet.</p>
                 </div>
               </div>
 
@@ -417,7 +417,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Written-Off on PPSR</p>
-                  <p className="text-sm text-gray-800">Statutory write-offs cannot be re-registered. Repairable write-offs need disclosure.</p>
+                  <p className="text-sm text-black">Statutory write-offs cannot be re-registered. Repairable write-offs need disclosure.</p>
                 </div>
               </div>
 
@@ -425,7 +425,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Mismatched Paint or Panels</p>
-                  <p className="text-sm text-gray-800">Major accident repairs often hide frame damage.</p>
+                  <p className="text-sm text-black">Major accident repairs often hide frame damage.</p>
                 </div>
               </div>
 
@@ -433,7 +433,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
                 <AlertTriangle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-semibold text-gray-900">Mouldy or Damp Smell</p>
-                  <p className="text-sm text-gray-800">Indicates flood damage - electrical nightmares ahead.</p>
+                  <p className="text-sm text-black">Indicates flood damage - electrical nightmares ahead.</p>
                 </div>
               </div>
             </div>
@@ -446,7 +446,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
             <CheckCircle className="h-8 w-8 text-green-600 mr-3" />
             <h2 className="text-3xl font-bold text-gray-900">10. Final Purchase Checklist</h2>
           </div>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Before you hand over money, make absolutely certain you've completed these steps:
             </p>
@@ -502,7 +502,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
         {/* Conclusion */}
         <section className="mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Conclusion: Knowledge is Your Best Protection</h2>
-          <div className="prose prose-lg max-w-none text-gray-800">
+          <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
               Buying a used car in Australia doesn't have to be risky. By following this comprehensive checklist, you'll avoid the most common pitfalls that cost buyers thousands of dollars every year.
             </p>

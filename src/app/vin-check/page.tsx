@@ -26,7 +26,7 @@ export default function VINCheckPage() {
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             VIN Check Australia - Instant Vehicle Identification Number Lookup
           </h1>
-          <p className="text-xl text-gray-800 max-w-3xl mx-auto">
+          <p className="text-xl text-black max-w-3xl mx-auto">
             Decode any VIN number instantly. Get comprehensive vehicle history, PPSR check, stolen car verification & market valuation from $34.99
           </p>
           <div className="mt-8">
