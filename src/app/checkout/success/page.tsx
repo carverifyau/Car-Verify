@@ -26,9 +26,7 @@ function CheckoutSuccessContent() {
       conversionFiredRef.current = true
 
       window.gtag('event', 'conversion', {
-        'send_to': 'AW-17728735517/6AFzCKit4r8bEJ2S3IVC',
-        'value': 34.99,
-        'currency': 'AUD',
+        'send_to': 'AW-17728735517/XzilCO335L8bEJ2S3IVC',
         'transaction_id': sessionId
       })
 
