@@ -6,11 +6,35 @@ import { CheckCircleIcon, ClockIcon, UserGroupIcon } from '@heroicons/react/24/o
 import { useEffect, useState, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 
+// Declare gtag for TypeScript
+declare global {
+  interface Window {
+    gtag?: (command: string, targetId: string, config?: Record<string, any>) => void;
+  }
+}
+
 function CheckoutSuccessContent() {
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const [reportProcessed, setReportProcessed] = useState(false)
   const processingRef = useRef(false)
+  const conversionFiredRef = useRef(false)
+
+  // Fire Google Ads conversion event
+  useEffect(() => {
+    if (sessionId && !conversionFiredRef.current && typeof window !== 'undefined' && window.gtag) {
+      conversionFiredRef.current = true
+
+      window.gtag('event', 'conversion', {
+        'send_to': 'AW-17728735517/6AFzCKit4r8bEJ2S3IVC',
+        'value': 34.99,
+        'currency': 'AUD',
+        'transaction_id': sessionId
+      })
+
+      console.log('Google Ads conversion fired:', sessionId)
+    }
+  }, [sessionId])
 
   useEffect(() => {
     if (sessionId && !reportProcessed && !processingRef.current) {
