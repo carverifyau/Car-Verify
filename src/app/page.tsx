@@ -16,19 +16,19 @@ export default function Home() {
         transition={{ duration: 0.6 }}
         className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50"
       >
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3 md:py-4">
           <div className="flex justify-between items-center">
             <motion.div
               className="flex items-center space-x-3"
               whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <div className="bg-blue-600 p-2 rounded-lg">
-                <Car className="h-6 w-6 text-white" />
+              <div className="bg-blue-600 p-1.5 md:p-2 rounded-lg">
+                <Car className="h-5 w-5 md:h-6 md:w-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold text-gray-900">Car Verify</span>
-                <div className="text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
+                <span className="text-xl md:text-2xl font-bold text-gray-900">Car Verify</span>
+                <div className="text-[10px] md:text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
               </div>
             </motion.div>
             <nav className="hidden md:flex items-center space-x-8">
@@ -47,7 +47,7 @@ export default function Home() {
       </motion.header>
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-16">
+      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 py-8 md:py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -61,12 +61,12 @@ export default function Home() {
                 Authorised PPSR Provider • Official Government Data
               </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+              <h1 className="text-3xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Don't Buy a Car Without
                 <span className="text-red-600"> Checking First</span>
               </h1>
 
-              <p className="text-xl text-gray-700 mb-6 max-w-3xl mx-auto leading-relaxed font-medium">
+              <p className="text-lg md:text-xl text-gray-700 mb-6 max-w-3xl mx-auto leading-relaxed font-medium">
                 <span className="text-red-600 font-bold">1 in 4 cars</span> have hidden problems: stolen history, money owing, or write-off damage.
                 Get the truth before you buy.
               </p>

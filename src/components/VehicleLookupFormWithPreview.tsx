@@ -70,16 +70,16 @@ export default function VehicleLookupFormWithPreview() {
 
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-8 max-w-2xl mx-auto">
-      <div className="text-center mb-8">
+    <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+      <div className="text-center mb-6 md:mb-8">
         <div className="flex items-center justify-center space-x-2 mb-4">
           <Shield className="h-5 w-5 text-blue-600" />
           <span className="text-sm font-medium text-blue-600 uppercase tracking-wide">Secure Vehicle Check</span>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">
+        <h2 className="text-xl md:text-2xl font-bold text-gray-900">
           Enter Vehicle Details
         </h2>
-        <p className="text-gray-600 mt-2">Get your comprehensive vehicle report in seconds</p>
+        <p className="text-sm md:text-base text-gray-600 mt-2">Get your comprehensive vehicle report in seconds</p>
       </div>
 
       <form onSubmit={handleCheckout} className="space-y-6">
@@ -88,7 +88,7 @@ export default function VehicleLookupFormWithPreview() {
           <button
             type="button"
             onClick={() => setLookupType('rego')}
-            className={`flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 text-sm ${
+            className={`flex-1 py-4 md:py-3 px-4 rounded-md font-medium transition-all duration-200 text-base md:text-sm ${
               lookupType === 'rego'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
@@ -99,7 +99,7 @@ export default function VehicleLookupFormWithPreview() {
           <button
             type="button"
             onClick={() => setLookupType('vin')}
-            className={`flex-1 py-3 px-4 rounded-md font-medium transition-all duration-200 text-sm ${
+            className={`flex-1 py-4 md:py-3 px-4 rounded-md font-medium transition-all duration-200 text-base md:text-sm ${
               lookupType === 'vin'
                 ? 'bg-white text-blue-600 shadow-sm'
                 : 'text-gray-600 hover:text-gray-900'
@@ -121,7 +121,8 @@ export default function VehicleLookupFormWithPreview() {
               value={vin}
               onChange={(e) => setVin(e.target.value.toUpperCase())}
               placeholder="Enter 17-character VIN"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-mono text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
+              inputMode="text"
+              className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-mono text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
               maxLength={17}
             />
             <p className="mt-2 text-xs text-gray-500 text-center">
@@ -143,7 +144,8 @@ export default function VehicleLookupFormWithPreview() {
                 value={rego}
                 onChange={(e) => setRego(e.target.value.toUpperCase())}
                 placeholder="e.g., ABC123"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-bold text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
+                inputMode="text"
+                className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-bold text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
                 maxLength={7}
               />
             </div>
@@ -155,7 +157,7 @@ export default function VehicleLookupFormWithPreview() {
                 id="state"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 transition-all duration-200"
+                className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-900 text-lg md:text-base transition-all duration-200"
               >
                 <option value="">Select State</option>
                 <option value="NSW">NSW</option>
@@ -175,17 +177,19 @@ export default function VehicleLookupFormWithPreview() {
         <button
           type="submit"
           disabled={isScanning || (lookupType === 'rego' && (!rego || !state)) || (lookupType === 'vin' && !vin)}
-          className="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-semibold text-lg flex items-center justify-center space-x-2 shadow-sm"
+          className="w-full bg-blue-600 text-white py-5 md:py-4 px-6 rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-bold text-xl md:text-lg flex items-center justify-center space-x-2 shadow-lg"
         >
           {isScanning ? (
             <>
-              <Loader2 className="h-5 w-5 animate-spin" />
-              <span>Searching Official Database...</span>
+              <Loader2 className="h-6 w-6 md:h-5 md:w-5 animate-spin" />
+              <span className="md:hidden">Searching...</span>
+              <span className="hidden md:inline">Searching Official Database...</span>
             </>
           ) : (
             <>
-              <Search className="h-5 w-5" />
-              <span>Check Now - Before It's Too Late</span>
+              <Search className="h-6 w-6 md:h-5 md:w-5" />
+              <span className="md:hidden">Check This Car</span>
+              <span className="hidden md:inline">Check Now - Before It's Too Late</span>
             </>
           )}
         </button>

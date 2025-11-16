@@ -160,35 +160,35 @@ function CheckoutPageContent() {
             </Link>
           </div>
 
-          {/* Progress Indicator */}
+          {/* Progress Indicator - Simplified for mobile */}
           <div className="mt-6">
-            <div className="flex items-center justify-center space-x-8">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-5 w-5 text-white" />
+            <div className="flex items-center justify-center space-x-3 md:space-x-8">
+              <div className="flex items-center space-x-1 md:space-x-2">
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <CheckCircle className="h-3 w-3 md:h-5 md:w-5 text-white" />
                 </div>
-                <span className="text-blue-600 font-semibold">Vehicle Details</span>
+                <span className="text-blue-600 font-semibold text-xs md:text-base hidden sm:inline">Vehicle Details</span>
               </div>
-              <div className="h-px bg-blue-600 w-16"></div>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
-                  <CheckCircle className="h-5 w-5 text-white" />
+              <div className="h-px bg-blue-600 w-8 md:w-16"></div>
+              <div className="flex items-center space-x-1 md:space-x-2">
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                  <CheckCircle className="h-3 w-3 md:h-5 md:w-5 text-white" />
                 </div>
-                <span className="text-blue-600 font-semibold">Choose Plan</span>
+                <span className="text-blue-600 font-semibold text-xs md:text-base hidden sm:inline">Choose Plan</span>
               </div>
-              <div className="h-px bg-blue-600 w-16"></div>
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center">
-                  <CreditCard className="h-5 w-5 text-gray-500" />
+              <div className="h-px bg-blue-600 w-8 md:w-16"></div>
+              <div className="flex items-center space-x-1 md:space-x-2">
+                <div className="w-6 h-6 md:w-8 md:h-8 bg-gray-300 rounded-full flex items-center justify-center">
+                  <CreditCard className="h-3 w-3 md:h-5 md:w-5 text-gray-500" />
                 </div>
-                <span className="text-gray-500 font-semibold">Payment</span>
+                <span className="text-gray-500 font-semibold text-xs md:text-base hidden sm:inline">Payment</span>
               </div>
             </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+      <div className="container mx-auto px-4 py-6 md:py-12 bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
         <div className="max-w-4xl mx-auto">
           {/* Vehicle Information */}
           <motion.div
@@ -310,11 +310,11 @@ function CheckoutPageContent() {
                 <div className="text-center">
                   <button
                     onClick={scrollToEmailSection}
-                    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white py-4 px-8 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 font-bold text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                    className="bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 md:py-4 px-8 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 font-bold text-xl md:text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
-                    <Car className="h-6 w-6" />
+                    <Car className="h-7 w-7 md:h-6 md:w-6" />
                     <span>Get Report Now</span>
-                    <ArrowRight className="h-5 w-5" />
+                    <ArrowRight className="h-6 w-6 md:h-5 md:w-5" />
                   </button>
                 </div>
               </div>
@@ -421,7 +421,8 @@ function CheckoutPageContent() {
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
                     placeholder="your.email@example.com"
-                    className="w-full px-6 py-4 border-2 border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 transition-all duration-200 text-lg"
+                    inputMode="email"
+                    className="w-full px-6 py-5 md:py-4 border-2 border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 transition-all duration-200 text-xl md:text-lg"
                     required
                     autoComplete="email"
                   />
@@ -446,11 +447,11 @@ function CheckoutPageContent() {
               <div className="max-w-lg mx-auto">
                 <button
                   disabled
-                  className="bg-gray-400 text-white py-4 px-12 rounded-xl cursor-not-allowed transition-all duration-300 font-semibold text-lg flex items-center space-x-3 mx-auto shadow-lg mb-4"
+                  className="bg-gray-400 text-white py-5 md:py-4 px-8 md:px-12 rounded-xl cursor-not-allowed transition-all duration-300 font-bold text-xl md:text-lg flex items-center space-x-3 mx-auto shadow-lg mb-4"
                 >
-                  <CreditCard className="h-6 w-6" />
+                  <CreditCard className="h-7 w-7 md:h-6 md:w-6" />
                   <span>Enter Email First</span>
-                  <Lock className="h-5 w-5" />
+                  <Lock className="h-6 w-6 md:h-5 md:w-5" />
                 </button>
                 <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4">
                   <p className="text-red-700 font-bold">⚠️ EMAIL REQUIRED</p>
@@ -461,20 +462,25 @@ function CheckoutPageContent() {
               <button
                 onClick={handlePurchase}
                 disabled={isCreatingPayment}
-                className="bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-12 rounded-xl hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-semibold text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
+                className="bg-gradient-to-r from-green-600 to-green-700 text-white py-5 md:py-4 px-8 md:px-12 rounded-xl hover:from-green-700 hover:to-green-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-xl md:text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
               >
-                <CreditCard className="h-6 w-6" />
+                <CreditCard className="h-7 w-7 md:h-6 md:w-6" />
                 <span>
                   {isCreatingPayment
-                    ? 'Preparing Checkout...'
-                    : '🚨 Get Protected Now - Only $34.99'
+                    ? 'Preparing...'
+                    : (
+                      <>
+                        <span className="md:hidden">Get Report - $34.99</span>
+                        <span className="hidden md:inline">🚨 Get Protected Now - Only $34.99</span>
+                      </>
+                    )
                   }
                 </span>
-                <Lock className="h-5 w-5" />
+                <Lock className="h-6 w-6 md:h-5 md:w-5" />
               </button>
             )}
 
-            <div className="mt-6 flex items-center justify-center space-x-8 text-sm text-gray-600">
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 md:gap-8 text-xs md:text-sm text-gray-600">
               <div className="flex items-center space-x-2">
                 <Lock className="h-4 w-4" />
                 <span>Secure Checkout</span>
