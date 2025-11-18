@@ -24,7 +24,18 @@ export default function TermsPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
         <p className="text-gray-600 mb-8">Last updated: November 18, 2024</p>
 
-        <div className="bg-white rounded-xl shadow-sm p-8 prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-900 prose-li:text-gray-900 prose-strong:text-gray-900">
+        <div className="bg-white rounded-xl shadow-sm p-8">
+          <style jsx>{`
+            h2 { font-size: 1.75rem; font-weight: bold; color: #000; margin-top: 2rem; margin-bottom: 1rem; }
+            h3 { font-size: 1.25rem; font-weight: bold; color: #000; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+            p { color: #000; margin-bottom: 1rem; font-size: 1.125rem; line-height: 1.75; }
+            ul { color: #000; margin-bottom: 1rem; margin-left: 1.5rem; list-style-type: disc; }
+            li { color: #000; margin-bottom: 0.5rem; font-size: 1.125rem; }
+            strong { color: #000; font-weight: 600; }
+            a { color: #2563eb; text-decoration: underline; }
+            a:hover { color: #1d4ed8; }
+          `}</style>
+
           <h2>1. Agreement to Terms</h2>
           <p>
             By accessing and using Car Verify ("the Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, please do not use our Service.
