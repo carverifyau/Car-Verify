@@ -224,13 +224,13 @@ function CheckoutPageContent() {
           >
             <div className="relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold whitespace-nowrap">
                   🔒 COMPLETE PROTECTION REPORT
                 </span>
               </div>
-              <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-8">
+              <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
                 <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-2">Comprehensive Vehicle Report</h3>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Comprehensive Vehicle Report</h3>
                   <div className="text-gray-600">One-time payment • Instant delivery</div>
                 </div>
 
