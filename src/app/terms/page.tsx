@@ -1,14 +1,17 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-
-export const metadata = {
-  title: 'Terms of Service | Car Verify Australia',
-  description: 'Terms of Service for Car Verify - Rules and guidelines for using our PPSR checking service.',
-}
+import Head from 'next/head'
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Head>
+        <title>Terms of Service | Car Verify Australia</title>
+        <meta name="description" content="Terms of Service for Car Verify - Rules and guidelines for using our PPSR checking service." />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -240,5 +243,6 @@ export default function TermsPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

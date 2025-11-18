@@ -1,14 +1,17 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
-
-export const metadata = {
-  title: 'Privacy Policy | Car Verify Australia',
-  description: 'Privacy Policy for Car Verify - How we collect, use, and protect your personal information.',
-}
+import Head from 'next/head'
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <>
+      <Head>
+        <title>Privacy Policy | Car Verify Australia</title>
+        <meta name="description" content="Privacy Policy for Car Verify - How we collect, use, and protect your personal information." />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
       {/* Navigation */}
       <div className="bg-white shadow-sm">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -183,5 +186,6 @@ export default function PrivacyPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }
