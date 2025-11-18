@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         <h1 className="text-4xl font-bold text-gray-900 mb-4">Privacy Policy</h1>
         <p className="text-gray-600 mb-8">Last updated: November 18, 2024</p>
 
-        <div className="bg-white rounded-xl shadow-sm p-8 prose prose-lg max-w-none">
+        <div className="bg-white rounded-xl shadow-sm p-8 prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-900 prose-li:text-gray-900 prose-strong:text-gray-900">
           <h2>1. Introduction</h2>
           <p>
             Car Verify ("we", "our", or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our PPSR vehicle checking service.
