@@ -60,10 +60,10 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'aud',
             product_data: {
-              name: 'Comprehensive Vehicle Report',
-              description: 'Complete vehicle history including PPSR, write-off history, market valuation and more',
+              name: 'Official PPSR Check',
+              description: 'Official PPSR certificate - Finance owing, stolen status, and write-off history',
             },
-            unit_amount: 3499, // $34.99 in cents
+            unit_amount: 1499, // $14.99 in cents
           },
           quantity: 1,
         },

@@ -225,68 +225,49 @@ function CheckoutPageContent() {
             <div className="relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold whitespace-nowrap">
-                  🔒 COMPLETE PROTECTION REPORT
+                  🔒 OFFICIAL PPSR CHECK - $14.99
                 </span>
               </div>
               <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Comprehensive Vehicle Report</h3>
-                  <div className="text-gray-600">One-time payment • Instant delivery</div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Official PPSR Check</h3>
+                  <div className="text-blue-600 font-bold text-2xl mb-2">$14.99</div>
+                  <div className="text-gray-600">One-time payment • Instant certificate</div>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-4 mb-6">
-                  <div className="space-y-3">
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Official PPSR Certificate</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Stolen Vehicle Check</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Write-off History & Damage</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Finance Owing Status</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Accident History Report</span>
-                    </div>
+                <div className="space-y-3 mb-6 max-w-xl mx-auto">
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">Finance Owing / Security Interests</span>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Current Market Value</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Safety Recalls & Defects</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Registration History</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">Previous Owners Count</span>
-                    </div>
-                    <div className="flex items-center text-gray-700">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
-                      <span className="font-semibold">30-Day Money Back Guarantee</span>
-                    </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">Stolen Vehicle Status</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">Write-Off History (WOVR)</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">Official PPSR Certificate (PDF)</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">Instant Email Delivery</span>
+                  </div>
+                  <div className="flex items-center text-gray-700">
+                    <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                    <span className="font-semibold">30-Day Money Back Guarantee</span>
                   </div>
                 </div>
 
                 <div className="text-center bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
                   <div className="text-green-600 font-bold text-lg">
-                    ✅ Save thousands by avoiding problem vehicles
+                    ✅ Don't Inherit Someone Else's Debt
                   </div>
                   <div className="text-gray-600 text-sm mt-1">
-                    Complete protection from stolen cars, write-offs, and hidden damage
+                    Official PPSR check reveals finance owing, stolen status, and write-offs
                   </div>
                 </div>
 
@@ -313,7 +294,7 @@ function CheckoutPageContent() {
                     className="bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 md:py-4 px-8 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 font-bold text-xl md:text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
                     <Car className="h-7 w-7 md:h-6 md:w-6" />
-                    <span>Get Report Now</span>
+                    <span>Get PPSR Check - $14.99</span>
                     <ArrowRight className="h-6 w-6 md:h-5 md:w-5" />
                   </button>
                 </div>
@@ -470,8 +451,8 @@ function CheckoutPageContent() {
                     ? 'Preparing...'
                     : (
                       <>
-                        <span className="md:hidden">Get Report - $34.99</span>
-                        <span className="hidden md:inline">🚨 Get Protected Now - Only $34.99</span>
+                        <span className="md:hidden">Get PPSR Check - $14.99</span>
+                        <span className="hidden md:inline">Get Official PPSR Check - $14.99</span>
                       </>
                     )
                   }

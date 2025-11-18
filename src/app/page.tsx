@@ -62,20 +62,19 @@ export default function Home() {
               </div>
 
               <h1 className="text-3xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                Don't Buy a Car Without
-                <span className="text-red-600"> Checking First</span>
+                Official PPSR Check
+                <span className="text-blue-600"> - Just $14.99</span>
               </h1>
 
               <p className="text-lg md:text-xl text-gray-700 mb-6 max-w-3xl mx-auto leading-relaxed font-medium">
-                <span className="text-red-600 font-bold">1 in 4 cars</span> have hidden problems: stolen history, money owing, or write-off damage.
-                Get the truth before you buy.
+                Get your <span className="text-blue-600 font-bold">official PPSR certificate</span> instantly. Check for finance owing, stolen status, and write-off history before you buy.
               </p>
 
-              <div className="bg-yellow-100 border-l-4 border-yellow-500 p-4 mb-8 max-w-2xl mx-auto">
+              <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-8 max-w-2xl mx-auto">
                 <div className="flex items-center">
-                  <AlertTriangle className="h-5 w-5 text-yellow-600 mr-2" />
-                  <p className="text-yellow-800 font-semibold text-sm">
-                    <strong>WARNING:</strong> Buying without checking could cost you thousands. Reports take 30 seconds.
+                  <AlertTriangle className="h-5 w-5 text-red-600 mr-2" />
+                  <p className="text-red-800 font-semibold text-sm">
+                    <strong>WARNING:</strong> 1 in 4 cars have money owing. Don't inherit someone else's debt - check first.
                   </p>
                 </div>
               </div>

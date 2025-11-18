@@ -188,8 +188,8 @@ export default function VehicleLookupFormWithPreview() {
           ) : (
             <>
               <Search className="h-6 w-6 md:h-5 md:w-5" />
-              <span className="md:hidden">Check This Car</span>
-              <span className="hidden md:inline">Check Now - Before It's Too Late</span>
+              <span className="md:hidden">Get PPSR Check - $14.99</span>
+              <span className="hidden md:inline">Get Official PPSR Check - $14.99</span>
             </>
           )}
         </button>

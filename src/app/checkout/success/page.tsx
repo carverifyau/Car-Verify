@@ -99,7 +99,7 @@ function CheckoutSuccessContent() {
             transition={{ delay: 0.4 }}
             className="text-xl text-white/80 mb-8"
           >
-            Your vehicle report request has been received and is now in our processing queue.
+            Your PPSR check request has been received and is now in our processing queue.
           </motion.p>
 
           {/* Process Information */}
@@ -125,9 +125,9 @@ function CheckoutSuccessContent() {
               <div className="flex items-start space-x-4">
                 <UserGroupIcon className="w-6 h-6 text-green-400 mt-1 flex-shrink-0" />
                 <div className="text-left">
-                  <h3 className="font-medium text-white">Expert Review</h3>
+                  <h3 className="font-medium text-white">PPSR Check</h3>
                   <p className="text-gray-300 text-sm">
-                    Your vehicle will be manually checked against PPSR, NEVDIS, and pricing databases by our experienced team
+                    Your vehicle will be checked against the official PPSR database for finance, stolen status, and write-offs
                   </p>
                 </div>
               </div>
@@ -137,7 +137,7 @@ function CheckoutSuccessContent() {
                 <div className="text-left">
                   <h3 className="font-medium text-white">Email Delivery</h3>
                   <p className="text-gray-300 text-sm">
-                    You'll receive your comprehensive vehicle report via email once processing is complete
+                    You'll receive your official PPSR certificate via email once processing is complete
                   </p>
                 </div>
               </div>
