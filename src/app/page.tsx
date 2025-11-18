@@ -63,7 +63,7 @@ export default function Home() {
 
               <h1 className="text-3xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
                 Official PPSR Check
-                <span className="text-blue-600"> - Just $14.99</span>
+                <span className="text-red-600"> - Before You Buy</span>
               </h1>
 
               <p className="text-lg md:text-xl text-gray-700 mb-6 max-w-3xl mx-auto leading-relaxed font-medium">
