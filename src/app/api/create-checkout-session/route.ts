@@ -27,7 +27,22 @@ const createCheckoutSessionSchema = z.object({
     vin: z.string().optional(),
     rego: z.string().optional(),
     state: z.string().optional(),
-  }),
+  }).refine(
+    (data) => {
+      // If type is 'rego', both rego and state are required
+      if (data.type === 'rego') {
+        return data.rego && data.rego.trim() !== '' && data.state && data.state.trim() !== ''
+      }
+      // If type is 'vin', vin is required
+      if (data.type === 'vin') {
+        return data.vin && data.vin.trim() !== ''
+      }
+      return false
+    },
+    {
+      message: 'For rego lookups, both registration and state are required. For VIN lookups, VIN is required.',
+    }
+  ),
   reportType: z.enum(['standard', 'premium', 'comprehensive']),
 })
 
