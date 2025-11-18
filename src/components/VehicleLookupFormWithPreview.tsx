@@ -33,27 +33,9 @@ export default function VehicleLookupFormWithPreview() {
       return
     }
 
-    // Validate rego format (alphanumeric, 3-7 characters)
-    if (lookupType === 'rego') {
-      const regoPattern = /^[A-Z0-9]{3,7}$/
-      if (!regoPattern.test(rego)) {
-        alert('⚠️ Invalid registration format.\n\nPlease enter a valid registration number (letters and numbers only, 3-7 characters).\n\nExample: ABC123')
-        return
-      }
-    }
-
     if (lookupType === 'vin' && !vin) {
       alert('Please enter VIN number')
       return
-    }
-
-    // Validate VIN format (17 characters, alphanumeric, no I, O, Q)
-    if (lookupType === 'vin') {
-      const vinPattern = /^[A-HJ-NPR-Z0-9]{17}$/
-      if (!vinPattern.test(vin) || vin.length !== 17) {
-        alert('⚠️ Invalid VIN format.\n\nVIN must be exactly 17 characters (letters and numbers, excluding I, O, Q).\n\nPlease check your VIN and try again.')
-        return
-      }
     }
 
     // Track form submission
@@ -143,13 +125,12 @@ export default function VehicleLookupFormWithPreview() {
               id="vin"
               value={vin}
               onChange={(e) => setVin(e.target.value.toUpperCase())}
-              placeholder="Enter 17-character VIN"
+              placeholder="Enter VIN"
               inputMode="text"
               className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-mono text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
-              maxLength={17}
             />
             <p className="mt-2 text-xs text-gray-500 text-center">
-              17 characters, no spaces (found on dashboard or driver's door)
+              Found on dashboard or driver's door
             </p>
           </div>
         )}
@@ -165,15 +146,10 @@ export default function VehicleLookupFormWithPreview() {
                 type="text"
                 id="rego"
                 value={rego}
-                onChange={(e) => {
-                  const value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '')
-                  setRego(value)
-                }}
+                onChange={(e) => setRego(e.target.value.toUpperCase())}
                 placeholder="e.g., ABC123"
                 inputMode="text"
                 className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-bold text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
-                maxLength={7}
-                minLength={3}
               />
             </div>
             <div>
