@@ -140,14 +140,14 @@ export default function BlogPage() {
             Don't Risk It - Check Before You Buy
           </h2>
           <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-            Reading about car buying dangers? Take action now with a comprehensive vehicle check.
-            Get the protection these articles recommend.
+            Reading about car buying dangers? Take action now with an official PPSR check.
+            Get the essential protection these articles recommend.
           </p>
           <Link
             href="/"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors"
           >
-            🛡️ Check My Vehicle Now - $34.99
+            🛡️ Get PPSR Certificate - $14.99
           </Link>
         </div>
       </div>

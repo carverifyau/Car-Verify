@@ -339,7 +339,7 @@ export default function WhatToCheckBuyingUsedCarPage() {
 
             <h3 className="text-black text-xl font-semibold mt-6 mb-3">Research Market Value</h3>
             <ul className="space-y-2 mb-4">
-              <li><strong>RedBook/GlassGuide:</strong> Get an official market valuation for the exact make/model/year</li>
+              <li><strong>RedBook/GlassGuide:</strong> Professional valuation services show fair market price</li>
               <li><strong>Similar listings:</strong> Check Carsales, Facebook Marketplace for comparable vehicles</li>
               <li><strong>Dealer vs private:</strong> Private sales should be 10-15% cheaper than dealer prices</li>
             </ul>
@@ -353,10 +353,10 @@ export default function WhatToCheckBuyingUsedCarPage() {
             </ul>
 
             <div className="text-center my-8">
-              <Link href="/checkout" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
-                Get Market Valuation + PPSR - $34.99
+              <Link href="/" className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 inline-block">
+                Get Official PPSR Check - $14.99
               </Link>
-              <p className="text-sm text-black mt-2">Know exactly what the car is worth</p>
+              <p className="text-sm text-black mt-2">Essential protection before you buy</p>
             </div>
           </div>
         </section>
@@ -504,10 +504,10 @@ export default function WhatToCheckBuyingUsedCarPage() {
           <h2 className="text-black text-3xl font-bold mb-6">Conclusion: Knowledge is Your Best Protection</h2>
           <div className="prose prose-lg max-w-none text-black">
             <p className="mb-4">
-              Buying a used car in Australia doesn't have to be risky. By following this comprehensive checklist, you'll avoid the most common pitfalls that cost buyers thousands of dollars every year.
+              Buying a used car in Australia doesn't have to be risky. By following this checklist, you'll avoid the most common pitfalls that cost buyers thousands of dollars every year.
             </p>
             <p className="mb-4">
-              Remember: the most important step is the PPSR check. For just $34.99, you get legal protection against inheriting someone else's $15,400 debt, buying a stolen vehicle, or purchasing a written-off car. It's the cheapest insurance policy you can buy.
+              Remember: the most important step is the PPSR check. For just $14.99, you get legal protection against inheriting someone else's $15,400 debt, buying a stolen vehicle, or purchasing a written-off car. It's the cheapest insurance policy you can buy.
             </p>
             <p>
               Take your time, do your due diligence, and don't let sellers pressure you into rushing. There will always be another car, but you can't undo a bad purchase once you've signed the papers.
@@ -517,14 +517,14 @@ export default function WhatToCheckBuyingUsedCarPage() {
 
         {/* Final CTA */}
         <div className="bg-blue-600 rounded-xl p-8 text-center text-white">
-          <h2 className="text-black text-3xl font-bold mb-4">Start Your Used Car Check Today</h2>
+          <h2 className="text-white text-3xl font-bold mb-4">Protect Yourself Before You Buy</h2>
           <p className="text-xl mb-6 text-blue-100">
-            Get an official PPSR check plus comprehensive market valuation for any Australian vehicle
+            Get an official PPSR certificate for any Australian vehicle - delivered instantly
           </p>
-          <Link href="/checkout" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 inline-block">
-            Run PPSR Check + Get Valuation - $34.99
+          <Link href="/" className="bg-white text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 inline-block">
+            Get Official PPSR Certificate - $14.99
           </Link>
-          <p className="text-sm text-blue-100 mt-4">✅ Instant results • ✅ Official certificate • ✅ Market value included</p>
+          <p className="text-sm text-blue-100 mt-4">✅ Finance Check • ✅ Write-off History • ✅ Stolen Check • ✅ Official Certificate</p>
         </div>
       </article>
     </div>

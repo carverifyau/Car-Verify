@@ -343,20 +343,20 @@ export default function CarBuyingScamsPage() {
 
           <div className="bg-red-600 rounded-xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white mb-4">
-              🛡️ Get Full Scam Protection Now
+              🛡️ Protect Yourself with Official PPSR Check
             </h3>
             <p className="text-red-100 mb-6 max-w-2xl mx-auto">
-              <span className="font-bold">$35 protection vs $8,500 average scam loss.</span>
-              Professional vehicle verification stops scammers in their tracks.
+              <span className="font-bold">$14.99 protection vs $8,500 average scam loss.</span>
+              Official PPSR certificate stops scammers in their tracks.
             </p>
             <Link
               href="/"
               className="inline-block bg-white text-red-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg"
             >
-              🚨 VERIFY VEHICLE NOW - $34.99
+              🚨 GET PPSR CERTIFICATE - $14.99
             </Link>
             <div className="text-red-200 text-sm mt-4">
-              ✅ Scam Detection • ✅ PPSR Check • ✅ Stolen Verification • ✅ Professional Report
+              ✅ Finance Check • ✅ Write-off History • ✅ Stolen Verification • ✅ Official Certificate
             </div>
           </div>
         </div>

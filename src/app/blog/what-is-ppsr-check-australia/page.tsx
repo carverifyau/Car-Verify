@@ -209,40 +209,32 @@ export default function WhatIsPPSRCheckPage() {
                 <ul className="list-disc pl-6 text-yellow-700 mt-3 space-y-1">
                   <li>Searching wrong VIN or registration details</li>
                   <li>Misinterpreting complex legal documents</li>
-                  <li>Missing additional databases (stolen, market value)</li>
+                  <li>Missing stolen vehicle databases</li>
                   <li>Not getting the official certificate for legal protection</li>
                 </ul>
               </div>
             </div>
           </div>
 
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">Professional vs DIY PPSR Checks</h3>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">Smart Way to Get Your PPSR Check</h3>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-red-50 p-6 rounded-lg">
-              <h4 className="font-bold text-red-800 mb-3">🔴 DIY Government Site ($25)</h4>
-              <ul className="text-red-700 space-y-2 text-sm">
-                <li>• Only checks PPSR database</li>
-                <li>• Complex legal language</li>
-                <li>• No interpretation help</li>
-                <li>• Easy to make search errors</li>
-                <li>• No stolen vehicle check</li>
-                <li>• No market valuation</li>
-                <li>• Risk of missing critical information</li>
-              </ul>
-            </div>
-
-            <div className="bg-green-50 p-6 rounded-lg">
-              <h4 className="font-bold text-green-800 mb-3">🟢 Professional Service ($35)</h4>
-              <ul className="text-green-700 space-y-2 text-sm">
-                <li>• PPSR + 50+ other databases</li>
-                <li>• Plain English explanations</li>
-                <li>• Expert interpretation included</li>
-                <li>• Multiple search methods</li>
-                <li>• Stolen vehicle verification</li>
-                <li>• Market valuation included</li>
-                <li>• Comprehensive protection report</li>
-              </ul>
+          <div className="bg-green-50 p-6 rounded-lg border-2 border-green-300 mb-8">
+            <h4 className="font-bold text-green-800 mb-3 text-xl">🟢 Official PPSR Certificate - Just $14.99</h4>
+            <p className="text-green-700 mb-4">
+              Get your official government PPSR certificate delivered instantly:
+            </p>
+            <ul className="text-green-700 space-y-2 text-sm">
+              <li>✅ Official PPSR database search</li>
+              <li>✅ Finance owing status - know exactly what's owed</li>
+              <li>✅ Write-off history - see accident damage records</li>
+              <li>✅ Stolen vehicle check - verify it's not stolen</li>
+              <li>✅ Legal protection certificate - official government document</li>
+              <li>✅ Delivered to your email in minutes</li>
+            </ul>
+            <div className="mt-4 bg-green-100 p-3 rounded">
+              <p className="text-green-800 font-bold">
+                💰 Save yourself from the $15,400 average debt - for just $14.99
+              </p>
             </div>
           </div>
 
@@ -271,7 +263,7 @@ export default function WhatIsPPSRCheckPage() {
             <div className="grid md:grid-cols-2 gap-6">
               <div>
                 <h4 className="font-semibold text-gray-700 mb-2">Cost of PPSR Check:</h4>
-                <p className="text-3xl font-bold text-green-600">$35</p>
+                <p className="text-3xl font-bold text-green-600">$14.99</p>
               </div>
               <div>
                 <h4 className="font-semibold text-gray-700 mb-2">Average debt avoided:</h4>
@@ -279,25 +271,25 @@ export default function WhatIsPPSRCheckPage() {
               </div>
             </div>
             <p className="text-center text-gray-600 mt-4 font-semibold">
-              Return on investment: <span className="text-green-600">44,000%</span>
+              Return on investment: <span className="text-green-600">102,000%</span>
             </p>
           </div>
 
           <div className="bg-green-600 rounded-xl p-8 text-center">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Protect Yourself with Professional PPSR Check
+              Get Your Official PPSR Certificate Now
             </h3>
             <p className="text-green-100 mb-6">
-              Don't risk inheriting someone else's debt. Get comprehensive protection with our expert vehicle report.
+              Don't risk inheriting someone else's debt. Get your official PPSR certificate delivered in minutes.
             </p>
             <Link
               href="/"
               className="inline-block bg-white text-green-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg"
             >
-              🛡️ GET PPSR CHECK + FULL REPORT - $34.99
+              🛡️ GET OFFICIAL PPSR CERTIFICATE - $14.99
             </Link>
             <div className="text-green-200 text-sm mt-4">
-              ✅ Official PPSR Certificate • ✅ Stolen Check • ✅ Market Value • ✅ Expert Analysis
+              ✅ Finance Check • ✅ Write-off History • ✅ Stolen Vehicle Check • ✅ Official Certificate
             </div>
           </div>
         </div>

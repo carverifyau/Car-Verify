@@ -234,8 +234,8 @@ export default function RedFlagsBuyingUsedCarsPage() {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">The #1 Protection Strategy</h2>
 
           <p className="text-lg mb-6">
-            <span className="font-bold">Every single red flag above can be caught with a professional vehicle check.</span>
-            For $34.99, you get:
+            <span className="font-bold">Every single red flag above can be caught with an official PPSR check.</span>
+            For just $14.99, you get:
           </p>
 
           <div className="grid md:grid-cols-2 gap-6 mb-8">
@@ -245,9 +245,9 @@ export default function RedFlagsBuyingUsedCarsPage() {
                 <li>• Finance still owing (PPSR check)</li>
                 <li>• Stolen vehicle status</li>
                 <li>• Write-off history</li>
-                <li>• True market value</li>
-                <li>• Registration history</li>
-                <li>• Safety compliance</li>
+                <li>• Previous accident damage</li>
+                <li>• Registration encumbrances</li>
+                <li>• Legal ownership issues</li>
               </ul>
             </div>
             <div className="bg-blue-50 p-6 rounded-lg">
@@ -255,10 +255,10 @@ export default function RedFlagsBuyingUsedCarsPage() {
               <ul className="text-blue-700 space-y-2">
                 <li>• Average $15,400 finance debt</li>
                 <li>• $8,000+ write-off losses</li>
-                <li>• $4,200 overpriced purchases</li>
+                <li>• Thousands in legal fees</li>
                 <li>• Criminal charges (stolen cars)</li>
                 <li>• Repair nightmares</li>
-                <li>• Legal complications</li>
+                <li>• Repossession trauma</li>
               </ul>
             </div>
           </div>
@@ -286,7 +286,7 @@ export default function RedFlagsBuyingUsedCarsPage() {
           </p>
 
           <p className="text-lg mb-8">
-            The choice is simple: spend $35 on protection, or risk losing $20,000+ to scammers and hidden problems.
+            The choice is simple: spend $14.99 on protection, or risk losing $20,000+ to scammers and hidden problems.
           </p>
 
           <div className="bg-blue-600 rounded-xl p-8 text-center">
@@ -294,16 +294,16 @@ export default function RedFlagsBuyingUsedCarsPage() {
               Smart Buyers Check First
             </h3>
             <p className="text-blue-100 mb-6">
-              Don't let red flags become expensive lessons. Get the professional protection you need.
+              Don't let red flags become expensive lessons. Get your official PPSR certificate now.
             </p>
             <Link
               href="/"
               className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-50 transition-colors shadow-lg"
             >
-              🚨 CHECK MY VEHICLE NOW - $34.99
+              🚨 GET PPSR CERTIFICATE - $14.99
             </Link>
             <div className="text-blue-200 text-sm mt-4">
-              ✅ Instant Results • ✅ Government Databases • ✅ Money-Back Guarantee
+              ✅ Finance Check • ✅ Write-off History • ✅ Stolen Check • ✅ Official Certificate
             </div>
           </div>
         </div>
