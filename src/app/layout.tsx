@@ -66,24 +66,22 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* Google Analytics 4 & Google Ads */}
+        {/* Google Ads Conversion Tracking */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17728735517"
           strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-ads" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
 
-            // Google Analytics 4
-            gtag('config', 'G-XXXXXXXXXX', {
-              page_path: window.location.pathname,
-            });
-
             // Google Ads Conversion Tracking
             gtag('config', 'AW-17728735517');
+
+            // Google Analytics 4 (add your GA4 measurement ID here when ready)
+            // gtag('config', 'G-XXXXXXXXXX');
           `}
         </Script>
 
