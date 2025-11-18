@@ -233,18 +233,37 @@ function PPSRAdminDashboard() {
                   {/* Step 1: Order Info */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                     <h3 className="font-bold text-blue-900 mb-3">Step 1: Order Information</h3>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Vehicle:</span>
-                        <span className="font-medium">{selectedOrder.vin || `${selectedOrder.rego} - ${selectedOrder.state}`}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Customer:</span>
-                        <span className="font-medium">{selectedOrder.customerName}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Email:</span>
-                        <span className="font-medium">{selectedOrder.customerEmail}</span>
+                    <div className="space-y-3">
+                      {/* Vehicle Info - Easy to copy */}
+                      {selectedOrder.vin ? (
+                        <div>
+                          <div className="text-xs text-gray-600 mb-1">VIN Number:</div>
+                          <div className="bg-white border border-blue-300 rounded p-3 font-mono text-lg font-bold text-gray-900 tracking-wider select-all">
+                            {selectedOrder.vin}
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="grid grid-cols-2 gap-3">
+                          <div>
+                            <div className="text-xs text-gray-600 mb-1">Registration:</div>
+                            <div className="bg-white border border-blue-300 rounded p-3 font-bold text-lg text-gray-900 tracking-wider select-all">
+                              {selectedOrder.rego}
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-xs text-gray-600 mb-1">State:</div>
+                            <div className="bg-white border border-blue-300 rounded p-3 font-bold text-lg text-gray-900 select-all">
+                              {selectedOrder.state}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Customer Info */}
+                      <div className="pt-2 border-t border-blue-200">
+                        <div className="text-xs text-gray-600 mb-1">Customer:</div>
+                        <div className="text-sm font-medium text-gray-900">{selectedOrder.customerName}</div>
+                        <div className="text-sm text-gray-600 select-all">{selectedOrder.customerEmail}</div>
                       </div>
                     </div>
                   </div>
