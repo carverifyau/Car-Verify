@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { ArrowRight, CheckCircle, Shield, Search, Loader2 } from 'lucide-react'
+import { analytics } from '@/lib/analytics'
 
 interface VehicleData {
   make: string;
@@ -36,6 +37,10 @@ export default function VehicleLookupFormWithPreview() {
       alert('Please enter VIN number')
       return
     }
+
+    // Track form submission
+    const vehicleId = lookupType === 'rego' ? `${rego}-${state}` : vin
+    analytics.formSubmitted(lookupType, vehicleId)
 
     // Show scanning animation
     setIsScanning(true)

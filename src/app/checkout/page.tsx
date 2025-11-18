@@ -6,6 +6,7 @@ import { CheckCircle, ArrowLeft, ArrowRight, CreditCard, Lock, Car } from 'lucid
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { STRIPE_PAYMENT_LINK } from '@/config/stripe'
+import { analytics } from '@/lib/analytics'
 
 interface VehicleInfo {
   type: 'vin' | 'rego'
@@ -47,8 +48,10 @@ function CheckoutPageContent() {
 
     if (vin) {
       setVehicleInfo({ type: 'vin', vin })
+      analytics.checkoutViewed({ type: 'vin', vin })
     } else if (rego && state) {
       setVehicleInfo({ type: 'rego', rego, state })
+      analytics.checkoutViewed({ type: 'rego', rego, state })
     }
   }, [searchParams])
 
@@ -59,6 +62,7 @@ function CheckoutPageContent() {
     }
 
     if (!customerEmail || !customerEmail.trim()) {
+      analytics.paymentButtonClicked(false)
       alert('⚠️ Email address is required to receive your report!')
       return
     }
@@ -66,10 +70,12 @@ function CheckoutPageContent() {
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(customerEmail)) {
+      analytics.paymentButtonClicked(false)
       alert('⚠️ Please enter a valid email address')
       return
     }
 
+    analytics.paymentButtonClicked(true)
     setIsCreatingPayment(true)
 
     try {
@@ -102,6 +108,7 @@ function CheckoutPageContent() {
       if (data.url) {
         // Redirect to Stripe Checkout
         console.log('Redirecting to Stripe:', data.url)
+        analytics.redirectedToStripe()
         window.location.href = data.url
       } else {
         throw new Error('No checkout URL returned from API')
@@ -231,7 +238,6 @@ function CheckoutPageContent() {
               <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
                 <div className="text-center mb-6">
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Official PPSR Check</h3>
-                  <div className="text-blue-600 font-bold text-2xl mb-2">$14.99</div>
                   <div className="text-gray-600">One-time payment • Instant certificate</div>
                 </div>
 
@@ -401,6 +407,11 @@ function CheckoutPageContent() {
                     id="customerEmail"
                     value={customerEmail}
                     onChange={(e) => setCustomerEmail(e.target.value)}
+                    onBlur={() => {
+                      if (customerEmail && customerEmail.includes('@')) {
+                        analytics.emailEntered()
+                      }
+                    }}
                     placeholder="your.email@example.com"
                     inputMode="email"
                     className="w-full px-6 py-5 md:py-4 border-2 border-gray-300 rounded-lg focus:ring-4 focus:ring-blue-500 focus:border-blue-500 text-gray-900 placeholder-gray-500 transition-all duration-200 text-xl md:text-lg"
