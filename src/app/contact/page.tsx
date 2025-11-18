@@ -35,10 +35,10 @@ export default function ContactPage() {
                     Send us an email and we'll get back to you within 24 hours.
                   </p>
                   <a
-                    href="mailto:support@car-verify.com.au"
+                    href="mailto:carverifyau@gmail.com"
                     className="text-blue-600 hover:text-blue-700 font-semibold"
                   >
-                    support@car-verify.com.au
+                    carverifyau@gmail.com
                   </a>
                 </div>
               </div>
@@ -106,7 +106,7 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-semibold text-gray-900 mb-2">I entered the wrong rego/VIN</h3>
                 <p className="text-gray-600 text-sm">
-                  Contact us immediately at support@car-verify.com.au with your order number and correct details. If we haven't processed it yet, we can update it for free.
+                  Contact us immediately at carverifyau@gmail.com with your order number and correct details. If we haven't processed it yet, we can update it for free.
                 </p>
               </div>
 
@@ -134,7 +134,7 @@ export default function ContactPage() {
 
             <div className="mt-8 bg-blue-50 border-l-4 border-blue-500 p-4">
               <p className="text-blue-900 text-sm">
-                <strong>Still have questions?</strong> Email us at support@car-verify.com.au and we'll help you out!
+                <strong>Still have questions?</strong> Email us at carverifyau@gmail.com and we'll help you out!
               </p>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function ContactPage() {
             Send us an email and we'll get back to you as soon as possible. We're here to ensure your vehicle check experience is smooth and hassle-free.
           </p>
           <a
-            href="mailto:support@car-verify.com.au"
+            href="mailto:carverifyau@gmail.com"
             className="inline-block bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors"
           >
             Email Support Team

@@ -150,7 +150,7 @@ export default function PrivacyPage() {
             If you have questions about this Privacy Policy or wish to exercise your privacy rights, please contact us:
           </p>
           <ul>
-            <li><strong>Email:</strong> support@car-verify.com.au</li>
+            <li><strong>Email:</strong> carverifyau@gmail.com</li>
             <li><strong>Website:</strong> <Link href="/contact" className="text-blue-600 hover:text-blue-700">Contact Support Page</Link></li>
           </ul>
 

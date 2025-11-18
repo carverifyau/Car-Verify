@@ -78,7 +78,7 @@ export default function TermsPage() {
 
           <h3>4.3 How to Request a Refund</h3>
           <p>
-            To request a refund, contact us at support@car-verify.com.au within 7 days of purchase. Include your order number and reason for the refund request. Refunds are processed within 5-10 business days.
+            To request a refund, contact us at carverifyau@gmail.com within 7 days of purchase. Include your order number and reason for the refund request. Refunds are processed within 5-10 business days.
           </p>
 
           <h2>5. User Responsibilities</h2>
@@ -168,7 +168,7 @@ export default function TermsPage() {
           <ul>
             <li>Check your spam/junk folder</li>
             <li>Verify you provided the correct email address</li>
-            <li>Contact us at support@car-verify.com.au</li>
+            <li>Contact us at carverifyau@gmail.com</li>
           </ul>
 
           <h2>11. Termination</h2>
@@ -189,7 +189,7 @@ export default function TermsPage() {
           <h2>14. Dispute Resolution</h2>
           <h3>14.1 Informal Resolution</h3>
           <p>
-            If you have a dispute with Car Verify, please contact us first at support@car-verify.com.au. We will attempt to resolve disputes informally before pursuing formal legal action.
+            If you have a dispute with Car Verify, please contact us first at carverifyau@gmail.com. We will attempt to resolve disputes informally before pursuing formal legal action.
           </p>
 
           <h3>14.2 Consumer Protection</h3>
@@ -216,14 +216,14 @@ export default function TermsPage() {
             For questions about these Terms of Service, please contact us:
           </p>
           <ul>
-            <li><strong>Email:</strong> support@car-verify.com.au</li>
+            <li><strong>Email:</strong> carverifyau@gmail.com</li>
             <li><strong>Website:</strong> <Link href="/contact" className="text-blue-600 hover:text-blue-700">Contact Support Page</Link></li>
           </ul>
 
           <div className="bg-green-50 border-l-4 border-green-500 p-6 mt-8">
             <p className="text-green-900 font-semibold mb-2">Questions About These Terms?</p>
             <p className="text-green-800 text-sm">
-              We're here to help! If you have any questions about these Terms of Service or need clarification, please don't hesitate to contact us at support@car-verify.com.au
+              We're here to help! If you have any questions about these Terms of Service or need clarification, please don't hesitate to contact us at carverifyau@gmail.com
             </p>
           </div>
         </div>
