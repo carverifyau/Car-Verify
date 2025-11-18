@@ -212,8 +212,8 @@ export default function Home() {
                 <div className="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
                   <FileText className="h-8 w-8 text-purple-600" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Full History</h3>
-                <p className="text-gray-600 text-sm">Registration details, recalls, and market valuation</p>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Official Certificate</h3>
+                <p className="text-gray-600 text-sm"><strong>Legal proof.</strong> Official PPSR certificate accepted by banks and legal authorities</p>
               </motion.div>
             </div>
 
@@ -225,18 +225,18 @@ export default function Home() {
               transition={{ duration: 0.6, delay: 0.5 }}
               viewport={{ once: true }}
             >
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
                 <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">99.9%</div>
-                  <div className="text-gray-600 text-sm">Data Accuracy</div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">Official</div>
+                  <div className="text-gray-600 text-sm">Government PPSR Database</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">&lt; 3s</div>
-                  <div className="text-gray-600 text-sm">Report Generation</div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">Instant</div>
+                  <div className="text-gray-600 text-sm">Certificate Delivery</div>
                 </div>
                 <div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
-                  <div className="text-gray-600 text-sm">Trusted Customers</div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">$14.99</div>
+                  <div className="text-gray-600 text-sm">One-Time Payment</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-blue-600 mb-2">24/7</div>

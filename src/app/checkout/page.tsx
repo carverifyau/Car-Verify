@@ -225,7 +225,7 @@ function CheckoutPageContent() {
             <div className="relative">
               <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 z-10">
                 <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 md:px-6 py-2 rounded-full text-xs md:text-sm font-bold whitespace-nowrap">
-                  🔒 OFFICIAL PPSR CHECK - $14.99
+                  🔒 OFFICIAL PPSR CHECK
                 </span>
               </div>
               <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
@@ -294,7 +294,7 @@ function CheckoutPageContent() {
                     className="bg-gradient-to-r from-green-500 to-emerald-600 text-white py-5 md:py-4 px-8 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 font-bold text-xl md:text-lg flex items-center space-x-3 mx-auto shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
                     <Car className="h-7 w-7 md:h-6 md:w-6" />
-                    <span>Get PPSR Check - $14.99</span>
+                    <span>Get PPSR Check Now</span>
                     <ArrowRight className="h-6 w-6 md:h-5 md:w-5" />
                   </button>
                 </div>
@@ -451,8 +451,8 @@ function CheckoutPageContent() {
                     ? 'Preparing...'
                     : (
                       <>
-                        <span className="md:hidden">Get PPSR Check - $14.99</span>
-                        <span className="hidden md:inline">Get Official PPSR Check - $14.99</span>
+                        <span className="md:hidden">Get PPSR Check Now</span>
+                        <span className="hidden md:inline">🚨 Get Official PPSR Check</span>
                       </>
                     )
                   }
