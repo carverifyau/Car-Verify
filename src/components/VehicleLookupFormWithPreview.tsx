@@ -176,37 +176,6 @@ export default function VehicleLookupFormWithPreview() {
           </div>
         )}
 
-        {/* Pricing Display */}
-        <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-500 rounded-lg p-6">
-          <div className="text-center mb-4">
-            <div className="text-5xl font-black text-green-600 mb-2">$1</div>
-            <div className="text-sm font-bold text-gray-900 uppercase tracking-wide">First PPSR Check</div>
-          </div>
-          <div className="bg-white rounded-lg p-4 mb-4">
-            <div className="flex items-start space-x-2 mb-2">
-              <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-gray-900 font-semibold">
-                Get your first PPSR certificate for just $1
-              </div>
-            </div>
-            <div className="flex items-start space-x-2 mb-2">
-              <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-gray-900 font-semibold">
-                Then $20/month for 10 PPSR checks per month
-              </div>
-            </div>
-            <div className="flex items-start space-x-2">
-              <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
-              <div className="text-sm text-gray-900 font-semibold">
-                Cancel anytime - no lock-in contract
-              </div>
-            </div>
-          </div>
-          <div className="text-xs text-gray-600 text-center leading-relaxed">
-            Perfect for buyers checking multiple cars or dealers needing regular checks
-          </div>
-        </div>
-
         {/* Search Button */}
         <button
           type="submit"
@@ -222,8 +191,8 @@ export default function VehicleLookupFormWithPreview() {
           ) : (
             <>
               <Search className="h-6 w-6 md:h-5 md:w-5" />
-              <span className="md:hidden">Start $1 Trial</span>
-              <span className="hidden md:inline">Start $1 Trial - Get PPSR Check</span>
+              <span className="md:hidden">Get PPSR Check</span>
+              <span className="hidden md:inline">Get Official PPSR Check</span>
             </>
           )}
         </button>
