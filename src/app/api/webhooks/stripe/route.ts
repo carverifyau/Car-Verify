@@ -129,22 +129,32 @@ async function createOrUpdateCustomerAccount(
 export async function POST(request: NextRequest) {
   console.log('🚀 STRIPE WEBHOOK - Processing payment')
   console.log('🚀 Timestamp:', new Date().toISOString())
-  console.log('🚀 Version: WITH-ACCOUNT-CREATION')
+  console.log('🚀 Version: WITH-ACCOUNT-CREATION-AND-SIGNATURE-VERIFICATION')
 
   try {
     const body = await request.text()
     console.log('📦 Body length:', body.length)
 
-    // ABSOLUTELY NO SIGNATURE VERIFICATION - DIRECT PROCESSING
-    let event
+    // Verify webhook signature
+    const signature = request.headers.get('stripe-signature')
+    if (!signature) {
+      console.log('❌ No signature header found')
+      return NextResponse.json({ error: 'No signature' }, { status: 400 })
+    }
+
+    let event: Stripe.Event
     try {
-      event = JSON.parse(body)
-      console.log('✅ Event parsed successfully')
+      event = stripe.webhooks.constructEvent(
+        body,
+        signature,
+        process.env.STRIPE_WEBHOOK_SECRET!
+      )
+      console.log('✅ Webhook signature verified')
       console.log('✅ Event type:', event.type)
       console.log('✅ Event ID:', event.id)
     } catch (e) {
-      console.log('❌ Failed to parse JSON:', e)
-      return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+      console.log('❌ Webhook signature verification failed:', e)
+      return NextResponse.json({ error: 'Invalid signature' }, { status: 400 })
     }
 
     if (event.type === 'checkout.session.completed') {
