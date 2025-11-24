@@ -206,6 +206,81 @@ function CheckoutPageContent() {
             </div>
           </motion.div>
 
+          {/* Urgency Statistics */}
+          <motion.div
+            className="mb-8"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <div className="p-6 bg-red-50 border border-red-200 rounded-2xl mb-6">
+              <div className="text-center text-gray-700">
+                <h3 className="text-xl font-bold mb-3 text-red-600">⚠️ Don&apos;t Risk It - Get The Facts First</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mb-4">
+                  <div className="bg-white p-3 rounded-lg border border-red-200">
+                    <div className="text-2xl font-bold text-red-600">180,000+</div>
+                    <div className="text-gray-700">Cars stolen in Australia yearly</div>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-orange-200">
+                    <div className="text-2xl font-bold text-orange-600">1 in 4</div>
+                    <div className="text-gray-700">Cars have hidden problems</div>
+                  </div>
+                  <div className="bg-white p-3 rounded-lg border border-yellow-200">
+                    <div className="text-2xl font-bold text-yellow-600">$25,000+</div>
+                    <div className="text-gray-700">Average loss when buying blind</div>
+                  </div>
+                </div>
+                <p className="text-red-600 font-bold mb-4">
+                  🚨 1 in 6 used cars has serious hidden problems
+                </p>
+
+                {/* Real Horror Stories */}
+                <div className="bg-white p-4 rounded-lg mb-4 border border-gray-200">
+                  <h4 className="text-red-600 font-bold mb-2">Recent Cases:</h4>
+                  <div className="text-left text-sm space-y-2">
+                    <div className="flex items-start space-x-2">
+                      <span className="text-red-600">•</span>
+                      <span className="text-gray-700">"Bought a $35,000 BMW, discovered it was flood damaged. Engine died after 2 weeks. Total loss." - Sarah M, Melbourne</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <span className="text-red-600">•</span>
+                      <span className="text-gray-700">"Car had $18,000 finance owing. Bank seized it from my driveway." - Mike T, Sydney</span>
+                    </div>
+                    <div className="flex items-start space-x-2">
+                      <span className="text-red-600">•</span>
+                      <span className="text-gray-700">&ldquo;&lsquo;Clean&rsquo; car turned out to be stolen. Police confiscated it, lost $22,000.&rdquo; - Emma K, Brisbane</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-gray-700 font-bold text-lg">
+                  📊 Over 65% of Australians don&apos;t check vehicle history before buying
+                </p>
+              </div>
+            </div>
+
+            {/* Trust Indicators */}
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl mb-6">
+              <div className="text-center text-gray-700">
+                <h4 className="text-lg font-bold mb-3 text-blue-600">✅ Trusted by 50,000+ Australian Car Buyers</h4>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">⭐⭐⭐⭐⭐</div>
+                    <div className="text-gray-600">"Saved me from buying a lemon. Report was detailed and instant." - David R</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">💰</div>
+                    <div className="text-gray-600">"Report revealed $15k finance owing. Dodged a massive bullet!" - Lisa H</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl mb-2">🛡️</div>
+                    <div className="text-gray-600">"Professional report helped negotiate $8k off asking price." - Tom S</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
           {!showPaymentForm ? (
             <>
               {/* Email Collection Form */}
