@@ -80,22 +80,47 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Create or get product
+    const products = await stripe.products.list({
+      limit: 1,
+    })
+
+    let product
+    if (products.data.length > 0 && products.data[0].name === 'Car Verify PPSR Subscription') {
+      product = products.data[0]
+    } else {
+      product = await stripe.products.create({
+        name: 'Car Verify PPSR Subscription',
+        description: '10 PPSR certificate checks per month',
+      })
+    }
+
+    // Create or get price for the product
+    const prices = await stripe.prices.list({
+      product: product.id,
+      limit: 1,
+    })
+
+    let price
+    if (prices.data.length > 0) {
+      price = prices.data[0]
+    } else {
+      price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: 2000, // $20
+        currency: 'aud',
+        recurring: {
+          interval: 'month',
+        },
+      })
+    }
+
     // Create subscription with payment collection
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
         {
-          price_data: {
-            currency: 'aud',
-            product_data: {
-              name: 'Car Verify PPSR Subscription',
-              description: '10 PPSR certificate checks per month',
-            },
-            unit_amount: 2000, // $20
-            recurring: {
-              interval: 'month',
-            },
-          },
+          price: price.id,
         },
       ],
       discounts: [{
@@ -106,7 +131,6 @@ export async function POST(request: NextRequest) {
         payment_method_types: ['card'],
         save_default_payment_method: 'on_subscription',
       },
-      expand: ['latest_invoice.payment_intent'],
       metadata: {
         customerEmail: validatedData.customerEmail,
         vehicleType: validatedData.vehicleInfo.type,
@@ -116,13 +140,60 @@ export async function POST(request: NextRequest) {
         reportType: validatedData.reportType,
         checksPerMonth: '10',
       },
+      expand: ['latest_invoice.payment_intent'],
     })
 
-    const invoice = subscription.latest_invoice as Stripe.Invoice
+    console.log('[SUBSCRIPTION INTENT] Subscription created:', subscription.id)
+
+    // Get the latest invoice
+    const latestInvoice = subscription.latest_invoice
+    const invoiceId = typeof latestInvoice === 'string' ? latestInvoice : latestInvoice?.id
+
+    if (!invoiceId) {
+      throw new Error('No invoice created with subscription')
+    }
+
+    // Retrieve the invoice with payment_intent expanded
+    const invoice = await stripe.invoices.retrieve(invoiceId, {
+      expand: ['payment_intent'],
+    })
+
+    console.log('[SUBSCRIPTION INTENT] Invoice ID:', invoice.id)
+    console.log('[SUBSCRIPTION INTENT] Invoice status:', invoice.status)
+    console.log('[SUBSCRIPTION INTENT] Payment intent:', invoice.payment_intent)
+
+    // If no payment intent exists, create one manually
+    if (!invoice.payment_intent) {
+      console.log('[SUBSCRIPTION INTENT] No payment intent, creating one manually')
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: invoice.amount_due,
+        currency: invoice.currency,
+        customer: customer.id,
+        metadata: {
+          invoice_id: invoice.id,
+          subscription_id: subscription.id,
+        },
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      })
+
+      console.log('[SUBSCRIPTION INTENT] Payment Intent created:', paymentIntent.id)
+
+      return NextResponse.json({
+        subscriptionId: subscription.id,
+        clientSecret: paymentIntent.client_secret,
+        customerId: customer.id,
+      })
+    }
+
     const paymentIntent = invoice.payment_intent as Stripe.PaymentIntent
 
-    console.log('[SUBSCRIPTION INTENT] Subscription created:', subscription.id)
-    console.log('[SUBSCRIPTION INTENT] Payment Intent:', paymentIntent.id)
+    if (!paymentIntent.client_secret) {
+      throw new Error('Payment intent missing client secret')
+    }
+
+    console.log('[SUBSCRIPTION INTENT] Payment Intent ID:', paymentIntent.id)
 
     return NextResponse.json({
       subscriptionId: subscription.id,
