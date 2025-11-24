@@ -64,6 +64,10 @@ export default function CustomCheckoutForm({
         <PaymentElement
           options={{
             layout: 'tabs',
+            wallets: {
+              applePay: 'auto',
+              googlePay: 'auto',
+            },
             defaultValues: {
               billingDetails: {
                 email: customerEmail,

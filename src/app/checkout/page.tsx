@@ -343,8 +343,7 @@ function CheckoutPageContent() {
                 <div className="bg-white rounded-2xl shadow-lg border-2 border-green-600 p-8 max-w-2xl mx-auto">
                   <div className="text-center mb-6">
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">Complete Payment</h3>
-                    <div className="text-5xl font-black text-green-600 mb-2">$1</div>
-                    <p className="text-gray-600">First PPSR check • Then $20/month for 10 checks</p>
+                    <div className="text-5xl font-black text-green-600">$1</div>
                   </div>
 
                   {clientSecret && (
