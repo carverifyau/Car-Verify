@@ -237,8 +237,7 @@ function CheckoutPageContent() {
               </div>
               <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Official PPSR Check</h3>
-                  <div className="text-gray-600">$1 First Check • Then $20/month for 10 checks</div>
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900">Official PPSR Check</h3>
                 </div>
 
                 <div className="space-y-3 mb-6 max-w-xl mx-auto">
