@@ -26,6 +26,7 @@ export default function CustomCheckoutForm({
     e.preventDefault()
 
     if (!stripe || !elements) {
+      setError('Payment form not ready. Please refresh the page.')
       return
     }
 
@@ -33,18 +34,28 @@ export default function CustomCheckoutForm({
     setError(null)
 
     try {
-      const { error: submitError } = await stripe.confirmPayment({
+      // Validate that the payment element is complete
+      const { error: submitError } = await elements.submit()
+
+      if (submitError) {
+        setError(submitError.message || 'Please complete the payment information')
+        setIsProcessing(false)
+        return
+      }
+
+      const { error: confirmError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
           return_url: `${window.location.origin}/checkout/success?session_id=${subscriptionId}`,
         },
       })
 
-      if (submitError) {
-        setError(submitError.message || 'An error occurred during payment')
+      if (confirmError) {
+        setError(confirmError.message || 'An error occurred during payment')
         setIsProcessing(false)
       }
     } catch (err) {
+      console.error('Payment error:', err)
       setError('An unexpected error occurred')
       setIsProcessing(false)
     }
@@ -63,10 +74,9 @@ export default function CustomCheckoutForm({
       <div className="bg-white border border-gray-300 rounded-lg p-4">
         <PaymentElement
           options={{
-            layout: 'tabs',
-            wallets: {
-              applePay: 'auto',
-              googlePay: 'auto',
+            layout: {
+              type: 'tabs',
+              defaultCollapsed: false,
             },
             defaultValues: {
               billingDetails: {
