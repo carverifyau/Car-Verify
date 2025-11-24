@@ -238,7 +238,7 @@ function CheckoutPageContent() {
               <div className="bg-white rounded-2xl shadow-lg border-2 border-blue-600 p-6 md:p-8 pt-10 md:pt-8">
                 <div className="text-center mb-6">
                   <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Official PPSR Check</h3>
-                  <div className="text-gray-600">One-time payment • Instant certificate</div>
+                  <div className="text-gray-600">$1 First Check • Then $20/month for 10 checks</div>
                 </div>
 
                 <div className="space-y-3 mb-6 max-w-xl mx-auto">
@@ -491,6 +491,26 @@ function CheckoutPageContent() {
               You'll be redirected to secure Stripe checkout. Your report will be generated instantly after payment and delivered to your email.
               All purchases include our 30-day money-back guarantee.
             </p>
+          </motion.div>
+
+          {/* Billing Disclaimer */}
+          <motion.div
+            className="mt-8 max-w-3xl mx-auto"
+            initial={{ y: 50, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-sm text-gray-600 leading-relaxed">
+              <p className="mb-3">
+                <strong className="text-gray-900">Subscription Terms:</strong> After your $1 payment today, your subscription will automatically renew at $20/month unless cancelled. The subscription includes 10 PPSR certificate checks per month, instant delivery, and access to all official government databases. You can cancel anytime from your account settings with no penalties or fees.
+              </p>
+              <p className="mb-3">
+                <strong className="text-gray-900">Refund Policy:</strong> We offer a 30-day money-back guarantee. If you're not satisfied with our service, contact us at carverifyau@gmail.com for a full refund.
+              </p>
+              <p>
+                <strong className="text-gray-900">Data Accuracy:</strong> Car Verify obtains PPSR data from official Australian government sources (AFSA). While we strive for accuracy, we recommend using PPSR checks as part of your overall vehicle purchasing research. For full terms, see our <Link href="/terms" className="text-blue-600 hover:text-blue-700 underline">Terms of Service</Link>.
+              </p>
+            </div>
           </motion.div>
         </div>
       </div>

@@ -68,6 +68,21 @@ export async function POST(request: NextRequest) {
     const stripe = getStripeClient()
     console.log('[CHECKOUT] Stripe client initialized, creating session...')
 
+    // Create or get a coupon for $19 off (making first payment $1 instead of $20)
+    let couponId = 'first-check-discount'
+    try {
+      await stripe.coupons.retrieve(couponId)
+    } catch (error) {
+      // Coupon doesn't exist, create it
+      await stripe.coupons.create({
+        id: couponId,
+        amount_off: 1900, // $19 off in cents
+        currency: 'aud',
+        duration: 'once',
+        name: 'First PPSR Check - $1 Trial',
+      })
+    }
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -75,23 +90,32 @@ export async function POST(request: NextRequest) {
           price_data: {
             currency: 'aud',
             product_data: {
-              name: 'Official PPSR Check',
-              description: 'Official PPSR certificate - Finance owing, stolen status, and write-off history',
+              name: 'Car Verify PPSR Subscription',
+              description: '10 PPSR certificate checks per month - Finance owing, stolen status, and write-off history',
             },
-            unit_amount: 1499, // $14.99 in cents
+            unit_amount: 2000, // $20 in cents
+            recurring: {
+              interval: 'month',
+            },
           },
           quantity: 1,
         },
       ],
-      mode: 'payment',
+      mode: 'subscription',
+      discounts: [{
+        coupon: couponId,
+      }],
       customer_email: validatedData.customerEmail,
-      metadata: {
-        customerEmail: validatedData.customerEmail,
-        vehicleType: validatedData.vehicleInfo.type,
-        vehicleVin: validatedData.vehicleInfo.vin || '',
-        vehicleRego: validatedData.vehicleInfo.rego || '',
-        vehicleState: validatedData.vehicleInfo.state || '',
-        reportType: validatedData.reportType,
+      subscription_data: {
+        metadata: {
+          customerEmail: validatedData.customerEmail,
+          vehicleType: validatedData.vehicleInfo.type,
+          vehicleVin: validatedData.vehicleInfo.vin || '',
+          vehicleRego: validatedData.vehicleInfo.rego || '',
+          vehicleState: validatedData.vehicleInfo.state || '',
+          reportType: validatedData.reportType,
+          checksPerMonth: '10',
+        },
       },
       success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appUrl}/checkout?${new URLSearchParams({

@@ -25,9 +25,18 @@ export async function POST(request: NextRequest) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object
       console.log('💳 Processing session:', session.id)
+      console.log('💳 Session mode:', session.mode)
 
-      // Extract metadata (from API-created sessions)
-      const metadata = session.metadata || {}
+      // For subscription mode, metadata is in subscription object
+      let metadata = session.metadata || {}
+
+      // If this is a subscription checkout, try to get subscription to access its metadata
+      if (session.mode === 'subscription' && session.subscription) {
+        console.log('🔄 Subscription checkout detected, subscription ID:', session.subscription)
+        // Metadata is passed through subscription_data.metadata in the checkout session
+        // We'll get it from the invoice.payment_succeeded event instead
+      }
+
       console.log('🏷️ Metadata:', metadata)
 
       // Also try to parse client_reference_id (from Payment Links)
@@ -58,6 +67,8 @@ export async function POST(request: NextRequest) {
         status: 'pending',
         report_data: {
           stripe_session_id: session.id,
+          stripe_subscription_id: session.subscription || null,
+          subscription_mode: session.mode === 'subscription',
           amount_paid: session.amount_total,
           currency: session.currency,
           payment_status: session.payment_status,
@@ -80,6 +91,40 @@ export async function POST(request: NextRequest) {
 
       console.log('✅ REPORT CREATED:', data[0]?.id)
       return NextResponse.json({ success: true, id: data[0]?.id })
+    }
+
+    // Handle recurring subscription payments
+    if (event.type === 'invoice.payment_succeeded') {
+      const invoice = event.data.object
+      console.log('💰 Processing recurring payment, invoice:', invoice.id)
+      console.log('💰 Subscription:', invoice.subscription)
+      console.log('💰 Customer:', invoice.customer)
+
+      // For recurring payments, we don't create a new report
+      // The customer already has access through their subscription
+      // We could update a subscription usage table here if needed
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Recurring payment processed - no report creation needed'
+      })
+    }
+
+    // Handle subscription cancellations
+    if (event.type === 'customer.subscription.deleted') {
+      const subscription = event.data.object
+      console.log('🚫 Subscription cancelled:', subscription.id)
+      console.log('🚫 Customer:', subscription.customer)
+
+      // We could mark the customer's subscription as inactive in the database here
+      // For now, just log it
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Subscription cancellation logged'
+      })
     }
 
     // For other events
