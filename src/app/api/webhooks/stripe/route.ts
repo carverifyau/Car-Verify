@@ -1,10 +1,135 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { sendAccountAccessEmail } from '@/lib/email'
+import Stripe from 'stripe'
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+
+// Helper function to create or update customer account
+async function createOrUpdateCustomerAccount(
+  email: string,
+  name: string | null,
+  stripeCustomerId: string,
+  stripeSubscriptionId: string,
+  subscription: Stripe.Subscription
+) {
+  console.log('👤 Creating/updating customer account for:', email)
+
+  // Check if user already exists in Supabase Auth
+  const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
+  let user = existingUsers?.users.find(u => u.email === email)
+
+  // Create user if doesn't exist
+  if (!user) {
+    console.log('👤 Creating new user account')
+    const { data: newUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      email_confirm: true,
+      user_metadata: {
+        name: name || '',
+      },
+    })
+
+    if (authError) {
+      console.error('❌ Auth error:', authError)
+      throw authError
+    }
+
+    user = newUser.user
+    console.log('✅ User created:', user.id)
+  } else {
+    console.log('✅ Existing user found:', user.id)
+  }
+
+  // Create or update customer record
+  const { error: customerError } = await supabaseAdmin
+    .from('customers')
+    .upsert({
+      id: user.id,
+      email,
+      name: name || null,
+      stripe_customer_id: stripeCustomerId,
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'id',
+    })
+
+  if (customerError) {
+    console.error('❌ Customer error:', customerError)
+    throw customerError
+  }
+
+  console.log('✅ Customer record created/updated')
+
+  // Create or update subscription record
+  const { error: subscriptionError } = await supabaseAdmin
+    .from('subscriptions')
+    .upsert({
+      customer_id: user.id,
+      stripe_subscription_id: stripeSubscriptionId,
+      stripe_price_id: subscription.items.data[0]?.price.id || null,
+      status: subscription.status as any,
+      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+      cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+      canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+      checks_used: 0,
+      checks_limit: 10,
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'stripe_subscription_id',
+    })
+
+  if (subscriptionError) {
+    console.error('❌ Subscription error:', subscriptionError)
+    throw subscriptionError
+  }
+
+  console.log('✅ Subscription record created/updated')
+
+  // Generate magic link for account access
+  console.log('📧 Generating magic link for:', email)
+  const { data: linkData, error: magicLinkError } = await supabaseAdmin.auth.admin.generateLink({
+    type: 'magiclink',
+    email,
+    options: {
+      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/account`,
+    },
+  })
+
+  if (magicLinkError || !linkData) {
+    console.error('❌ Magic link generation error:', magicLinkError)
+    throw new Error('Failed to generate magic link')
+  }
+
+  console.log('✅ Magic link generated successfully')
+
+  // Send welcome email with magic link
+  try {
+    const firstPaymentAmount = subscription.items.data[0]?.price.unit_amount
+      ? `$${(subscription.items.data[0].price.unit_amount / 100).toFixed(2)}`
+      : '$1.00'
+
+    await sendAccountAccessEmail({
+      to: email,
+      name: name || 'Customer',
+      magicLink: linkData.properties.action_link,
+      subscriptionAmount: firstPaymentAmount,
+    })
+
+    console.log('✅ Welcome email sent to:', email)
+  } catch (emailError) {
+    console.error('⚠️ Email send error (non-fatal):', emailError)
+    // Don't throw - account is created, email is not critical
+  }
+
+  return user.id
+}
 
 export async function POST(request: NextRequest) {
-  console.log('🚀 STRIPE WEBHOOK - SIGNATURE VERIFICATION COMPLETELY REMOVED!')
+  console.log('🚀 STRIPE WEBHOOK - Processing payment')
   console.log('🚀 Timestamp:', new Date().toISOString())
-  console.log('🚀 Version: FIXED-FINAL')
+  console.log('🚀 Version: WITH-ACCOUNT-CREATION')
 
   try {
     const body = await request.text()
@@ -30,11 +155,18 @@ export async function POST(request: NextRequest) {
       // For subscription mode, metadata is in subscription object
       let metadata = session.metadata || {}
 
-      // If this is a subscription checkout, try to get subscription to access its metadata
+      // Get subscription details if this is a subscription checkout
+      let subscription: Stripe.Subscription | null = null
       if (session.mode === 'subscription' && session.subscription) {
         console.log('🔄 Subscription checkout detected, subscription ID:', session.subscription)
-        // Metadata is passed through subscription_data.metadata in the checkout session
-        // We'll get it from the invoice.payment_succeeded event instead
+        const subscriptionId = typeof session.subscription === 'string'
+          ? session.subscription
+          : session.subscription.id
+
+        subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+          expand: ['items.data.price'],
+        })
+        console.log('🔄 Subscription retrieved:', subscription.id)
       }
 
       console.log('🏷️ Metadata:', metadata)
@@ -50,6 +182,26 @@ export async function POST(request: NextRequest) {
         }
       }
 
+      const customerEmail = session.customer_details?.email || clientRefData?.email || metadata.customerEmail || 'unknown@test.com'
+      const customerName = session.customer_details?.name || 'Customer'
+      const stripeCustomerId = typeof session.customer === 'string' ? session.customer : session.customer?.id || ''
+
+      // Create or update customer account
+      let customerId: string | null = null
+      if (subscription && stripeCustomerId) {
+        try {
+          customerId = await createOrUpdateCustomerAccount(
+            customerEmail,
+            customerName,
+            stripeCustomerId,
+            subscription.id,
+            subscription
+          )
+        } catch (error) {
+          console.error('⚠️ Failed to create customer account (non-fatal):', error)
+        }
+      }
+
       // Use clientRefData if available (Payment Link), otherwise use metadata (API session)
       const vehicleInfo = {
         type: clientRefData?.type || (metadata.vehicleType === 'vin' ? 'vin' : 'rego'),
@@ -60,8 +212,9 @@ export async function POST(request: NextRequest) {
 
       const reportData = {
         order_id: session.id,
-        customer_email: session.customer_details?.email || clientRefData?.email || metadata.customerEmail || 'unknown@test.com',
-        customer_name: session.customer_details?.name || 'Test Customer',
+        customer_id: customerId,
+        customer_email: customerEmail,
+        customer_name: customerName,
         vehicle_identifier: vehicleInfo,
         report_type: metadata.reportType === 'comprehensive' ? 'PREMIUM' : 'STANDARD',
         status: 'pending',
@@ -90,7 +243,7 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('✅ REPORT CREATED:', data[0]?.id)
-      return NextResponse.json({ success: true, id: data[0]?.id })
+      return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
     }
 
     // Handle recurring subscription payments

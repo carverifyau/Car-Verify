@@ -24,10 +24,84 @@ export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
 export type Database = {
   public: {
     Tables: {
+      customers: {
+        Row: {
+          id: string
+          email: string
+          name: string | null
+          stripe_customer_id: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          email: string
+          name?: string | null
+          stripe_customer_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          email?: string
+          name?: string | null
+          stripe_customer_id?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      subscriptions: {
+        Row: {
+          id: string
+          customer_id: string
+          stripe_subscription_id: string
+          stripe_price_id: string | null
+          status: 'active' | 'canceled' | 'incomplete' | 'past_due' | 'trialing' | 'paused'
+          current_period_start: string | null
+          current_period_end: string | null
+          cancel_at: string | null
+          canceled_at: string | null
+          checks_used: number
+          checks_limit: number
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          customer_id: string
+          stripe_subscription_id: string
+          stripe_price_id?: string | null
+          status: 'active' | 'canceled' | 'incomplete' | 'past_due' | 'trialing' | 'paused'
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at?: string | null
+          canceled_at?: string | null
+          checks_used?: number
+          checks_limit?: number
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          customer_id?: string
+          stripe_subscription_id?: string
+          stripe_price_id?: string | null
+          status?: 'active' | 'canceled' | 'incomplete' | 'past_due' | 'trialing' | 'paused'
+          current_period_start?: string | null
+          current_period_end?: string | null
+          cancel_at?: string | null
+          canceled_at?: string | null
+          checks_used?: number
+          checks_limit?: number
+          created_at?: string
+          updated_at?: string
+        }
+      }
       reports: {
         Row: {
           id: string
           order_id: string
+          customer_id: string | null
           customer_email: string
           customer_name: string | null
           vehicle_identifier: any
@@ -40,6 +114,7 @@ export type Database = {
         Insert: {
           id?: string
           order_id: string
+          customer_id?: string | null
           customer_email: string
           customer_name?: string | null
           vehicle_identifier: any
@@ -52,6 +127,7 @@ export type Database = {
         Update: {
           id?: string
           order_id?: string
+          customer_id?: string | null
           customer_email?: string
           customer_name?: string | null
           vehicle_identifier?: any

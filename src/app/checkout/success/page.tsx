@@ -144,11 +144,33 @@ function CheckoutSuccessContent() {
             </div>
           </motion.div>
 
-          {/* MVP Notice */}
+          {/* Account Access Notice */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
+            className="bg-green-500/10 border border-green-500/20 rounded-lg p-6 mb-8"
+          >
+            <h3 className="text-green-400 font-medium mb-2">📧 Check Your Email - Account Access Link</h3>
+            <p className="text-sm text-gray-300 mb-3">
+              We've sent you a magic link to access your account dashboard where you can:
+            </p>
+            <ul className="text-sm text-gray-300 text-left max-w-md mx-auto space-y-1">
+              <li>✓ View all your PPSR reports</li>
+              <li>✓ Download completed reports</li>
+              <li>✓ Manage your subscription</li>
+              <li>✓ Track your usage (10 checks per month)</li>
+            </ul>
+            <p className="text-xs text-gray-400 mt-3">
+              The email link is valid for 1 hour. You can also <Link href="/login" className="text-green-400 hover:underline">request a new login link</Link> anytime.
+            </p>
+          </motion.div>
+
+          {/* MVP Notice */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
             className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-6 mb-8"
           >
             <h3 className="text-blue-400 font-medium mb-2">MVP Launch Special</h3>
@@ -162,9 +184,16 @@ function CheckoutSuccessContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
+            transition={{ delay: 0.8 }}
             className="space-y-4"
           >
+            <Link
+              href="/account"
+              className="inline-block bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-8 rounded-lg transition-colors mr-4"
+            >
+              View My Account
+            </Link>
+
             <Link
               href="/"
               className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-lg transition-colors"
@@ -172,7 +201,7 @@ function CheckoutSuccessContent() {
               Return to Homepage
             </Link>
 
-            <div className="text-gray-400 text-sm">
+            <div className="text-gray-400 text-sm mt-4">
               <p>Questions? Email us at <a href="mailto:support@regoreports.com.au" className="text-blue-400 hover:underline">support@regoreports.com.au</a></p>
             </div>
           </motion.div>
