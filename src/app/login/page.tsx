@@ -2,7 +2,10 @@
 
 import { useState } from 'react'
 import { Shield, Mail, ArrowRight } from 'lucide-react'
-import { createClientComponentClient } from '@/lib/supabase-auth'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export default function LoginPage() {
   const [email, setEmail] = useState('')
@@ -10,7 +13,7 @@ export default function LoginPage() {
   const [isSuccess, setIsSuccess] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const supabase = createClientComponentClient()
+  const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
