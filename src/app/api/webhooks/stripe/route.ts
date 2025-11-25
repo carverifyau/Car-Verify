@@ -300,6 +300,20 @@ export async function POST(request: NextRequest) {
       console.log('📄 Invoice status:', invoice.status)
       console.log('📄 Subscription:', invoice.subscription)
 
+      // Mark invoice as paid (Payment Elements flow requires this)
+      if (invoice.status === 'open') {
+        console.log('💰 Marking invoice as paid')
+        try {
+          await stripe.invoices.pay(invoiceId, {
+            paid_out_of_band: true,
+          })
+          console.log('✅ Invoice marked as paid')
+        } catch (error) {
+          console.error('⚠️ Failed to mark invoice as paid:', error)
+          // Continue anyway - payment succeeded
+        }
+      }
+
       if (!invoice.subscription) {
         console.log('⚠️ No subscription on invoice')
         return NextResponse.json({
