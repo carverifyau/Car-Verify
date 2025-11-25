@@ -274,19 +274,176 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Handle initial payment success (Payment Intent flow)
+    if (event.type === 'payment_intent.succeeded') {
+      const paymentIntent = event.data.object
+      console.log('💳 Payment Intent succeeded:', paymentIntent.id)
+      console.log('💳 Customer:', paymentIntent.customer)
+      console.log('💳 Amount:', paymentIntent.amount)
+
+      // Get the invoice associated with this payment intent
+      const invoices = await stripe.invoices.list({
+        payment_intent: paymentIntent.id,
+        limit: 1,
+      })
+
+      if (invoices.data.length === 0) {
+        console.log('⚠️ No invoice found for payment intent')
+        return NextResponse.json({
+          received: true,
+          type: event.type,
+          message: 'No invoice found - skipping account creation'
+        })
+      }
+
+      const invoice = invoices.data[0]
+      console.log('📄 Invoice found:', invoice.id)
+      console.log('📄 Subscription:', invoice.subscription)
+
+      if (!invoice.subscription) {
+        console.log('⚠️ No subscription on invoice')
+        return NextResponse.json({
+          received: true,
+          type: event.type,
+          message: 'No subscription - skipping account creation'
+        })
+      }
+
+      // Get full subscription details
+      const subscriptionId = typeof invoice.subscription === 'string'
+        ? invoice.subscription
+        : invoice.subscription.id
+
+      const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+        expand: ['items.data.price'],
+      })
+
+      console.log('🔄 Subscription retrieved:', subscription.id)
+      console.log('🔄 Subscription metadata:', subscription.metadata)
+
+      const customerEmail = invoice.customer_email || 'unknown@test.com'
+      const customerName = invoice.customer_name || 'Customer'
+      const stripeCustomerId = typeof invoice.customer === 'string' ? invoice.customer : invoice.customer?.id || ''
+
+      // Create or update customer account
+      let customerId: string | null = null
+      if (stripeCustomerId) {
+        try {
+          customerId = await createOrUpdateCustomerAccount(
+            customerEmail,
+            customerName,
+            stripeCustomerId,
+            subscription.id,
+            subscription
+          )
+        } catch (error) {
+          console.error('⚠️ Failed to create customer account (non-fatal):', error)
+        }
+      }
+
+      // Create report record
+      const metadata = subscription.metadata
+      const vehicleInfo = {
+        type: metadata.vehicleType === 'vin' ? 'vin' : 'rego',
+        vin: metadata.vehicleVin || undefined,
+        rego: metadata.vehicleRego || 'UNKNOWN',
+        state: metadata.vehicleState || 'QLD'
+      }
+
+      const reportData = {
+        order_id: paymentIntent.id,
+        customer_id: customerId,
+        customer_email: customerEmail,
+        customer_name: customerName,
+        vehicle_identifier: vehicleInfo,
+        report_type: metadata.reportType === 'comprehensive' ? 'PREMIUM' : 'STANDARD',
+        status: 'pending',
+        report_data: {
+          stripe_payment_intent_id: paymentIntent.id,
+          stripe_invoice_id: invoice.id,
+          stripe_subscription_id: subscription.id,
+          amount_paid: paymentIntent.amount,
+          currency: paymentIntent.currency,
+          payment_status: 'paid',
+          created_at: new Date().toISOString(),
+          webhook_processed: true
+        }
+      }
+
+      console.log('💾 Creating report from payment intent:', reportData)
+
+      const { data, error } = await supabaseAdmin
+        .from('reports')
+        .upsert(reportData, { onConflict: 'order_id' })
+        .select()
+
+      if (error) {
+        console.error('❌ DB Error:', error)
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      console.log('✅ REPORT CREATED FROM PAYMENT INTENT:', data[0]?.id)
+      return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
+    }
+
     // Handle subscription cancellations
     if (event.type === 'customer.subscription.deleted') {
       const subscription = event.data.object
       console.log('🚫 Subscription cancelled:', subscription.id)
       console.log('🚫 Customer:', subscription.customer)
 
-      // We could mark the customer's subscription as inactive in the database here
-      // For now, just log it
+      // Update subscription status in database
+      const { error } = await supabaseAdmin
+        .from('subscriptions')
+        .update({
+          status: 'canceled',
+          canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('stripe_subscription_id', subscription.id)
+
+      if (error) {
+        console.error('⚠️ Failed to update subscription status:', error)
+      } else {
+        console.log('✅ Subscription status updated to canceled')
+      }
 
       return NextResponse.json({
         received: true,
         type: event.type,
-        message: 'Subscription cancellation logged'
+        message: 'Subscription cancellation processed'
+      })
+    }
+
+    // Handle subscription updates
+    if (event.type === 'customer.subscription.updated') {
+      const subscription = event.data.object
+      console.log('🔄 Subscription updated:', subscription.id)
+      console.log('🔄 New status:', subscription.status)
+
+      // Update subscription in database
+      const { error } = await supabaseAdmin
+        .from('subscriptions')
+        .update({
+          status: subscription.status as any,
+          current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+          current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+          cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+          canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('stripe_subscription_id', subscription.id)
+
+      if (error) {
+        console.error('⚠️ Failed to update subscription:', error)
+      } else {
+        console.log('✅ Subscription updated in database')
+      }
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Subscription update processed'
       })
     }
 
