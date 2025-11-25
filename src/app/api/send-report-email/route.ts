@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 import { supabaseAdmin } from '@/lib/supabase'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 interface EmailRequest {
   customerEmail: string
   customerName?: string
@@ -26,6 +24,9 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('📧 Sending report email to:', customerEmail)
+
+    // Initialize Resend with API key (done at runtime, not build time)
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Generate report summary for email
     const reportSummary = generateReportSummary(reportData, rego, state)
