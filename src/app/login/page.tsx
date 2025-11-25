@@ -60,8 +60,24 @@ export default function LoginPage() {
 
       console.log('✅ OTP verified successfully! Session:', data.session)
 
-      // Wait for session to be saved in localStorage/cookies
-      await new Promise(resolve => setTimeout(resolve, 500))
+      // Explicitly set the session to ensure it persists
+      await supabase.auth.setSession({
+        access_token: data.session!.access_token,
+        refresh_token: data.session!.refresh_token,
+      })
+
+      // Wait a moment for localStorage to be written
+      await new Promise(resolve => setTimeout(resolve, 1000))
+
+      // Verify session is in localStorage
+      const { data: { session: verifySession } } = await supabase.auth.getSession()
+      console.log('Session verification:', verifySession)
+
+      if (!verifySession) {
+        setError('Session failed to persist. Please try again.')
+        setIsLoading(false)
+        return
+      }
 
       // Force a full page reload to ensure session is picked up
       window.location.replace('/account')
