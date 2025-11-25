@@ -1,20 +1,15 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { createClient } from '@supabase/supabase-js'
 import { User, LogIn } from 'lucide-react'
 import Link from 'next/link'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+import { supabase } from '@/lib/supabase-client'
 
 export default function AuthHeaderButton() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setIsLoggedIn(!!session)

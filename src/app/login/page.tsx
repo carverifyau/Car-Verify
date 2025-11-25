@@ -3,10 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Shield, Mail, ArrowRight } from 'lucide-react'
-import { createClient } from '@supabase/supabase-js'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+import { supabase } from '@/lib/supabase-client'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -15,8 +12,6 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [showOtpInput, setShowOtpInput] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
-  const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
   const handleSendCode = async (e: React.FormEvent) => {
     e.preventDefault()

@@ -2,19 +2,15 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClient } from '@supabase/supabase-js'
 import { Shield, Calendar, FileText, CreditCard, AlertCircle, User } from 'lucide-react'
 import SignOutButton from '@/components/SignOutButton'
 import CancelSubscriptionButton from '@/components/CancelSubscriptionButton'
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+import { supabase } from '@/lib/supabase-client'
 
 type Tab = 'reports' | 'plans'
 
 export default function AccountPage() {
   const router = useRouter()
-  const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
   const [activeTab, setActiveTab] = useState<Tab>('reports')
   const [isLoading, setIsLoading] = useState(true)
