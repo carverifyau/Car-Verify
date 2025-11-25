@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { sendAccountAccessEmail } from '@/lib/email'
 import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
@@ -87,41 +86,9 @@ async function createOrUpdateCustomerAccount(
 
   console.log('✅ Subscription record created/updated')
 
-  // Generate magic link for account access
-  console.log('📧 Generating magic link for:', email)
-  const { data: linkData, error: magicLinkError } = await supabaseAdmin.auth.admin.generateLink({
-    type: 'magiclink',
-    email,
-    options: {
-      redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/account`,
-    },
-  })
-
-  if (magicLinkError || !linkData) {
-    console.error('❌ Magic link generation error:', magicLinkError)
-    throw new Error('Failed to generate magic link')
-  }
-
-  console.log('✅ Magic link generated successfully')
-
-  // Send welcome email with magic link
-  try {
-    const firstPaymentAmount = subscription.items.data[0]?.price.unit_amount
-      ? `$${(subscription.items.data[0].price.unit_amount / 100).toFixed(2)}`
-      : '$1.00'
-
-    await sendAccountAccessEmail({
-      to: email,
-      name: name || 'Customer',
-      magicLink: linkData.properties.action_link,
-      subscriptionAmount: firstPaymentAmount,
-    })
-
-    console.log('✅ Welcome email sent to:', email)
-  } catch (emailError) {
-    console.error('⚠️ Email send error (non-fatal):', emailError)
-    // Don't throw - account is created, email is not critical
-  }
+  // NOTE: Login instructions will be sent manually with the PPSR report
+  // This ensures customers receive their report and account access at the same time
+  // Admin will include login instructions when sending the completed report via email
 
   return user.id
 }
