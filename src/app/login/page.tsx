@@ -22,21 +22,25 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      console.log('Sending OTP to:', email)
+      const { data, error } = await supabase.auth.signInWithOtp({
         email,
         options: {
           shouldCreateUser: false, // Only allow existing users
         },
       })
 
+      console.log('OTP Response:', { data, error })
+
       if (error) {
         throw error
       }
 
       setShowOtpInput(true)
-      setIsLoading(false)
     } catch (err) {
+      console.error('OTP Send Error:', err)
       setError(err instanceof Error ? err.message : 'An error occurred')
+    } finally {
       setIsLoading(false)
     }
   }
@@ -47,11 +51,14 @@ export default function LoginPage() {
     setError(null)
 
     try {
-      const { error } = await supabase.auth.verifyOtp({
+      console.log('Verifying OTP for:', email)
+      const { data, error } = await supabase.auth.verifyOtp({
         email,
         token: otp,
         type: 'email',
       })
+
+      console.log('Verify Response:', { data, error })
 
       if (error) {
         throw error
@@ -60,6 +67,7 @@ export default function LoginPage() {
       // Redirect to account page
       window.location.href = '/account'
     } catch (err) {
+      console.error('OTP Verify Error:', err)
       setError(err instanceof Error ? err.message : 'Invalid code. Please try again.')
       setIsLoading(false)
     }
