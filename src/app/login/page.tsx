@@ -25,9 +25,6 @@ export default function LoginPage() {
       console.log('Sending OTP to:', email)
       const { data, error } = await supabase.auth.signInWithOtp({
         email,
-        options: {
-          shouldCreateUser: false, // Only allow existing users
-        },
       })
 
       console.log('OTP Response:', { data, error })
