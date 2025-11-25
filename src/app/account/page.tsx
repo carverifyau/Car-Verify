@@ -39,9 +39,8 @@ export default function AccountPage() {
         .single()
 
       setCustomer(customerData)
-      console.log('Customer data:', customerData)
 
-      const { data: subscriptionData, error: subscriptionError } = await supabase
+      const { data: subscriptionData } = await supabase
         .from('subscriptions')
         .select('*')
         .eq('customer_id', session.user.id)
@@ -49,7 +48,6 @@ export default function AccountPage() {
         .limit(1)
         .single()
 
-      console.log('Subscription query result:', { subscriptionData, subscriptionError })
       setSubscription(subscriptionData)
 
       const { data: reportsData } = await supabase
