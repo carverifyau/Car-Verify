@@ -61,7 +61,12 @@ export default function LoginPage() {
         throw error
       }
 
-      // Redirect to account page
+      console.log('✅ OTP verified successfully! Session:', data.session)
+
+      // Wait for session to be saved in localStorage/cookies
+      await new Promise(resolve => setTimeout(resolve, 500))
+
+      // Force reload to ensure fresh session pickup
       window.location.href = '/account'
     } catch (err) {
       console.error('OTP Verify Error:', err)
