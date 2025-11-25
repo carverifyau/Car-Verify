@@ -90,7 +90,26 @@ export async function POST(request: NextRequest) {
 
             <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
 
-            <p>If you have any questions about your report, please don't hesitate to contact our support team.</p>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 25px; border-radius: 8px; margin: 20px 0;">
+                <h2 style="margin: 0 0 15px 0; color: white;">🎉 Welcome to Car Verify!</h2>
+                <p style="margin: 10px 0; color: white;">Your account has been created and you now have access to your personalized dashboard where you can:</p>
+                <ul style="margin: 10px 0; padding-left: 20px; color: white;">
+                    <li>View all your PPSR reports in one place</li>
+                    <li>Track your subscription usage</li>
+                    <li>Manage your account settings</li>
+                    <li>Access your report history anytime</li>
+                </ul>
+                <div style="text-align: center; margin-top: 20px;">
+                    <a href="https://carverify.com.au/login" class="btn" style="background: white; color: #667eea; font-weight: bold; text-decoration: none; display: inline-block; padding: 12px 30px; border-radius: 6px;">
+                        🔐 Log In to Your Account
+                    </a>
+                </div>
+                <p style="margin: 15px 0 0 0; font-size: 13px; text-align: center; color: white;">
+                    You'll receive a secure 6-digit code via email to access your account
+                </p>
+            </div>
+
+            <p>If you have any questions about your report or account, please don't hesitate to contact our support team.</p>
 
             <p>Thank you for choosing Car Verify!</p>
 
@@ -204,7 +223,7 @@ export async function POST(request: NextRequest) {
     const mailOptions = {
       from: `"Car Verify" <${process.env.SMTP_USER}>`,
       to: customerEmail,
-      subject: `Your Vehicle Report is Ready - ${rego} (${state})`,
+      subject: `🚗 Your PPSR Certificate for ${rego} + Account Access - Car Verify`,
       html: emailHtml,
       attachments: attachments
     }
