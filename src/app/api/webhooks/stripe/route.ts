@@ -13,6 +13,8 @@ async function createOrUpdateCustomerAccount(
   subscription: Stripe.Subscription
 ) {
   console.log('👤 Creating/updating customer account for:', email)
+  console.log('🔑 Service role key configured:', !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+  console.log('🔑 Service role key prefix:', process.env.SUPABASE_SERVICE_ROLE_KEY?.substring(0, 20))
 
   // Check if user already exists in Supabase Auth
   const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
@@ -61,28 +63,40 @@ async function createOrUpdateCustomerAccount(
   console.log('✅ Customer record created/updated')
 
   // Create or update subscription record
-  const { error: subscriptionError } = await supabaseAdmin
+  const subscriptionData = {
+    customer_id: user.id,
+    stripe_subscription_id: stripeSubscriptionId,
+    stripe_price_id: subscription.items.data[0]?.price.id || null,
+    status: subscription.status as any,
+    current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
+    current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+    cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
+    canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+    checks_used: 0,
+    checks_limit: 10,
+    updated_at: new Date().toISOString(),
+  }
+
+  console.log('📝 Attempting to upsert subscription with data:', JSON.stringify(subscriptionData, null, 2))
+
+  const { error: subscriptionError, data: subscriptionResult } = await supabaseAdmin
     .from('subscriptions')
-    .upsert({
-      customer_id: user.id,
-      stripe_subscription_id: stripeSubscriptionId,
-      stripe_price_id: subscription.items.data[0]?.price.id || null,
-      status: subscription.status as any,
-      current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-      current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-      cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
-      canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
-      checks_used: 0,
-      checks_limit: 10,
-      updated_at: new Date().toISOString(),
-    }, {
+    .upsert(subscriptionData, {
       onConflict: 'stripe_subscription_id',
     })
+    .select()
 
   if (subscriptionError) {
-    console.error('❌ Subscription error:', subscriptionError)
-    throw subscriptionError
+    console.error('❌ Subscription upsert failed!')
+    console.error('❌ Error code:', subscriptionError.code)
+    console.error('❌ Error message:', subscriptionError.message)
+    console.error('❌ Error details:', subscriptionError.details)
+    console.error('❌ Error hint:', subscriptionError.hint)
+    console.error('❌ Full error object:', JSON.stringify(subscriptionError, null, 2))
+    throw new Error(`Subscription creation failed: ${subscriptionError.message} (${subscriptionError.code}) - ${subscriptionError.details || subscriptionError.hint || 'No additional details'}`)
   }
+
+  console.log('✅ Subscription upsert result:', subscriptionResult)
 
   console.log('✅ Subscription record created/updated')
 
