@@ -63,9 +63,8 @@ export default function LoginPage() {
       // Wait for session to be saved in localStorage/cookies
       await new Promise(resolve => setTimeout(resolve, 500))
 
-      // Use Next.js router for proper navigation with session
-      router.push('/account')
-      router.refresh()
+      // Force a full page reload to ensure session is picked up
+      window.location.replace('/account')
     } catch (err) {
       console.error('OTP Verify Error:', err)
       setError(err instanceof Error ? err.message : 'Invalid code. Please try again.')
