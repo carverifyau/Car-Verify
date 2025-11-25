@@ -280,24 +280,25 @@ export async function POST(request: NextRequest) {
       console.log('💳 Payment Intent succeeded:', paymentIntent.id)
       console.log('💳 Customer:', paymentIntent.customer)
       console.log('💳 Amount:', paymentIntent.amount)
+      console.log('💳 Invoice:', paymentIntent.invoice)
 
-      // Get the invoice associated with this payment intent
-      const invoices = await stripe.invoices.list({
-        payment_intent: paymentIntent.id,
-        limit: 1,
-      })
-
-      if (invoices.data.length === 0) {
-        console.log('⚠️ No invoice found for payment intent')
+      // Check if payment intent has an invoice
+      if (!paymentIntent.invoice) {
+        console.log('⚠️ No invoice on payment intent')
         return NextResponse.json({
           received: true,
           type: event.type,
-          message: 'No invoice found - skipping account creation'
+          message: 'No invoice - skipping account creation'
         })
       }
 
-      const invoice = invoices.data[0]
-      console.log('📄 Invoice found:', invoice.id)
+      // Get the invoice from the payment intent
+      const invoiceId = typeof paymentIntent.invoice === 'string'
+        ? paymentIntent.invoice
+        : paymentIntent.invoice.id
+
+      const invoice = await stripe.invoices.retrieve(invoiceId)
+      console.log('📄 Invoice retrieved:', invoice.id)
       console.log('📄 Subscription:', invoice.subscription)
 
       if (!invoice.subscription) {
