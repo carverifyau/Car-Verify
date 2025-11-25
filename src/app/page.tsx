@@ -4,6 +4,7 @@ import { Shield, CheckCircle, AlertTriangle, Zap, Clock, Award, Search, FileText
 import Link from 'next/link'
 import VehicleLookupFormWithPreview from '@/components/VehicleLookupFormWithPreview'
 import Footer from '@/components/Footer'
+import AuthHeaderButton from '@/components/AuthHeaderButton'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -31,16 +32,17 @@ export default function Home() {
                 <div className="text-[10px] md:text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
               </div>
             </motion.div>
-            <nav className="hidden md:flex items-center space-x-8">
-              <Link href="#how-it-works" className="text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+            <nav className="flex items-center space-x-4 md:space-x-8">
+              <Link href="#how-it-works" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
                 How it Works
               </Link>
-              <Link href="#sample-report" className="text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+              <Link href="#sample-report" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
                 Sample Report
               </Link>
-              <Link href="#support" className="text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+              <Link href="#support" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
                 Support
               </Link>
+              <AuthHeaderButton />
             </nav>
           </div>
         </div>
