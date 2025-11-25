@@ -4,6 +4,18 @@ import Stripe from 'stripe'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
+// Helper function to safely convert Unix timestamp to ISO string
+function toISOStringOrNull(unixTimestamp: number | null | undefined): string | null {
+  if (!unixTimestamp || unixTimestamp <= 0) return null
+  try {
+    const date = new Date(unixTimestamp * 1000)
+    return date.toISOString()
+  } catch (e) {
+    console.warn('⚠️ Invalid timestamp:', unixTimestamp)
+    return null
+  }
+}
+
 // Helper function to create or update customer account
 async function createOrUpdateCustomerAccount(
   email: string,
@@ -68,10 +80,10 @@ async function createOrUpdateCustomerAccount(
     stripe_subscription_id: stripeSubscriptionId,
     stripe_price_id: subscription.items.data[0]?.price.id || null,
     status: subscription.status as any,
-    current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-    current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
-    cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
-    canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+    current_period_start: toISOStringOrNull(subscription.current_period_start),
+    current_period_end: toISOStringOrNull(subscription.current_period_end),
+    cancel_at: toISOStringOrNull(subscription.cancel_at),
+    canceled_at: toISOStringOrNull(subscription.canceled_at),
     checks_used: 0,
     checks_limit: 10,
     updated_at: new Date().toISOString(),
@@ -464,7 +476,7 @@ export async function POST(request: NextRequest) {
         .from('subscriptions')
         .update({
           status: 'canceled',
-          canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+          canceled_at: toISOStringOrNull(subscription.canceled_at),
           updated_at: new Date().toISOString(),
         })
         .eq('stripe_subscription_id', subscription.id)
@@ -509,10 +521,10 @@ export async function POST(request: NextRequest) {
         .from('subscriptions')
         .update({
           status: subscription.status as any,
-          current_period_start: subscription.current_period_start ? new Date(subscription.current_period_start * 1000).toISOString() : null,
-          current_period_end: subscription.current_period_end ? new Date(subscription.current_period_end * 1000).toISOString() : null,
-          cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
-          canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
+          current_period_start: toISOStringOrNull(subscription.current_period_start),
+          current_period_end: toISOStringOrNull(subscription.current_period_end),
+          cancel_at: toISOStringOrNull(subscription.cancel_at),
+          canceled_at: toISOStringOrNull(subscription.canceled_at),
           updated_at: new Date().toISOString(),
         })
         .eq('stripe_subscription_id', subscription.id)
