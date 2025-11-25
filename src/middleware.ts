@@ -30,18 +30,19 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   // Protected routes that require authentication
-  const protectedRoutes = ['/account']
-  const isProtectedRoute = protectedRoutes.some(route =>
-    request.nextUrl.pathname.startsWith(route)
-  )
+  // NOTE: Disabled middleware auth check - account page handles auth client-side
+  // const protectedRoutes = ['/account']
+  // const isProtectedRoute = protectedRoutes.some(route =>
+  //   request.nextUrl.pathname.startsWith(route)
+  // )
 
   // Redirect to login if trying to access protected route without auth
-  if (isProtectedRoute && !user) {
-    const redirectUrl = request.nextUrl.clone()
-    redirectUrl.pathname = '/login'
-    redirectUrl.searchParams.set('redirectTo', request.nextUrl.pathname)
-    return NextResponse.redirect(redirectUrl)
-  }
+  // if (isProtectedRoute && !user) {
+  //   const redirectUrl = request.nextUrl.clone()
+  //   redirectUrl.pathname = '/login'
+  //   redirectUrl.searchParams.set('redirectTo', request.nextUrl.pathname)
+  //   return NextResponse.redirect(redirectUrl)
+  // }
 
   return supabaseResponse
 }
