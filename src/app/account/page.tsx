@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Shield, Calendar, FileText, CreditCard, AlertCircle, User, BarChart3, Settings, Download, Clock, CheckCircle2, TrendingUp } from 'lucide-react'
+import Link from 'next/link'
+import { Shield, Calendar, FileText, CreditCard, AlertCircle, User, BarChart3, Settings, Download, Clock, CheckCircle2, TrendingUp, Car } from 'lucide-react'
 import SignOutButton from '@/components/SignOutButton'
 import CancelSubscriptionButton from '@/components/CancelSubscriptionButton'
+import Footer from '@/components/Footer'
 import { supabase } from '@/lib/supabase-client'
 
 type Tab = 'reports' | 'subscription' | 'usage' | 'settings'
@@ -81,19 +83,49 @@ export default function AccountPage() {
     : 0
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Account</h1>
-              <p className="text-sm text-gray-600 mt-1">{customer?.email || user?.email}</p>
-            </div>
-            <SignOutButton />
+    <div className="min-h-screen bg-white">
+      {/* Website Header */}
+      <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3 md:py-4">
+          <div className="flex justify-between items-center">
+            <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <div className="bg-blue-600 p-1.5 md:p-2 rounded-lg">
+                <Car className="h-5 w-5 md:h-6 md:w-6 text-white" />
+              </div>
+              <div>
+                <span className="text-xl md:text-2xl font-bold text-gray-900">Car Verify</span>
+                <div className="text-[10px] md:text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
+              </div>
+            </Link>
+            <nav className="flex items-center space-x-4 md:space-x-8">
+              <Link href="/" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+                Home
+              </Link>
+              <Link href="/#how-it-works" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+                How it Works
+              </Link>
+              <Link href="/#sample-report" className="hidden md:inline text-gray-600 hover:text-blue-600 transition-all duration-300 text-sm font-medium">
+                Sample Report
+              </Link>
+              <SignOutButton />
+            </nav>
           </div>
         </div>
-      </div>
+      </header>
+
+      {/* Account Page Content */}
+      <div className="bg-gradient-to-br from-gray-50 via-blue-50 to-gray-50 min-h-screen">
+        {/* Page Title */}
+        <div className="bg-white border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Account</h1>
+                <p className="text-sm text-gray-600 mt-1">{customer?.email || user?.email}</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Quick Stats Banner */}
@@ -593,6 +625,9 @@ export default function AccountPage() {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }
