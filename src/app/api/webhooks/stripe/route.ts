@@ -295,10 +295,24 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('📄 Invoice ID from metadata:', invoiceId)
+
+      // Get subscription ID from metadata (more reliable than invoice)
+      const subscriptionId = paymentIntent.metadata?.subscription_id
+
+      if (!subscriptionId) {
+        console.log('⚠️ No subscription_id in payment intent metadata')
+        return NextResponse.json({
+          received: true,
+          type: event.type,
+          message: 'No subscription_id in metadata - skipping account creation'
+        })
+      }
+
+      console.log('🔄 Subscription ID from metadata:', subscriptionId)
+
       const invoice = await stripe.invoices.retrieve(invoiceId)
       console.log('📄 Invoice retrieved:', invoice.id)
       console.log('📄 Invoice status:', invoice.status)
-      console.log('📄 Subscription:', invoice.subscription)
 
       // Mark invoice as paid (Payment Elements flow requires this)
       if (invoice.status === 'open') {
@@ -314,20 +328,7 @@ export async function POST(request: NextRequest) {
         }
       }
 
-      if (!invoice.subscription) {
-        console.log('⚠️ No subscription on invoice')
-        return NextResponse.json({
-          received: true,
-          type: event.type,
-          message: 'No subscription - skipping account creation'
-        })
-      }
-
       // Get full subscription details
-      const subscriptionId = typeof invoice.subscription === 'string'
-        ? invoice.subscription
-        : invoice.subscription.id
-
       const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
         expand: ['items.data.price'],
       })
@@ -435,13 +436,29 @@ export async function POST(request: NextRequest) {
       console.log('🔄 Subscription updated:', subscription.id)
       console.log('🔄 New status:', subscription.status)
 
+      // Check if subscription exists in database first
+      const { data: existing } = await supabaseAdmin
+        .from('subscriptions')
+        .select('id')
+        .eq('stripe_subscription_id', subscription.id)
+        .single()
+
+      if (!existing) {
+        console.log('⚠️ Subscription not in database yet, skipping update')
+        return NextResponse.json({
+          received: true,
+          type: event.type,
+          message: 'Subscription not in database yet'
+        })
+      }
+
       // Update subscription in database
       const { error } = await supabaseAdmin
         .from('subscriptions')
         .update({
           status: subscription.status as any,
-          current_period_start: new Date(subscription.current_period_start * 1000).toISOString(),
-          current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+          current_period_start: subscription.current_period_start ? new Date(subscription.current_period_start * 1000).toISOString() : null,
+          current_period_end: subscription.current_period_end ? new Date(subscription.current_period_end * 1000).toISOString() : null,
           cancel_at: subscription.cancel_at ? new Date(subscription.cancel_at * 1000).toISOString() : null,
           canceled_at: subscription.canceled_at ? new Date(subscription.canceled_at * 1000).toISOString() : null,
           updated_at: new Date().toISOString(),
