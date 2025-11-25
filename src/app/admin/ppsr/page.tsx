@@ -98,7 +98,8 @@ function PPSRAdminDashboard() {
           },
           rego: selectedOrder.rego,
           vin: selectedOrder.vin,
-          state: selectedOrder.state
+          state: selectedOrder.state,
+          reportId: selectedOrder.id  // Pass report ID to store PDF
         }),
       })
 

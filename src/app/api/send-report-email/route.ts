@@ -1,17 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
+import { supabaseAdmin } from '@/lib/supabase'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface EmailRequest {
   customerEmail: string
   customerName?: string
   reportData: any
   rego: string
+  vin?: string
   state: string
+  reportId?: string
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const { customerEmail, customerName, reportData, rego, state }: EmailRequest = await request.json()
+    const { customerEmail, customerName, reportData, rego, vin, state, reportId }: EmailRequest = await request.json()
 
     if (!customerEmail || !reportData || !rego) {
       return NextResponse.json(
@@ -20,17 +25,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-
-    // Create email transporter using SMTP settings from environment
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
+    console.log('📧 Sending report email to:', customerEmail)
 
     // Generate report summary for email
     const reportSummary = generateReportSummary(reportData, rego, state)
@@ -199,40 +194,68 @@ export async function POST(request: NextRequest) {
       console.error('PDF generation request failed:', pdfResponse.status)
     }
 
-    // Prepare attachments array
+    // Prepare attachments array for Resend
     const attachments = []
 
     // Add PDF attachment if available
     if (pdfAttachment) {
-      attachments.push(pdfAttachment)
+      attachments.push({
+        filename: pdfAttachment.filename,
+        content: pdfAttachment.content
+      })
     }
 
-    // Add PPSR certificate attachment if available
+    // Add PPSR certificate attachment if available and store it in database
     if (reportData.ppsrCertificateData) {
       console.log('Adding PPSR certificate attachment...')
       attachments.push({
         filename: reportData.ppsrCertificateFilename || 'ppsr-certificate.pdf',
-        content: reportData.ppsrCertificateData,
-        encoding: 'base64',
-        contentType: reportData.ppsrCertificateType || 'application/pdf'
+        content: reportData.ppsrCertificateData
       })
       console.log('PPSR certificate attached successfully')
+
+      // Store PPSR PDF in database if reportId is provided
+      if (reportId) {
+        try {
+          console.log('📦 Storing PPSR PDF in database for report:', reportId)
+          const { error: updateError } = await supabaseAdmin
+            .from('reports')
+            .update({
+              ppsr_pdf_data: reportData.ppsrCertificateData,
+              ppsr_pdf_filename: reportData.ppsrCertificateFilename || 'ppsr-certificate.pdf',
+              updated_at: new Date().toISOString()
+            })
+            .eq('id', reportId)
+
+          if (updateError) {
+            console.error('❌ Failed to store PPSR PDF:', updateError)
+          } else {
+            console.log('✅ PPSR PDF stored successfully')
+          }
+        } catch (error) {
+          console.error('❌ Error storing PPSR PDF:', error)
+        }
+      }
     }
 
-    // Send email
-    const mailOptions = {
-      from: `"Car Verify" <${process.env.SMTP_USER}>`,
+    // Send email via Resend
+    console.log('📤 Sending email via Resend...')
+    const { data, error: resendError } = await resend.emails.send({
+      from: 'Car Verify <reports@carverify.com.au>',
       to: customerEmail,
       subject: `🚗 Your PPSR Certificate for ${rego} + Account Access - Car Verify`,
       html: emailHtml,
       attachments: attachments
+    })
+
+    if (resendError) {
+      console.error('❌ Resend error:', resendError)
+      throw new Error(`Failed to send email: ${resendError.message}`)
     }
 
-    const info = await transporter.sendMail(mailOptions)
-
     // Log successful email send
-    console.log('Report email sent successfully:', {
-      messageId: info.messageId,
+    console.log('✅ Report email sent successfully:', {
+      messageId: data?.id,
       customerEmail,
       rego,
       state,
@@ -241,7 +264,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      messageId: info.messageId,
+      messageId: data?.id,
       message: 'Report email sent successfully'
     })
 

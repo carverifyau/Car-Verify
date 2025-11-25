@@ -305,10 +305,14 @@ export default function AccountPage() {
 
                             <div className="flex-shrink-0">
                               {report.status === 'completed' ? (
-                                <button className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg">
+                                <a
+                                  href={`/api/reports/${report.id}/download`}
+                                  download
+                                  className="flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md hover:shadow-lg"
+                                >
                                   <Download className="h-4 w-4" />
                                   <span>Download PDF</span>
-                                </button>
+                                </a>
                               ) : (
                                 <div className="bg-gray-100 text-gray-500 px-6 py-3 rounded-lg font-medium flex items-center space-x-2">
                                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-500"></div>
