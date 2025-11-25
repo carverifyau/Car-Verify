@@ -140,10 +140,20 @@ export async function POST(request: NextRequest) {
           ? session.subscription
           : session.subscription.id
 
-        subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-          expand: ['items.data.price'],
-        })
-        console.log('🔄 Subscription retrieved:', subscription.id)
+        try {
+          subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+            expand: ['items.data.price'],
+          })
+          console.log('🔄 Subscription retrieved:', subscription.id)
+          console.log('🔄 Subscription status:', subscription.status)
+        } catch (error) {
+          console.error('❌ Failed to retrieve subscription:', error)
+          // Continue anyway, we might be able to create account without full subscription details
+        }
+      } else {
+        console.log('⚠️ Not a subscription checkout or no subscription ID')
+        console.log('⚠️ Session mode:', session.mode)
+        console.log('⚠️ Session subscription:', session.subscription)
       }
 
       console.log('🏷️ Metadata:', metadata)
@@ -166,6 +176,7 @@ export async function POST(request: NextRequest) {
       // Create or update customer account
       let customerId: string | null = null
       if (subscription && stripeCustomerId) {
+        console.log('✅ Both subscription and customer ID present, creating account')
         try {
           customerId = await createOrUpdateCustomerAccount(
             customerEmail,
@@ -174,9 +185,19 @@ export async function POST(request: NextRequest) {
             subscription.id,
             subscription
           )
+          console.log('✅ Customer account created successfully, ID:', customerId)
         } catch (error) {
-          console.error('⚠️ Failed to create customer account (non-fatal):', error)
+          console.error('❌ Failed to create customer account:', error)
+          // Log the full error for debugging
+          if (error instanceof Error) {
+            console.error('❌ Error message:', error.message)
+            console.error('❌ Error stack:', error.stack)
+          }
         }
+      } else {
+        console.log('⚠️ Skipping customer account creation')
+        console.log('⚠️ Has subscription?', !!subscription)
+        console.log('⚠️ Has stripe customer ID?', !!stripeCustomerId)
       }
 
       // Use clientRefData if available (Payment Link), otherwise use metadata (API session)
@@ -366,6 +387,47 @@ export async function POST(request: NextRequest) {
 
       console.log('✅ REPORT CREATED FROM PAYMENT INTENT:', data[0]?.id)
       return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
+    }
+
+    // Handle subscription creation (backup in case checkout.session.completed doesn't have it)
+    if (event.type === 'customer.subscription.created' || event.type === 'customer.subscription.updated') {
+      const subscription = event.data.object
+      console.log(`🔄 Subscription ${event.type}:`, subscription.id)
+      console.log('🔄 Subscription status:', subscription.status)
+      console.log('🔄 Customer:', subscription.customer)
+
+      const stripeCustomerId = typeof subscription.customer === 'string'
+        ? subscription.customer
+        : subscription.customer?.id
+
+      if (!stripeCustomerId) {
+        console.log('⚠️ No customer ID in subscription event')
+        return NextResponse.json({ received: true, message: 'No customer ID' })
+      }
+
+      // Get customer details from Stripe
+      const customer = await stripe.customers.retrieve(stripeCustomerId)
+      const customerEmail = (customer as any).email || 'unknown@test.com'
+      const customerName = (customer as any).name || 'Customer'
+
+      console.log('👤 Customer email:', customerEmail)
+      console.log('👤 Customer name:', customerName)
+
+      // Create or update customer account with subscription
+      try {
+        const customerId = await createOrUpdateCustomerAccount(
+          customerEmail,
+          customerName,
+          stripeCustomerId,
+          subscription.id,
+          subscription
+        )
+        console.log('✅ Customer account created/updated from subscription event, ID:', customerId)
+        return NextResponse.json({ success: true, customer_id: customerId })
+      } catch (error) {
+        console.error('❌ Failed to create customer account from subscription event:', error)
+        return NextResponse.json({ error: 'Failed to create account' }, { status: 500 })
+      }
     }
 
     // Handle subscription cancellations
