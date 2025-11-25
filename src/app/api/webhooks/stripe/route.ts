@@ -440,7 +440,16 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: true, customer_id: customerId })
       } catch (error) {
         console.error('❌ Failed to create customer account from subscription event:', error)
-        return NextResponse.json({ error: 'Failed to create account' }, { status: 500 })
+        const errorDetails = {
+          error: 'Failed to create account',
+          message: error instanceof Error ? error.message : 'Unknown error',
+          stack: error instanceof Error ? error.stack : undefined,
+          subscription_id: subscription.id,
+          customer_email: customerEmail,
+          timestamp: new Date().toISOString()
+        }
+        console.error('❌ Full error details:', JSON.stringify(errorDetails, null, 2))
+        return NextResponse.json(errorDetails, { status: 500 })
       }
     }
 
