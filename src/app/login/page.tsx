@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Shield, Mail, ArrowRight } from 'lucide-react'
 import { createClient } from '@supabase/supabase-js'
 
@@ -8,6 +9,7 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
 export default function LoginPage() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
   const [otp, setOtp] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -66,8 +68,9 @@ export default function LoginPage() {
       // Wait for session to be saved in localStorage/cookies
       await new Promise(resolve => setTimeout(resolve, 500))
 
-      // Force reload to ensure fresh session pickup
-      window.location.href = '/account'
+      // Use Next.js router for proper navigation with session
+      router.push('/account')
+      router.refresh()
     } catch (err) {
       console.error('OTP Verify Error:', err)
       setError(err instanceof Error ? err.message : 'Invalid code. Please try again.')
