@@ -8,28 +8,53 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(request: NextRequest) {
   try {
-    // Get user from session using cookies
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          },
-        },
-      }
-    )
+    let user = null
 
-    const { data: { user } } = await supabase.auth.getUser()
+    // Try to get user from Authorization header first (client-side auth)
+    const authHeader = request.headers.get('authorization')
+    if (authHeader?.startsWith('Bearer ')) {
+      const token = authHeader.substring(7)
+      console.log('🔑 Using Bearer token from Authorization header')
+
+      const { data, error } = await supabaseAdmin.auth.getUser(token)
+      if (!error && data.user) {
+        user = data.user
+        console.log('✅ User authenticated via token:', user.id, user.email)
+      } else {
+        console.log('❌ Token validation failed:', error)
+      }
+    }
+
+    // Fallback to cookie-based auth (server-side)
+    if (!user) {
+      console.log('🍪 Trying cookie-based authentication')
+      const cookieStore = await cookies()
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() {
+              return cookieStore.getAll()
+            },
+            setAll(cookiesToSet) {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              )
+            },
+          },
+        }
+      )
+
+      const { data: { user: cookieUser } } = await supabase.auth.getUser()
+      if (cookieUser) {
+        user = cookieUser
+        console.log('✅ User authenticated via cookies:', user.id, user.email)
+      }
+    }
 
     if (!user) {
+      console.log('❌ No valid authentication found')
       return NextResponse.json(
         { error: 'Unauthorized - Please log in to cancel your subscription' },
         { status: 401 }

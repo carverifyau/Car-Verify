@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { XCircle } from 'lucide-react'
+import { supabase } from '@/lib/supabase-client'
 
 interface CancelSubscriptionButtonProps {
   subscriptionId: string
@@ -19,10 +20,20 @@ export default function CancelSubscriptionButton({
     setError(null)
 
     try {
+      // Get the current session to send the access token
+      const { data: { session } } = await supabase.auth.getSession()
+
+      if (!session) {
+        setError('Please log in to cancel your subscription')
+        setIsLoading(false)
+        return
+      }
+
       const response = await fetch('/api/cancel-subscription', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
         },
         credentials: 'include', // Include cookies for authentication
         body: JSON.stringify({ subscriptionId }),
