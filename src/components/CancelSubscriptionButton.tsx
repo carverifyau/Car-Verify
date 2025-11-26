@@ -24,6 +24,7 @@ export default function CancelSubscriptionButton({
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include', // Include cookies for authentication
         body: JSON.stringify({ subscriptionId }),
       })
 
