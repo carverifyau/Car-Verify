@@ -2,9 +2,11 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { CheckCircle, Mail, Calendar } from 'lucide-react'
+import { CheckCircle, Mail, Calendar, Car, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import Footer from '@/components/Footer'
+import AuthHeaderButton from '@/components/AuthHeaderButton'
 
 function SubmissionSuccessContent() {
   const searchParams = useSearchParams()
@@ -27,7 +29,33 @@ function SubmissionSuccessContent() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
+        <div className="container mx-auto px-4 py-3 md:py-4">
+          <div className="flex justify-between items-center">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="bg-blue-600 p-1.5 md:p-2 rounded-lg">
+                <Car className="h-5 w-5 md:h-6 md:w-6 text-white" />
+              </div>
+              <div>
+                <span className="text-xl md:text-2xl font-bold text-gray-900">Car Verify</span>
+                <div className="text-[10px] md:text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
+              </div>
+            </Link>
+            <nav className="flex items-center space-x-4 md:space-x-8">
+              <Link href="/" className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 transition-colors">
+                <ArrowLeft className="h-5 w-5" />
+                <span className="hidden md:inline">Back to Home</span>
+              </Link>
+              <AuthHeaderButton />
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex items-center justify-center px-4 py-12 min-h-[calc(100vh-80px)]">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -163,13 +191,23 @@ function SubmissionSuccessContent() {
           </a>
         </p>
       </motion.div>
+      </div>
+
+      <Footer />
     </div>
   )
 }
 
 export default function SubmissionSuccessPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
       <SubmissionSuccessContent />
     </Suspense>
   )
