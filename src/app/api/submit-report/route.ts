@@ -7,11 +7,12 @@ interface SubmitReportRequest {
   rego?: string
   state?: string
   vin?: string
+  email?: string  // Optional email for non-authenticated submissions
 }
 
 export async function POST(request: NextRequest) {
   try {
-    const { rego, state, vin }: SubmitReportRequest = await request.json()
+    const { rego, state, vin, email }: SubmitReportRequest = await request.json()
 
     // Validate input
     if (!vin && (!rego || !state)) {
@@ -21,42 +22,71 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Create authenticated Supabase client
-    const cookieStore = await cookies()
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return cookieStore.getAll()
-          },
-          setAll(cookiesToSet) {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          },
-        },
+    let userId: string
+    let userEmail: string
+
+    // Check if email is provided (email-based submission)
+    if (email) {
+      console.log('📧 Email-based submission for:', email)
+
+      // Find customer by email
+      const { data: customer, error: customerError } = await supabaseAdmin
+        .from('customers')
+        .select('id, email')
+        .eq('email', email.toLowerCase().trim())
+        .single()
+
+      if (customerError || !customer) {
+        return NextResponse.json(
+          { error: 'No account found with this email' },
+          { status: 404 }
+        )
       }
-    )
 
-    // Check if user is authenticated
-    const { data: { user } } = await supabase.auth.getUser()
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Please log in to submit reports' },
-        { status: 401 }
+      userId = customer.id
+      userEmail = customer.email
+      console.log('✅ Customer found:', userId)
+    } else {
+      // Authenticated user submission
+      const cookieStore = await cookies()
+      const supabase = createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+          cookies: {
+            getAll() {
+              return cookieStore.getAll()
+            },
+            setAll(cookiesToSet) {
+              cookiesToSet.forEach(({ name, value, options }) =>
+                cookieStore.set(name, value, options)
+              )
+            },
+          },
+        }
       )
+
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        return NextResponse.json(
+          { error: 'Please log in or provide email to submit reports' },
+          { status: 401 }
+        )
+      }
+
+      userId = user.id
+      userEmail = user.email!
+      console.log('👤 Authenticated submission for:', userId, userEmail)
     }
 
-    console.log('📋 Submitting report for user:', user.id, user.email)
+    console.log('📋 Submitting report for user:', userId, userEmail)
 
     // Get user's subscription using admin client
     const { data: subscription, error: subError } = await supabaseAdmin
       .from('subscriptions')
       .select('*')
-      .eq('customer_id', user.id)
+      .eq('customer_id', userId)
       .single()
 
     if (subError || !subscription) {
@@ -96,7 +126,7 @@ export async function POST(request: NextRequest) {
     const { data: customer } = await supabaseAdmin
       .from('customers')
       .select('email, name')
-      .eq('id', user.id)
+      .eq('id', userId)
       .single()
 
     // Create report in database
@@ -105,8 +135,8 @@ export async function POST(request: NextRequest) {
       : { type: 'rego', rego, state }
 
     const reportData = {
-      customer_id: user.id,
-      customer_email: customer?.email || user.email,
+      customer_id: userId,
+      customer_email: customer?.email || userEmail,
       customer_name: customer?.name || 'Customer',
       vehicle_identifier: vehicleIdentifier,
       report_type: 'STANDARD',

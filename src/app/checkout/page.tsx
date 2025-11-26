@@ -68,6 +68,51 @@ function CheckoutPageContent() {
     setIsLoadingIntent(true)
 
     try {
+      // First, check if email has active subscription with checks remaining
+      console.log('🔍 Checking subscription for email:', customerEmail.trim())
+      const checkResponse = await fetch('/api/check-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: customerEmail.trim() })
+      })
+
+      const checkData = await checkResponse.json()
+      console.log('📊 Subscription check result:', checkData)
+
+      // If user has subscription with checks remaining, submit report directly
+      if (checkData.hasSubscription && checkData.hasChecksRemaining) {
+        console.log('✅ Active subscription found - submitting report directly')
+
+        const submitResponse = await fetch('/api/submit-report', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: customerEmail.trim(),
+            rego: vehicleInfo.type === 'rego' ? vehicleInfo.rego : undefined,
+            state: vehicleInfo.type === 'rego' ? vehicleInfo.state : undefined,
+            vin: vehicleInfo.type === 'vin' ? vehicleInfo.vin : undefined
+          })
+        })
+
+        const submitData = await submitResponse.json()
+
+        if (submitResponse.ok) {
+          console.log('✅ Report submitted successfully using subscription')
+          alert(`✅ Report Submitted Successfully!\n\nYour subscription was recognized!\n\nYou have ${submitData.checksRemaining} check${submitData.checksRemaining !== 1 ? 's' : ''} remaining this month.\n\n📧 Your PPSR certificate will be emailed to ${customerEmail.trim()} within 2 hours during business hours.\n\nThank you for using Car Verify!`)
+
+          // Redirect to homepage
+          window.location.href = '/'
+          return
+        } else {
+          // If submission failed, show error but don't proceed to payment
+          console.error('❌ Report submission failed:', submitData.error)
+          throw new Error(submitData.error || 'Failed to submit report using subscription')
+        }
+      }
+
+      // No subscription or no checks remaining - proceed to normal payment flow
+      console.log('💳 No active subscription - proceeding to payment')
+
       const response = await fetch('/api/create-subscription-intent', {
         method: 'POST',
         headers: {
@@ -93,7 +138,7 @@ function CheckoutPageContent() {
     } catch (error) {
       console.error('Payment initialization error:', error)
       const errorMsg = error instanceof Error ? error.message : 'Unknown error'
-      alert(`Failed to initialize payment: ${errorMsg}\n\nPlease try again or contact support.`)
+      alert(`Failed to process request: ${errorMsg}\n\nPlease try again or contact support.`)
     } finally {
       setIsLoadingIntent(false)
     }
