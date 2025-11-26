@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    console.log('👤 Customer found:', customer.id)
+    console.log('👤 Customer found:', customer.id, customer.email)
 
     // Check for active subscription
     const { data: subscription, error: subError } = await supabaseAdmin
@@ -38,8 +38,10 @@ export async function POST(request: NextRequest) {
       .eq('customer_id', customer.id)
       .single()
 
+    console.log('📊 Subscription query result:', { subscription, error: subError })
+
     if (subError || !subscription) {
-      console.log('❌ No subscription found for customer')
+      console.log('❌ No subscription found for customer:', customer.id, 'Error:', subError)
       return NextResponse.json({
         hasSubscription: false,
         message: 'No subscription found'
