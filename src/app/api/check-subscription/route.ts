@@ -31,14 +31,18 @@ export async function POST(request: NextRequest) {
 
     console.log('👤 Customer found:', customer.id, customer.email)
 
-    // Check for active subscription
-    const { data: subscription, error: subError } = await supabaseAdmin
+    // Check for active subscription - get the most recent one
+    const { data: subscriptions, error: subError } = await supabaseAdmin
       .from('subscriptions')
       .select('id, status, checks_used, checks_limit, current_period_end')
       .eq('customer_id', customer.id)
-      .single()
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
 
-    console.log('📊 Subscription query result:', { subscription, error: subError })
+    console.log('📊 Subscription query result:', { subscriptions, error: subError })
+
+    const subscription = subscriptions?.[0]
 
     if (subError || !subscription) {
       console.log('❌ No subscription found for customer:', customer.id, 'Error:', subError)

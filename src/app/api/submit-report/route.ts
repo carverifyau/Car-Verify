@@ -82,12 +82,16 @@ export async function POST(request: NextRequest) {
 
     console.log('📋 Submitting report for user:', userId, userEmail)
 
-    // Get user's subscription using admin client
-    const { data: subscription, error: subError } = await supabaseAdmin
+    // Get user's subscription using admin client - get most recent active one
+    const { data: subscriptions, error: subError } = await supabaseAdmin
       .from('subscriptions')
       .select('*')
       .eq('customer_id', userId)
-      .single()
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1)
+
+    const subscription = subscriptions?.[0]
 
     if (subError || !subscription) {
       return NextResponse.json(
