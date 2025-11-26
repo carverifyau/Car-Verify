@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     console.log('📧 Sending report email to:', customerEmail)
 
-    // Initialize Resend with API key (done at runtime, not build time)
+    // Initialize Resend with API key
     const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Generate report summary for email
