@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import nodemailer from 'nodemailer'
+import { Resend } from 'resend'
 import { supabaseAdmin } from '@/lib/supabase'
 
 interface EmailRequest {
@@ -25,16 +25,8 @@ export async function POST(request: NextRequest) {
 
     console.log('📧 Sending report email to:', customerEmail)
 
-    // Initialize Gmail SMTP transporter
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || 'smtp.gmail.com',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: false,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    })
+    // Initialize Resend with API key
+    const resend = new Resend(process.env.RESEND_API_KEY)
 
     // Generate report summary for email
     const reportSummary = generateReportSummary(reportData, rego, state)
@@ -203,14 +195,14 @@ export async function POST(request: NextRequest) {
       console.error('PDF generation request failed:', pdfResponse.status)
     }
 
-    // Prepare attachments array for nodemailer
+    // Prepare attachments array for Resend
     const attachments = []
 
     // Add PDF attachment if available
     if (pdfAttachment) {
       attachments.push({
         filename: pdfAttachment.filename,
-        content: Buffer.from(pdfAttachment.content, 'base64')
+        content: pdfAttachment.content
       })
     }
 
@@ -219,7 +211,7 @@ export async function POST(request: NextRequest) {
       console.log('Adding PPSR certificate attachment...')
       attachments.push({
         filename: reportData.ppsrCertificateFilename || 'ppsr-certificate.pdf',
-        content: Buffer.from(reportData.ppsrCertificateData, 'base64')
+        content: reportData.ppsrCertificateData
       })
       console.log('PPSR certificate attached successfully')
 
@@ -247,19 +239,24 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Send email via Gmail SMTP
-    console.log('📤 Sending email via Gmail SMTP...')
-    const info = await transporter.sendMail({
-      from: `"Car Verify" <${process.env.SMTP_USER}>`,
+    // Send email via Resend
+    console.log('📤 Sending email via Resend...')
+    const { data, error: resendError } = await resend.emails.send({
+      from: 'Car Verify <reports@carverify.com.au>',
       to: customerEmail,
       subject: `🚗 Your PPSR Certificate for ${rego} + Account Access - Car Verify`,
       html: emailHtml,
       attachments: attachments
     })
 
+    if (resendError) {
+      console.error('❌ Resend error:', resendError)
+      throw new Error(`Failed to send email: ${resendError.message}`)
+    }
+
     // Log successful email send
     console.log('✅ Report email sent successfully:', {
-      messageId: info.messageId,
+      messageId: data?.id,
       customerEmail,
       rego,
       state,
@@ -268,7 +265,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      messageId: info.messageId,
+      messageId: data?.id,
       message: 'Report email sent successfully'
     })
 
