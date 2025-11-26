@@ -98,10 +98,9 @@ function CheckoutPageContent() {
 
         if (submitResponse.ok) {
           console.log('✅ Report submitted successfully using subscription')
-          alert(`✅ Report Submitted Successfully!\n\nYour subscription was recognized!\n\nYou have ${submitData.checksRemaining} check${submitData.checksRemaining !== 1 ? 's' : ''} remaining this month.\n\n📧 Your PPSR certificate will be emailed to ${customerEmail.trim()} within 2 hours during business hours.\n\nThank you for using Car Verify!`)
 
-          // Redirect to homepage
-          window.location.href = '/'
+          // Redirect to success page
+          window.location.href = `/submission-success?checksRemaining=${submitData.checksRemaining}&email=${encodeURIComponent(customerEmail.trim())}&totalChecks=${checkData.checksLimit || 10}`
           return
         } else {
           // If submission failed, show error but don't proceed to payment

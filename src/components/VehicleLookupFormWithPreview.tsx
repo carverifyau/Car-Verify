@@ -107,9 +107,12 @@ export default function VehicleLookupFormWithPreview() {
           throw new Error(data.error || 'Failed to submit report')
         }
 
-        // Show success message and redirect to account page
-        alert(`✅ Report submitted successfully!\n\nYou have ${data.checksRemaining} checks remaining this month.\n\nWe'll process your report within 2 hours during business hours. You can view it in your account dashboard.`)
-        window.location.href = '/account'
+        // Get user email for success page
+        const { data: { user } } = await supabase.auth.getUser()
+        const userEmail = user?.email || ''
+
+        // Redirect to success page
+        window.location.href = `/submission-success?checksRemaining=${data.checksRemaining}&email=${encodeURIComponent(userEmail)}&totalChecks=${subscription.checks_limit || 10}`
         return
       }
 
