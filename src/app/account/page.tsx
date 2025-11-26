@@ -423,12 +423,12 @@ export default function AccountPage() {
                       </div>
                     )}
 
-                    {/* Cancel Subscription */}
+                    {/* Manage Subscription */}
                     {subscription.status === 'active' && !subscription.cancel_at && (
                       <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                        <h3 className="font-semibold text-gray-900 mb-2">Cancel Subscription</h3>
+                        <h3 className="font-semibold text-gray-900 mb-2">Manage Subscription</h3>
                         <p className="text-sm text-gray-600 mb-4">
-                          You can cancel your subscription at any time. You'll keep access until the end of your current billing period.
+                          Manage your subscription, update payment methods, view invoices, or cancel anytime through Stripe's secure portal.
                         </p>
                         <CancelSubscriptionButton
                           subscriptionId={subscription.stripe_subscription_id}
