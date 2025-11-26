@@ -32,19 +32,34 @@ export async function POST(request: NextRequest) {
     // Get customer's Stripe ID
     const { data: customer } = await supabaseAdmin
       .from('customers')
-      .select('stripe_customer_id')
+      .select('stripe_customer_id, email')
       .eq('id', user.id)
       .single()
 
     if (!customer?.stripe_customer_id) {
       console.log('❌ No Stripe customer ID found for user:', user.id)
       return NextResponse.json(
-        { error: 'No subscription found' },
+        { error: 'No subscription found. Please contact support.' },
         { status: 404 }
       )
     }
 
-    console.log('📋 Creating portal session for customer:', customer.stripe_customer_id)
+    console.log('📋 Creating portal session for customer:', customer.stripe_customer_id, customer.email)
+
+    // Verify customer exists in Stripe first
+    try {
+      const stripeCustomer = await stripe.customers.retrieve(customer.stripe_customer_id)
+      console.log('✅ Stripe customer verified:', stripeCustomer.id)
+    } catch (verifyError) {
+      console.error('❌ Customer not found in Stripe:', customer.stripe_customer_id, verifyError)
+      return NextResponse.json(
+        {
+          error: 'Subscription data mismatch. Please contact support.',
+          details: `Customer ${customer.stripe_customer_id} not found in Stripe`
+        },
+        { status: 404 }
+      )
+    }
 
     // Create a Stripe Customer Portal session
     const session = await stripe.billingPortal.sessions.create({
