@@ -28,7 +28,6 @@ function CheckoutPageContent() {
   const [subscriptionId, setSubscriptionId] = useState('')
   const [isLoadingIntent, setIsLoadingIntent] = useState(false)
   const [showPaymentForm, setShowPaymentForm] = useState(false)
-  const [agreedToTerms, setAgreedToTerms] = useState(false)
 
   useEffect(() => {
     const vin = searchParams.get('vin')
@@ -365,32 +364,9 @@ function CheckoutPageContent() {
                       />
                     </div>
 
-                    {/* Terms and Conditions Checkbox */}
-                    <div className="flex items-start space-x-3 bg-gray-50 p-4 rounded-lg border border-gray-200">
-                      <input
-                        type="checkbox"
-                        id="termsCheckbox"
-                        checked={agreedToTerms}
-                        onChange={(e) => setAgreedToTerms(e.target.checked)}
-                        className="mt-1 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500 flex-shrink-0"
-                        required
-                      />
-                      <label htmlFor="termsCheckbox" className="text-sm text-gray-700 leading-relaxed">
-                        <span className="font-semibold">I agree to the subscription terms:</span> $1 today, then $20/month for 10 PPSR checks per month. Auto-renews monthly until cancelled. I acknowledge the{' '}
-                        <Link href="/terms" target="_blank" className="text-blue-600 hover:text-blue-700 underline font-medium">
-                          Terms of Service
-                        </Link>
-                        {' '}and{' '}
-                        <Link href="/privacy" target="_blank" className="text-blue-600 hover:text-blue-700 underline font-medium">
-                          Privacy Policy
-                        </Link>
-                        . 30-day money-back guarantee.
-                      </label>
-                    </div>
-
                     <button
                       type="submit"
-                      disabled={isLoadingIntent || !customerEmail.trim() || !agreedToTerms}
+                      disabled={isLoadingIntent || !customerEmail.trim()}
                       className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-5 md:py-4 px-8 rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 font-bold text-xl md:text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                     >
                       {isLoadingIntent ? 'Loading...' : 'Continue to Payment'}
