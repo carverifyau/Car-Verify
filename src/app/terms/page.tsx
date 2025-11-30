@@ -57,42 +57,65 @@ export default function TermsPage() {
           </ul>
 
           <h2>3. Pricing and Payment</h2>
-          <h3>3.1 Service Fee</h3>
+          <h3>3.1 Subscription Plan</h3>
           <p>
-            The current price for our PPSR certificate service is AUD $14.99 (including GST). Prices are subject to change with reasonable notice.
+            Car Verify operates on a subscription model:
           </p>
+          <ul>
+            <li><strong>Initial Payment:</strong> AUD $1.00 (including GST) for your first month</li>
+            <li><strong>Ongoing Subscription:</strong> AUD $20.00/month (including GST) after the first month</li>
+            <li><strong>Included Checks:</strong> 10 PPSR certificate checks per month</li>
+            <li><strong>Auto-Renewal:</strong> Subscription automatically renews monthly unless cancelled</li>
+          </ul>
 
           <h3>3.2 Payment Processing</h3>
           <p>
-            All payments are processed securely through Stripe. We do not store your credit card information. Payment must be completed before we process your PPSR check.
+            All payments are processed securely through Stripe. We do not store your credit card information. Your card will be charged $1.00 initially, then $20.00/month on the same date each month until you cancel.
           </p>
 
-          <h3>3.3 One-Time Payment</h3>
+          <h3>3.3 Cancellation</h3>
           <p>
-            Our service is a one-time payment per vehicle check. There are no recurring charges or subscriptions.
+            You may cancel your subscription at any time through your account dashboard. Upon cancellation:
+          </p>
+          <ul>
+            <li>You retain access to your subscription benefits until the end of your current billing period</li>
+            <li>No further charges will be made after the current period ends</li>
+            <li>No refunds are provided for partial months</li>
+            <li>Unused checks do not roll over to the next billing period</li>
+          </ul>
+
+          <h3>3.4 Usage Limits</h3>
+          <p>
+            Each subscription includes 10 PPSR certificate checks per calendar month. If you exceed this limit, additional checks may be purchased separately or you may wait until your next billing cycle.
           </p>
 
           <h2>4. Refund Policy</h2>
-          <h3>4.1 Eligibility for Refunds</h3>
-          <p>You may be eligible for a full refund if:</p>
-          <ul>
-            <li>We are unable to process your PPSR check due to technical errors on our end</li>
-            <li>You accidentally made duplicate purchases for the same vehicle</li>
-            <li>You provided incorrect vehicle information and notify us within 24 hours</li>
-          </ul>
-
-          <h3>4.2 Non-Refundable Circumstances</h3>
-          <p>Refunds will NOT be provided if:</p>
-          <ul>
-            <li>The PPSR certificate has already been delivered to your email</li>
-            <li>You are dissatisfied with the results (e.g., finance owing was discovered)</li>
-            <li>You provided incorrect vehicle information and did not notify us within 24 hours</li>
-            <li>You changed your mind after receiving the certificate</li>
-          </ul>
-
-          <h3>4.3 How to Request a Refund</h3>
+          <h3>4.1 Money-Back Guarantee</h3>
           <p>
-            To request a refund, contact us at carverifyau@gmail.com within 7 days of purchase. Include your order number and reason for the refund request. Refunds are processed within 5-10 business days.
+            We offer a 30-day money-back guarantee. If you're not satisfied with our service within the first 30 days of your subscription, contact us for a full refund of your subscription fee.
+          </p>
+
+          <h3>4.2 Subscription Refunds</h3>
+          <p>You may be eligible for a refund if:</p>
+          <ul>
+            <li>You cancel within 30 days of your initial subscription</li>
+            <li>We are unable to provide the service due to technical errors on our end</li>
+            <li>You were charged incorrectly or experienced billing errors</li>
+          </ul>
+
+          <h3>4.3 Non-Refundable Circumstances</h3>
+          <p>Refunds will NOT be provided for:</p>
+          <ul>
+            <li>Subscriptions cancelled after 30 days (you'll retain access until end of billing period)</li>
+            <li>PPSR certificates that have been successfully delivered</li>
+            <li>Dissatisfaction with PPSR report results (e.g., finance owing was discovered)</li>
+            <li>Unused checks in your monthly allowance</li>
+            <li>Partial month refunds after using any checks</li>
+          </ul>
+
+          <h3>4.4 How to Request a Refund</h3>
+          <p>
+            To request a refund, contact us at carverifyau@gmail.com within 30 days of your initial subscription. Include your account email and reason for the refund request. Refunds are processed within 5-10 business days to the original payment method.
           </p>
 
           <h2>5. User Responsibilities</h2>
@@ -132,7 +155,7 @@ export default function TermsPage() {
 
           <h3>6.3 Limitation of Liability</h3>
           <p>
-            Car Verify's total liability to you for any claims arising from the Service is limited to the amount you paid for the service (AUD $14.99).
+            Car Verify's total liability to you for any claims arising from the Service is limited to the amount you paid for your subscription in the most recent billing period (maximum AUD $20.00).
           </p>
           <p>
             We are not liable for:
@@ -143,6 +166,18 @@ export default function TermsPage() {
             <li>Inaccuracies in government PPSR data</li>
             <li>Delayed delivery due to email provider issues</li>
             <li>Any indirect, incidental, or consequential damages</li>
+            <li>Business losses, lost profits, or opportunity costs</li>
+            <li>Decisions made based on PPSR certificates</li>
+          </ul>
+
+          <h3>6.4 Important Disclaimers</h3>
+          <p><strong>PPSR reports are informational only and should be used as part of comprehensive vehicle research. By using our service, you acknowledge that:</strong></p>
+          <ul>
+            <li>PPSR data is sourced from government databases and may not be 100% complete or current</li>
+            <li>A "clear" PPSR result does not guarantee a vehicle is problem-free</li>
+            <li>You should conduct additional inspections (mechanical, physical) before purchasing</li>
+            <li>Car Verify is not liable for vehicle purchasing decisions or financial losses</li>
+            <li>PPSR checks do not replace professional vehicle inspections or legal advice</li>
           </ul>
 
           <h2>7. Australian Consumer Law</h2>
