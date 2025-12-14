@@ -15,15 +15,30 @@ interface PendingOrder {
   status: 'pending' | 'completed'
 }
 
+interface Customer {
+  id: string
+  email: string
+  name?: string
+}
+
 function PPSRAdminDashboard() {
   const [pendingOrders, setPendingOrders] = useState<PendingOrder[]>([])
   const [selectedOrder, setSelectedOrder] = useState<PendingOrder | null>(null)
   const [ppsrFile, setPpsrFile] = useState<File | null>(null)
   const [isSending, setIsSending] = useState(false)
 
+  // New states for existing customers
+  const [customers, setCustomers] = useState<Customer[]>([])
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null)
+  const [manualRego, setManualRego] = useState('')
+  const [manualState, setManualState] = useState('QLD')
+  const [manualVin, setManualVin] = useState('')
+  const [useVin, setUseVin] = useState(false)
+
   // Load pending orders from Supabase
   useEffect(() => {
     loadOrders()
+    loadCustomers()
     const interval = setInterval(loadOrders, 30000) // Refresh every 30 seconds
     return () => clearInterval(interval)
   }, [])
@@ -48,6 +63,18 @@ function PPSRAdminDashboard() {
       }
     } catch (error) {
       console.error('Failed to load orders:', error)
+    }
+  }
+
+  const loadCustomers = async () => {
+    try {
+      const response = await fetch('/api/admin/customers')
+      if (response.ok) {
+        const data = await response.json()
+        setCustomers(data.customers || [])
+      }
+    } catch (error) {
+      console.error('Failed to load customers:', error)
     }
   }
 
@@ -134,6 +161,80 @@ function PPSRAdminDashboard() {
     }
   }
 
+  const handleSendToCustomer = async () => {
+    if (!selectedCustomer || !ppsrFile) {
+      alert('Please select a customer and upload a PPSR PDF')
+      return
+    }
+
+    if (!useVin && (!manualRego || !manualState)) {
+      alert('Please enter registration and state, or select VIN')
+      return
+    }
+
+    if (useVin && !manualVin) {
+      alert('Please enter VIN number')
+      return
+    }
+
+    setIsSending(true)
+
+    try {
+      // Convert PDF to base64
+      const reader = new FileReader()
+      const base64Promise = new Promise<string>((resolve, reject) => {
+        reader.onload = () => {
+          const base64 = (reader.result as string).split(',')[1]
+          resolve(base64)
+        }
+        reader.onerror = reject
+      })
+
+      reader.readAsDataURL(ppsrFile)
+      const base64Data = await base64Promise
+
+      // Send email with PPSR attachment
+      const emailResponse = await fetch('/api/send-report-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          customerEmail: selectedCustomer.email,
+          customerName: selectedCustomer.name || 'Customer',
+          reportData: {
+            ppsrCertificateData: base64Data,
+            ppsrCertificateFilename: ppsrFile.name,
+            ppsrCertificateType: ppsrFile.type
+          },
+          rego: useVin ? undefined : manualRego,
+          state: useVin ? undefined : manualState,
+          vin: useVin ? manualVin : undefined
+        }),
+      })
+
+      if (!emailResponse.ok) {
+        throw new Error('Failed to send email')
+      }
+
+      alert(`✅ PPSR certificate sent successfully to ${selectedCustomer.email}!`)
+
+      // Reset form
+      setSelectedCustomer(null)
+      setPpsrFile(null)
+      setManualRego('')
+      setManualState('QLD')
+      setManualVin('')
+      setUseVin(false)
+
+    } catch (error) {
+      console.error('Error sending email:', error)
+      alert('❌ Failed to send email. Please try again.')
+    } finally {
+      setIsSending(false)
+    }
+  }
+
   const pending = pendingOrders.filter(o => o.status === 'pending')
   const completed = pendingOrders.filter(o => o.status === 'completed')
 
@@ -148,6 +249,134 @@ function PPSRAdminDashboard() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Send to Existing Customer Section */}
+        <div className="mb-8 bg-gradient-to-r from-purple-50 to-blue-50 border-2 border-purple-200 rounded-xl p-6">
+          <h2 className="text-2xl font-bold text-purple-900 mb-4">📨 Send Report to Existing Customer</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Select Customer */}
+            <div className="bg-white rounded-lg p-4 border border-purple-200">
+              <label className="block text-sm font-bold text-gray-900 mb-2">Select Customer Account</label>
+              <select
+                value={selectedCustomer?.id || ''}
+                onChange={(e) => {
+                  const customer = customers.find(c => c.id === e.target.value)
+                  setSelectedCustomer(customer || null)
+                }}
+                className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+              >
+                <option value="">Choose customer...</option>
+                {customers.map((customer) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.email} {customer.name ? `(${customer.name})` : ''}
+                  </option>
+                ))}
+              </select>
+              <p className="text-xs text-gray-500 mt-2">{customers.length} customers available</p>
+            </div>
+
+            {/* Vehicle Info */}
+            <div className="bg-white rounded-lg p-4 border border-purple-200">
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-bold text-gray-900">Vehicle Information</label>
+                <button
+                  onClick={() => setUseVin(!useVin)}
+                  className="text-xs text-purple-600 hover:text-purple-700 font-medium"
+                >
+                  {useVin ? 'Use Rego' : 'Use VIN'}
+                </button>
+              </div>
+
+              {useVin ? (
+                <input
+                  type="text"
+                  value={manualVin}
+                  onChange={(e) => setManualVin(e.target.value.toUpperCase())}
+                  placeholder="VIN Number"
+                  className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                />
+              ) : (
+                <div className="grid grid-cols-2 gap-2">
+                  <input
+                    type="text"
+                    value={manualRego}
+                    onChange={(e) => setManualRego(e.target.value.toUpperCase())}
+                    placeholder="Rego"
+                    className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  />
+                  <select
+                    value={manualState}
+                    onChange={(e) => setManualState(e.target.value)}
+                    className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  >
+                    <option value="QLD">QLD</option>
+                    <option value="NSW">NSW</option>
+                    <option value="VIC">VIC</option>
+                    <option value="SA">SA</option>
+                    <option value="WA">WA</option>
+                    <option value="TAS">TAS</option>
+                    <option value="NT">NT</option>
+                    <option value="ACT">ACT</option>
+                  </select>
+                </div>
+              )}
+            </div>
+
+            {/* Upload and Send */}
+            <div className="md:col-span-2 bg-white rounded-lg p-4 border border-purple-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Upload */}
+                <div>
+                  <label className="block text-sm font-bold text-gray-900 mb-2">Upload PPSR PDF</label>
+                  <input
+                    type="file"
+                    accept="application/pdf,.pdf"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                    id="manual-ppsr-upload"
+                  />
+                  <label
+                    htmlFor="manual-ppsr-upload"
+                    className="block w-full p-3 border-2 border-dashed border-purple-300 rounded-lg text-center cursor-pointer hover:border-purple-400 hover:bg-purple-50 transition-colors"
+                  >
+                    {ppsrFile ? (
+                      <div className="flex items-center justify-center space-x-2">
+                        <CheckCircle className="h-5 w-5 text-green-600" />
+                        <span className="font-medium text-gray-900 text-sm">{ppsrFile.name}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center space-x-2">
+                        <Upload className="h-5 w-5 text-purple-600" />
+                        <span className="text-purple-700 text-sm">Click to upload</span>
+                      </div>
+                    )}
+                  </label>
+                </div>
+
+                {/* Send Button */}
+                <div className="flex items-end">
+                  <button
+                    onClick={handleSendToCustomer}
+                    disabled={!selectedCustomer || !ppsrFile || isSending}
+                    className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 disabled:opacity-50 disabled:cursor-not-allowed font-bold flex items-center justify-center space-x-2 transition-colors"
+                  >
+                    {isSending ? (
+                      <>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Mail className="h-5 w-5" />
+                        <span>Send to Customer</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
           {/* Left: Pending Orders */}
