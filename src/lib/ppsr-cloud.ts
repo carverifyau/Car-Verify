@@ -203,8 +203,8 @@ class PPSRCloudClient {
    */
   async downloadCertificate(
     searchCertificateNumber: string,
-    maxRetries: number = 3,
-    delayMs: number = 10000
+    maxRetries: number = 4,
+    delayMs: number = 5000
   ): Promise<{ pdfBase64: string; filename: string }> {
     console.log('📄 Downloading PPSR certificate...')
     console.log('  Certificate Number:', searchCertificateNumber)
