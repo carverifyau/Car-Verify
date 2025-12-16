@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import Stripe from 'stripe'
+import { ppsrCloudClient } from '@/lib/ppsr-cloud'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
@@ -13,6 +14,81 @@ function toISOStringOrNull(unixTimestamp: number | null | undefined): string | n
   } catch (e) {
     console.warn('⚠️ Invalid timestamp:', unixTimestamp)
     return null
+  }
+}
+
+// Helper function to automatically fetch PPSR certificate and send email
+async function processPPSRCertificate(params: {
+  reportId: string
+  customerEmail: string
+  customerName: string
+  rego: string
+  state: string
+  vin?: string
+}) {
+  try {
+    console.log('🚗 Auto-fetching PPSR certificate for', params.rego, params.state)
+
+    // Step 1: Fetch PPSR certificate from PPSR Cloud
+    const ppsrResult = await ppsrCloudClient.performPPSRCheck({
+      vin: params.vin,
+      registrationPlate: params.rego,
+      registrationState: params.state
+    })
+
+    console.log('✅ PPSR certificate fetched:', ppsrResult.filename)
+
+    // Step 2: Send email with certificate and welcome message
+    const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/send-report-email`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        customerEmail: params.customerEmail,
+        customerName: params.customerName,
+        reportData: {
+          ppsrCertificateData: ppsrResult.pdfBase64,
+          ppsrCertificateFilename: ppsrResult.filename,
+          ppsrStatus: 'completed', // We'll parse the actual status from searchResult later
+          year: '', // Can be extracted from NEVDIS data
+          make: '', // Can be extracted from NEVDIS data
+          model: '' // Can be extracted from NEVDIS data
+        },
+        rego: params.rego,
+        state: params.state,
+        vin: params.vin,
+        reportId: params.reportId
+      }),
+    })
+
+    if (!emailResponse.ok) {
+      throw new Error('Failed to send email')
+    }
+
+    console.log('✅ Welcome email sent to:', params.customerEmail)
+
+    // Step 3: Update report status to completed
+    const { error: updateError } = await supabaseAdmin
+      .from('reports')
+      .update({
+        status: 'completed',
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', params.reportId)
+
+    if (updateError) {
+      console.error('⚠️ Failed to update report status:', updateError)
+    } else {
+      console.log('✅ Report marked as completed:', params.reportId)
+    }
+
+    return { success: true }
+
+  } catch (error) {
+    console.error('❌ Auto PPSR processing failed:', error)
+    // Report stays in 'pending' status for manual processing
+    throw error
   }
 }
 
@@ -267,7 +343,27 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('✅ REPORT CREATED:', data[0]?.id)
-      return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
+
+      // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING
+      // Trigger async processing without blocking webhook response
+      const reportId = data[0]?.id
+      if (reportId && vehicleInfo.rego) {
+        // Don't await - let this run in background
+        processPPSRCertificate({
+          reportId,
+          customerEmail,
+          customerName,
+          rego: vehicleInfo.rego,
+          state: vehicleInfo.state,
+          vin: vehicleInfo.vin
+        }).catch(error => {
+          console.error('❌ Background PPSR processing failed:', error)
+          // Error is logged but doesn't affect webhook response
+        })
+        console.log('🔄 PPSR certificate fetch triggered in background')
+      }
+
+      return NextResponse.json({ success: true, id: reportId, customer_id: customerId })
     }
 
     // Handle recurring subscription payments
