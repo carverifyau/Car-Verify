@@ -345,22 +345,24 @@ export async function POST(request: NextRequest) {
       console.log('✅ REPORT CREATED:', data[0]?.id)
 
       // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING
-      // Trigger async processing without blocking webhook response
+      // Process synchronously to ensure completion in serverless environment
       const reportId = data[0]?.id
       if (reportId && vehicleInfo.rego) {
-        // Don't await - let this run in background
-        processPPSRCertificate({
-          reportId,
-          customerEmail,
-          customerName,
-          rego: vehicleInfo.rego,
-          state: vehicleInfo.state,
-          vin: vehicleInfo.vin
-        }).catch(error => {
-          console.error('❌ Background PPSR processing failed:', error)
-          // Error is logged but doesn't affect webhook response
-        })
-        console.log('🔄 PPSR certificate fetch triggered in background')
+        try {
+          console.log('🔄 Starting PPSR certificate fetch...')
+          await processPPSRCertificate({
+            reportId,
+            customerEmail,
+            customerName,
+            rego: vehicleInfo.rego,
+            state: vehicleInfo.state,
+            vin: vehicleInfo.vin
+          })
+          console.log('✅ PPSR certificate fetched and email sent successfully')
+        } catch (error) {
+          console.error('❌ PPSR processing failed:', error)
+          // Report stays in 'pending' status for manual processing via admin panel
+        }
       }
 
       return NextResponse.json({ success: true, id: reportId, customer_id: customerId })
