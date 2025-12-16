@@ -63,31 +63,31 @@ export async function POST(request: NextRequest) {
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚗 Your Vehicle Report is Ready!</h1>
-            <p>Complete vehicle history report for ${rego} (${state})</p>
+            <h1>🚗 Your PPSR Certificate is Ready!</h1>
+            <p>Official PPSR security check for ${rego} (${state})</p>
         </div>
 
         <div class="content">
             <p>Hello${customerName ? ` ${customerName}` : ''},</p>
 
-            <p>Great news! Your comprehensive vehicle report for <strong>${rego} (${state})</strong> has been completed and is attached to this email as a PDF.</p>
+            <p>Great news! Your PPSR certificate for <strong>${rego} (${state})</strong> has been completed and is attached to this email as a PDF.</p>
 
             <div class="report-summary">
-                <h3>📋 Report Summary</h3>
+                <h3>📋 PPSR Certificate</h3>
                 ${reportSummary}
             </div>
 
-            <p><strong>What's included in your report:</strong></p>
+            <p><strong>What's included in your PPSR certificate:</strong></p>
             <ul>
                 <li>✅ PPSR Security Interest Check</li>
-                <li>✅ Vehicle Details & Specifications</li>
-                <li>✅ Market Valuation (Trade, Private, Retail)</li>
-                <li>✅ Ownership History</li>
-                <li>✅ Safety & Compliance Information</li>
+                <li>✅ Finance/Money Owing Status</li>
+                <li>✅ Written-Off Vehicle Status</li>
+                <li>✅ Stolen Vehicle Status</li>
+                <li>✅ Official PPSR Search Certificate</li>
             </ul>
 
             <p style="text-align: center; font-weight: bold; color: #2563eb;">
-                📄 Your complete vehicle report is attached as a PDF below
+                📄 Your official PPSR certificate is attached as a PDF below
             </p>
 
             <p><small><strong>Note:</strong> This report is valid for 30 days from the date of generation. Please download or save your report within this timeframe.</small></p>

@@ -34,6 +34,8 @@ export default function VehicleLookupFormWithPreview() {
   const [isScanning, setIsScanning] = useState(false)
   const [subscription, setSubscription] = useState<Subscription | null>(null)
   const [isCheckingAuth, setIsCheckingAuth] = useState(true)
+  const [validationError, setValidationError] = useState('')
+  const [isValidating, setIsValidating] = useState(false)
 
   // Check if user is logged in with subscription
   useEffect(() => {
@@ -68,16 +70,51 @@ export default function VehicleLookupFormWithPreview() {
 
   const handleCheckout = async (e: React.FormEvent) => {
     e.preventDefault()
+    setValidationError('')
 
     if (lookupType === 'rego' && (!rego || !state)) {
-      alert('Please enter both registration number and state')
+      setValidationError('Please enter both registration number and state')
       return
     }
 
     if (lookupType === 'vin' && !vin) {
-      alert('Please enter VIN number')
+      setValidationError('Please enter VIN number')
       return
     }
+
+    // Validate vehicle details before proceeding
+    setIsValidating(true)
+    try {
+      const validationResponse = await fetch('/api/validate-vehicle', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          vin: lookupType === 'vin' ? vin : undefined,
+          rego: lookupType === 'rego' ? rego : undefined,
+          state: lookupType === 'rego' ? state : undefined
+        })
+      })
+
+      const validationData = await validationResponse.json()
+
+      if (!validationData.valid) {
+        setValidationError(validationData.error || 'Invalid vehicle details')
+        setIsValidating(false)
+        return
+      }
+
+      // Show warning if provided
+      if (validationData.warning) {
+        console.warn(validationData.warning)
+      }
+
+    } catch (error) {
+      console.error('Validation error:', error)
+      setValidationError('Failed to validate vehicle details. Please try again.')
+      setIsValidating(false)
+      return
+    }
+    setIsValidating(false)
 
     // Track form submission
     const vehicleId = lookupType === 'rego' ? `${rego}-${state}` : vin
@@ -218,19 +255,38 @@ export default function VehicleLookupFormWithPreview() {
           <div>
             <label htmlFor="vin" className="block text-sm font-medium text-gray-700 mb-2">
               Vehicle Identification Number (VIN)
+              <span className="text-gray-500 font-normal ml-2">
+                ({vin.length}/17 characters)
+              </span>
             </label>
             <input
               type="text"
               id="vin"
               value={vin}
-              onChange={(e) => setVin(e.target.value.toUpperCase())}
-              placeholder="Enter VIN"
+              onChange={(e) => {
+                const value = e.target.value.toUpperCase().replace(/[^A-HJ-NPR-Z0-9]/g, '')
+                if (value.length <= 17) {
+                  setVin(value)
+                  setValidationError('')
+                }
+              }}
+              placeholder="Enter 17-character VIN"
               inputMode="text"
-              className="w-full px-4 py-4 md:py-3 border-2 md:border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center font-mono text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200"
+              maxLength={17}
+              className={`w-full px-4 py-4 md:py-3 border-2 md:border rounded-lg focus:ring-2 text-center font-mono text-lg md:text-base tracking-wider uppercase text-gray-900 placeholder-gray-500 transition-all duration-200 ${
+                vin.length > 0 && vin.length !== 17
+                  ? 'border-orange-300 focus:ring-orange-500 focus:border-orange-500'
+                  : 'border-gray-300 focus:ring-blue-500 focus:border-blue-500'
+              }`}
             />
             <p className="mt-2 text-xs text-gray-500 text-center">
-              Found on dashboard or driver's door
+              Found on dashboard or driver's door • Must be exactly 17 characters
             </p>
+            {vin.length > 0 && vin.length !== 17 && (
+              <p className="mt-1 text-xs text-orange-600 text-center">
+                ⚠️ VIN must be exactly 17 characters ({17 - vin.length} more needed)
+              </p>
+            )}
           </div>
         )}
 
@@ -275,17 +331,38 @@ export default function VehicleLookupFormWithPreview() {
           </div>
         )}
 
+        {/* Validation Error */}
+        {validationError && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+            <p className="text-red-800 text-sm font-medium text-center">
+              ⚠️ {validationError}
+            </p>
+          </div>
+        )}
+
         {/* Search Button */}
         <button
           type="submit"
-          disabled={isScanning || (lookupType === 'rego' && (!rego || !state)) || (lookupType === 'vin' && !vin) || (subscription && checksRemaining === 0)}
+          disabled={
+            isScanning ||
+            isValidating ||
+            (lookupType === 'rego' && (!rego || !state)) ||
+            (lookupType === 'vin' && (!vin || vin.length !== 17)) ||
+            (subscription && checksRemaining === 0)
+          }
           className={`w-full py-5 md:py-4 px-6 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 font-bold text-xl md:text-lg flex items-center justify-center space-x-2 shadow-lg ${
             subscription && checksRemaining > 0
               ? 'bg-green-600 hover:bg-green-700 text-white'
               : 'bg-blue-600 hover:bg-blue-700 text-white'
           }`}
         >
-          {isScanning ? (
+          {isValidating ? (
+            <>
+              <Loader2 className="h-6 w-6 md:h-5 md:w-5 animate-spin" />
+              <span className="md:hidden">Validating...</span>
+              <span className="hidden md:inline">Validating Vehicle Details...</span>
+            </>
+          ) : isScanning ? (
             <>
               <Loader2 className="h-6 w-6 md:h-5 md:w-5 animate-spin" />
               <span className="md:hidden">{subscription && checksRemaining > 0 ? 'Submitting...' : 'Searching...'}</span>
