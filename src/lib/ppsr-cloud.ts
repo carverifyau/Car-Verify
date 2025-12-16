@@ -44,7 +44,8 @@ interface CertificateDownloadResponse {
     fileName: string
   }
   hasError: boolean
-  errors?: Array<{ errorCode: string; errorDescription: string }>
+  errors?: Array<{ code: number; message: string }>
+  hasWarning: boolean
 }
 
 class PPSRCloudClient {
@@ -84,8 +85,8 @@ class PPSRCloudClient {
       body: new URLSearchParams({
         grant_type: 'client_credentials',
         client_id: this.config.clientId,
-        client_secret: this.config.clientSecret,
-        scope: 'ausearch_api'
+        client_secret: this.config.clientSecret
+        // Note: PPSR Cloud doesn't require a scope parameter for client credentials
       })
     })
 
@@ -214,7 +215,7 @@ class PPSRCloudClient {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       console.log(`  Attempt ${attempt}/${maxRetries}...`)
 
-      const response = await fetch(`${this.config.baseUrl}/AuSearch/mv-summary-search-certificate`, {
+      const response = await fetch(`${this.config.baseUrl}/AuSearch/mv-root-search-certificate`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -242,18 +243,20 @@ class PPSRCloudClient {
 
       const data: CertificateDownloadResponse = await response.json()
 
+      console.log(`  📦 Response data:`, JSON.stringify(data).substring(0, 200))
+
       if (data.hasError) {
-        console.log(`  ⚠️ Attempt ${attempt} returned error:`, data.errors?.[0]?.errorDescription)
+        console.log(`  ⚠️ Attempt ${attempt} returned error:`, data.errors?.[0]?.message)
 
         // Check if it's a "not ready" error (code 570020)
-        const notReadyError = data.errors?.find(e => e.errorCode === '570020')
+        const notReadyError = data.errors?.find(e => e.code === 570020)
         if (notReadyError && attempt < maxRetries) {
           console.log(`  ⏳ Certificate not ready, waiting ${delayMs / 1000} seconds...`)
           await new Promise(resolve => setTimeout(resolve, delayMs))
           continue
         }
 
-        throw new Error('Certificate download failed: ' + (data.errors?.[0]?.errorDescription || 'Unknown error'))
+        throw new Error('Certificate download failed: ' + (data.errors?.[0]?.message || 'Unknown error'))
       }
 
       // Success!
