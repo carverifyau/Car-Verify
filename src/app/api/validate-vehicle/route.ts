@@ -69,23 +69,28 @@ export async function POST(request: NextRequest) {
             vin: vinResult
           })
         } else {
-          // VIN not found, but registration might still be valid
-          // (PPSR Cloud VIN lookup doesn't cover all vehicles)
-          console.log(`⚠️ VIN not found, but allowing rego`)
-          return NextResponse.json({
-            valid: true,
-            message: 'Registration number format valid',
-            warning: 'Could not verify registration in database'
-          })
+          // VIN not found - registration doesn't exist in PPSR database
+          console.log(`❌ Rego validation failed - not found in PPSR database`)
+          return NextResponse.json(
+            {
+              valid: false,
+              error: 'Registration number not found. Please check and try again.',
+              field: 'rego'
+            },
+            { status: 400 }
+          )
         }
       } catch (error) {
         console.error('Error validating rego:', error)
-        // On error, allow the rego but warn
-        return NextResponse.json({
-          valid: true,
-          message: 'Registration number format valid',
-          warning: 'Could not verify registration in database'
-        })
+        // On API error, fail validation to be safe
+        return NextResponse.json(
+          {
+            valid: false,
+            error: 'Unable to verify registration. Please try again.',
+            field: 'rego'
+          },
+          { status: 500 }
+        )
       }
     }
 
