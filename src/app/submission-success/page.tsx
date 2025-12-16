@@ -73,7 +73,7 @@ function SubmissionSuccessContent() {
               <CheckCircle className="h-20 w-20 text-white mx-auto mb-4" />
             </motion.div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-              Report Submitted Successfully!
+              PPSR Check Submitted Successfully!
             </h1>
             <p className="text-green-50 text-lg">
               Your subscription was recognized
@@ -100,14 +100,14 @@ function SubmissionSuccessContent() {
               <Mail className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">
-                  Report Delivery
+                  Certificate Delivery
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  Your PPSR certificate will be emailed to{' '}
+                  Your PPSR certificate is being generated automatically and will be emailed to{' '}
                   <span className="font-medium text-blue-600">
                     {details.email}
                   </span>{' '}
-                  within 2 hours during business hours.
+                  within the next few minutes.
                 </p>
               </div>
             </div>
@@ -117,12 +117,12 @@ function SubmissionSuccessContent() {
               <Calendar className="h-6 w-6 text-blue-600 flex-shrink-0 mt-1" />
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">
-                  Processing Time
+                  Automated Processing
                 </h3>
                 <p className="text-gray-600 text-sm">
-                  We'll process your report within 2 hours during business hours
-                  (Mon-Fri, 9am-5pm AEST). You'll receive an email notification
-                  when it's ready.
+                  Your official PPSR certificate is being retrieved automatically from
+                  the government database. You'll receive an email with the PDF certificate
+                  within minutes.
                 </p>
               </div>
             </div>
@@ -138,7 +138,7 @@ function SubmissionSuccessContent() {
                     1
                   </div>
                   <p className="text-gray-600 text-sm">
-                    We'll retrieve your official PPSR certificate from the
+                    Our system automatically retrieves your official PPSR certificate from the
                     government database
                   </p>
                 </div>
@@ -147,7 +147,7 @@ function SubmissionSuccessContent() {
                     2
                   </div>
                   <p className="text-gray-600 text-sm">
-                    Your comprehensive report will be compiled and reviewed
+                    The certificate is automatically emailed to you (usually within minutes)
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
@@ -155,8 +155,7 @@ function SubmissionSuccessContent() {
                     3
                   </div>
                   <p className="text-gray-600 text-sm">
-                    You'll receive an email with your complete PPSR certificate
-                    (PDF)
+                    You can also access your certificate anytime from your account dashboard
                   </p>
                 </div>
               </div>

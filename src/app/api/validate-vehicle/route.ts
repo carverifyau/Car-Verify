@@ -57,41 +57,15 @@ export async function POST(request: NextRequest) {
 
       console.log(`🔍 Validating rego: ${rego} (${state})`)
 
-      // Try to lookup VIN from PPSR Cloud - this confirms the rego exists
-      try {
-        const vinResult = await ppsrCloudClient.lookupVIN(rego, state)
+      // Basic format validation passed - allow the rego through
+      // Note: PPSR Cloud VIN lookup doesn't contain all vehicles,
+      // only those previously searched. We'll validate during actual PPSR check.
+      console.log(`✅ Rego format valid: ${rego} (${state})`)
 
-        if (vinResult) {
-          console.log(`✅ Rego validated - VIN found: ${vinResult}`)
-          return NextResponse.json({
-            valid: true,
-            message: 'Registration number verified',
-            vin: vinResult
-          })
-        } else {
-          // VIN not found - registration doesn't exist in PPSR database
-          console.log(`❌ Rego validation failed - not found in PPSR database`)
-          return NextResponse.json(
-            {
-              valid: false,
-              error: 'Registration number not found. Please check and try again.',
-              field: 'rego'
-            },
-            { status: 400 }
-          )
-        }
-      } catch (error) {
-        console.error('Error validating rego:', error)
-        // On API error, fail validation to be safe
-        return NextResponse.json(
-          {
-            valid: false,
-            error: 'Unable to verify registration. Please try again.',
-            field: 'rego'
-          },
-          { status: 500 }
-        )
-      }
+      return NextResponse.json({
+        valid: true,
+        message: 'Registration format valid'
+      })
     }
 
     return NextResponse.json(
