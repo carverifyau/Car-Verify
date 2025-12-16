@@ -90,7 +90,9 @@ export async function GET(request: NextRequest) {
     })
 
     if (!emailResponse.ok) {
-      throw new Error('Failed to send email')
+      const errorText = await emailResponse.text()
+      console.error('❌ Email endpoint error:', errorText)
+      throw new Error(`Failed to send email: ${errorText}`)
     }
 
     console.log('✅ Email sent to:', report.customer_email)
