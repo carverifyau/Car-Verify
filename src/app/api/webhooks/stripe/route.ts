@@ -519,6 +519,13 @@ export async function POST(request: NextRequest) {
       console.log(`🔄 Subscription ${event.type}:`, subscription.id)
       console.log('🔄 Subscription status:', subscription.status)
       console.log('🔄 Customer:', subscription.customer)
+      console.log('🔄 Subscription metadata:', subscription.metadata)
+
+      // Filter out non-Car Verify subscriptions (e.g., Self Assess)
+      if (subscription.metadata?.source === 'self_assess_platform') {
+        console.log('⚠️ Ignoring Self Assess subscription event')
+        return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
+      }
 
       const stripeCustomerId = typeof subscription.customer === 'string'
         ? subscription.customer
@@ -569,6 +576,12 @@ export async function POST(request: NextRequest) {
       console.log('🚫 Subscription cancelled:', subscription.id)
       console.log('🚫 Customer:', subscription.customer)
 
+      // Filter out non-Car Verify subscriptions
+      if (subscription.metadata?.source === 'self_assess_platform') {
+        console.log('⚠️ Ignoring Self Assess subscription cancellation')
+        return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
+      }
+
       // Update subscription status in database
       const { error } = await supabaseAdmin
         .from('subscriptions')
@@ -597,6 +610,12 @@ export async function POST(request: NextRequest) {
       const subscription = event.data.object
       console.log('🔄 Subscription updated:', subscription.id)
       console.log('🔄 New status:', subscription.status)
+
+      // Filter out non-Car Verify subscriptions
+      if (subscription.metadata?.source === 'self_assess_platform') {
+        console.log('⚠️ Ignoring Self Assess subscription update (second handler)')
+        return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
+      }
 
       // Check if subscription exists in database first
       const { data: existing } = await supabaseAdmin
