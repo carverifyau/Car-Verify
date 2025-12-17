@@ -527,11 +527,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
       }
 
-      // Skip incomplete_expired subscriptions (payment failed and retry period expired)
-      if (subscription.status === 'incomplete_expired') {
-        console.log('⚠️ Ignoring incomplete_expired subscription - payment failed')
-        return NextResponse.json({ received: true, message: 'Ignoring incomplete_expired subscription' })
-      }
+      // Note: We now accept all Stripe statuses including 'incomplete_expired' and 'unpaid'
+      // These are tracked in the database but won't give users access (status !== 'active')
 
       const stripeCustomerId = typeof subscription.customer === 'string'
         ? subscription.customer
@@ -662,12 +659,6 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
       }
 
-      // Skip incomplete_expired subscriptions
-      if (subscription.status === 'incomplete_expired') {
-        console.log('⚠️ Ignoring incomplete_expired subscription cancellation')
-        return NextResponse.json({ received: true, message: 'Ignoring incomplete_expired subscription' })
-      }
-
       // Update subscription status in database
       const { error } = await supabaseAdmin
         .from('subscriptions')
@@ -701,12 +692,6 @@ export async function POST(request: NextRequest) {
       if (subscription.metadata?.source === 'self_assess_platform') {
         console.log('⚠️ Ignoring Self Assess subscription update (second handler)')
         return NextResponse.json({ received: true, message: 'Ignoring non-Car Verify subscription' })
-      }
-
-      // Skip incomplete_expired subscriptions
-      if (subscription.status === 'incomplete_expired') {
-        console.log('⚠️ Ignoring incomplete_expired subscription update')
-        return NextResponse.json({ received: true, message: 'Ignoring incomplete_expired subscription' })
       }
 
       // Check if subscription exists in database first
