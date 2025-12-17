@@ -560,6 +560,80 @@ export async function POST(request: NextRequest) {
           subscription
         )
         console.log('✅ Customer account created/updated from subscription event, ID:', customerId)
+
+        // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING FOR NEW SUBSCRIPTIONS
+        // Only trigger for 'customer.subscription.created', not updates
+        if (event.type === 'customer.subscription.created') {
+          console.log('🔍 Checking for vehicle metadata to trigger PPSR automation...')
+
+          // Extract vehicle details from subscription metadata
+          const metadata = subscription.metadata
+          const vehicleInfo = {
+            type: metadata?.vehicleType === 'vin' ? 'vin' : 'rego',
+            vin: metadata?.vehicleVin || undefined,
+            rego: metadata?.vehicleRego || undefined,
+            state: metadata?.vehicleState || 'QLD'
+          }
+
+          console.log('🚗 Vehicle info from subscription metadata:', vehicleInfo)
+
+          // Only proceed if we have vehicle details
+          if (vehicleInfo.rego || vehicleInfo.vin) {
+            // Create report in database
+            const reportData = {
+              order_id: `sub_${subscription.id}`,
+              customer_id: customerId,
+              customer_email: customerEmail,
+              customer_name: customerName,
+              vehicle_identifier: vehicleInfo,
+              report_type: metadata?.reportType === 'comprehensive' ? 'PREMIUM' : 'STANDARD',
+              status: 'pending',
+              report_data: {
+                stripe_subscription_id: subscription.id,
+                subscription_mode: true,
+                created_at: new Date().toISOString(),
+                webhook_processed: true,
+                event_type: 'customer.subscription.created'
+              }
+            }
+
+            console.log('💾 Creating report from subscription:', reportData)
+
+            const { data, error: reportError } = await supabaseAdmin
+              .from('reports')
+              .upsert(reportData, { onConflict: 'order_id' })
+              .select()
+
+            if (reportError) {
+              console.error('❌ Failed to create report:', reportError)
+            } else {
+              const reportId = data[0]?.id
+              console.log('✅ REPORT CREATED:', reportId)
+
+              // Trigger PPSR automation
+              if (reportId && (vehicleInfo.rego || vehicleInfo.vin)) {
+                try {
+                  console.log('🔄 Starting PPSR certificate fetch from subscription event...')
+                  await processPPSRCertificate({
+                    reportId,
+                    customerEmail,
+                    customerName,
+                    rego: vehicleInfo.rego || 'UNKNOWN',
+                    state: vehicleInfo.state,
+                    vin: vehicleInfo.vin
+                  })
+                  console.log('✅ PPSR certificate fetched and email sent successfully from subscription event')
+                } catch (ppsrError) {
+                  console.error('❌ PPSR processing failed from subscription event:', ppsrError)
+                  // Report stays in 'pending' status for manual processing
+                }
+              }
+            }
+          } else {
+            console.log('⚠️ No vehicle details in subscription metadata - skipping PPSR automation')
+          }
+        }
+
         return NextResponse.json({ success: true, customer_id: customerId })
       } catch (error) {
         console.error('❌ Failed to create customer account from subscription event:', error)
