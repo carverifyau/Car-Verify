@@ -510,6 +510,27 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('✅ REPORT CREATED FROM PAYMENT INTENT:', data[0]?.id)
+
+      // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING FROM PAYMENT INTENT
+      const reportId = data[0]?.id
+      if (reportId && (vehicleInfo.rego || vehicleInfo.vin)) {
+        try {
+          console.log('🔄 Starting PPSR certificate fetch from payment_intent.succeeded...')
+          await processPPSRCertificate({
+            reportId,
+            customerEmail,
+            customerName,
+            rego: vehicleInfo.rego || 'UNKNOWN',
+            state: vehicleInfo.state,
+            vin: vehicleInfo.vin
+          })
+          console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
+        } catch (ppsrError) {
+          console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
+          // Report stays in 'pending' status for manual processing
+        }
+      }
+
       return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
     }
 
