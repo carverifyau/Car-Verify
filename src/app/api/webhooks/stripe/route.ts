@@ -414,6 +414,7 @@ export async function POST(request: NextRequest) {
       const invoice = await stripe.invoices.retrieve(invoiceId)
       console.log('📄 Invoice retrieved:', invoice.id)
       console.log('📄 Invoice status:', invoice.status)
+      console.log('📄 Invoice subscription:', invoice.subscription)
 
       const subscriptionId = typeof invoice.subscription === 'string'
         ? invoice.subscription
@@ -429,6 +430,7 @@ export async function POST(request: NextRequest) {
       }
 
       console.log('🔄 Subscription ID:', subscriptionId)
+      console.log('🔄 About to retrieve subscription details...')
 
       // Mark invoice as paid (Payment Elements flow requires this)
       if (invoice.status === 'open') {
@@ -450,7 +452,7 @@ export async function POST(request: NextRequest) {
       })
 
       console.log('🔄 Subscription retrieved:', subscription.id)
-      console.log('🔄 Subscription metadata:', subscription.metadata)
+      console.log('🔄 Subscription metadata:', JSON.stringify(subscription.metadata, null, 2))
 
       const customerEmail = invoice.customer_email || 'unknown@test.com'
       const customerName = invoice.customer_name || 'Customer'
@@ -480,6 +482,8 @@ export async function POST(request: NextRequest) {
         rego: metadata.vehicleRego || 'UNKNOWN',
         state: metadata.vehicleState || 'QLD'
       }
+
+      console.log('🚗 Vehicle info constructed:', JSON.stringify(vehicleInfo, null, 2))
 
       const reportData = {
         order_id: paymentIntent.id,
@@ -517,36 +521,66 @@ export async function POST(request: NextRequest) {
 
       // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING FROM PAYMENT INTENT
       const reportId = data[0]?.id
-      if (reportId && (vehicleInfo.rego || vehicleInfo.vin)) {
-        try {
-          console.log('🔄 Starting PPSR certificate fetch from payment_intent.succeeded...')
-          await processPPSRCertificate({
-            reportId,
-            customerEmail,
-            customerName,
-            rego: vehicleInfo.rego || 'UNKNOWN',
-            state: vehicleInfo.state,
-            vin: vehicleInfo.vin
-          })
-          console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
-        } catch (ppsrError) {
-          console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
-          // Store error in database for debugging
-          await supabaseAdmin
-            .from('reports')
-            .update({
-              report_data: {
-                ...data[0]?.report_data,
-                ppsr_error: {
-                  message: ppsrError instanceof Error ? ppsrError.message : 'Unknown error',
-                  stack: ppsrError instanceof Error ? ppsrError.stack : undefined,
-                  timestamp: new Date().toISOString()
-                }
+      console.log('🔍 PPSR Check conditions:', {
+        reportId: !!reportId,
+        hasRego: !!vehicleInfo.rego,
+        hasVin: !!vehicleInfo.vin,
+        rego: vehicleInfo.rego,
+        vin: vehicleInfo.vin
+      })
+
+      if (!reportId) {
+        console.error('❌ No report ID, cannot process PPSR')
+        return NextResponse.json({ success: false, error: 'No report ID' }, { status: 500 })
+      }
+
+      if (!vehicleInfo.rego && !vehicleInfo.vin) {
+        console.error('❌ No vehicle info (rego or VIN), cannot process PPSR')
+        await supabaseAdmin
+          .from('reports')
+          .update({
+            report_data: {
+              ...data[0]?.report_data,
+              ppsr_error: {
+                message: 'No vehicle identifier (rego or VIN) available',
+                vehicleInfo: vehicleInfo,
+                timestamp: new Date().toISOString()
               }
-            })
-            .eq('id', reportId)
-          // Report stays in 'pending' status for manual processing
-        }
+            }
+          })
+          .eq('id', reportId)
+        return NextResponse.json({ success: true, id: reportId, warning: 'No vehicle info for PPSR' })
+      }
+
+      // Process PPSR
+      try {
+        console.log('🔄 Starting PPSR certificate fetch from payment_intent.succeeded...')
+        await processPPSRCertificate({
+          reportId,
+          customerEmail,
+          customerName,
+          rego: vehicleInfo.rego || 'UNKNOWN',
+          state: vehicleInfo.state,
+          vin: vehicleInfo.vin
+        })
+        console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
+      } catch (ppsrError) {
+        console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
+        // Store error in database for debugging
+        await supabaseAdmin
+          .from('reports')
+          .update({
+            report_data: {
+              ...data[0]?.report_data,
+              ppsr_error: {
+                message: ppsrError instanceof Error ? ppsrError.message : 'Unknown error',
+                stack: ppsrError instanceof Error ? ppsrError.stack : undefined,
+                timestamp: new Date().toISOString()
+              }
+            }
+          })
+          .eq('id', reportId)
+        // Report stays in 'pending' status for manual processing
       }
 
       return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
