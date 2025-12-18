@@ -552,19 +552,18 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: true, id: reportId, warning: 'No vehicle info for PPSR' })
       }
 
-      // Process PPSR
-      try {
-        console.log('🔄 Starting PPSR certificate fetch from payment_intent.succeeded...')
-        await processPPSRCertificate({
-          reportId,
-          customerEmail,
-          customerName,
-          rego: vehicleInfo.rego || 'UNKNOWN',
-          state: vehicleInfo.state,
-          vin: vehicleInfo.vin
-        })
+      // Process PPSR asynchronously (don't await - let it run in background)
+      // This prevents the webhook from timing out while waiting for PPSR processing
+      processPPSRCertificate({
+        reportId,
+        customerEmail,
+        customerName,
+        rego: vehicleInfo.rego || 'UNKNOWN',
+        state: vehicleInfo.state,
+        vin: vehicleInfo.vin
+      }).then(() => {
         console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
-      } catch (ppsrError) {
+      }).catch(async (ppsrError) => {
         console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
         // Store error in database for debugging
         await supabaseAdmin
@@ -580,9 +579,9 @@ export async function POST(request: NextRequest) {
             }
           })
           .eq('id', reportId)
-        // Report stays in 'pending' status for manual processing
-      }
+      })
 
+      console.log('🔄 PPSR processing started in background')
       return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
     }
 
