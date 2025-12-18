@@ -522,20 +522,46 @@ export async function POST(request: NextRequest) {
 
       console.log('✅ REPORT CREATED FROM PAYMENT INTENT:', data[0]?.id)
 
-      // Store that we reached this point for debugging
-      await supabaseAdmin
-        .from('reports')
-        .update({
-          report_data: {
-            ...data[0]?.report_data,
-            webhook_reached_ppsr_check: true,
-            webhook_timestamp: new Date().toISOString()
-          }
-        })
-        .eq('id', data[0]?.id)
-
       // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING FROM PAYMENT INTENT
-      const reportId = data[0]?.id
+      // Get report ID - use order_id to fetch if data is empty
+      let reportId = data[0]?.id
+
+      if (!reportId) {
+        console.log('⚠️ No report ID from upsert, fetching by order_id...')
+        const { data: fetchedReport } = await supabaseAdmin
+          .from('reports')
+          .select('id, report_data')
+          .eq('order_id', paymentIntent.id)
+          .single()
+
+        reportId = fetchedReport?.id
+
+        if (fetchedReport) {
+          // Store breadcrumb on fetched report
+          await supabaseAdmin
+            .from('reports')
+            .update({
+              report_data: {
+                ...fetchedReport.report_data,
+                webhook_reached_ppsr_check: true,
+                webhook_timestamp: new Date().toISOString()
+              }
+            })
+            .eq('id', reportId)
+        }
+      } else {
+        // Store breadcrumb on newly created report
+        await supabaseAdmin
+          .from('reports')
+          .update({
+            report_data: {
+              ...data[0].report_data,
+              webhook_reached_ppsr_check: true,
+              webhook_timestamp: new Date().toISOString()
+            }
+          })
+          .eq('id', reportId)
+      }
       console.log('🔍 PPSR Check conditions:', {
         reportId: !!reportId,
         hasRego: !!vehicleInfo.rego,
