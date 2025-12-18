@@ -522,6 +522,18 @@ export async function POST(request: NextRequest) {
 
       console.log('✅ REPORT CREATED FROM PAYMENT INTENT:', data[0]?.id)
 
+      // Store that we reached this point for debugging
+      await supabaseAdmin
+        .from('reports')
+        .update({
+          report_data: {
+            ...data[0]?.report_data,
+            webhook_reached_ppsr_check: true,
+            webhook_timestamp: new Date().toISOString()
+          }
+        })
+        .eq('id', data[0]?.id)
+
       // 🚀 AUTOMATIC PPSR CERTIFICATE FETCHING FROM PAYMENT INTENT
       const reportId = data[0]?.id
       console.log('🔍 PPSR Check conditions:', {
