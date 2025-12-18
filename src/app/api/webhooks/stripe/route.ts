@@ -3,6 +3,9 @@ import { supabaseAdmin } from '@/lib/supabase'
 import Stripe from 'stripe'
 import { ppsrCloudClient } from '@/lib/ppsr-cloud'
 
+// Configure function timeout for PPSR processing (takes ~26 seconds)
+export const maxDuration = 60 // seconds (Vercel Pro/Team plans support up to 300s)
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 // Helper function to safely convert Unix timestamp to ISO string
@@ -552,18 +555,20 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: true, id: reportId, warning: 'No vehicle info for PPSR' })
       }
 
-      // Process PPSR asynchronously (don't await - let it run in background)
-      // This prevents the webhook from timing out while waiting for PPSR processing
-      processPPSRCertificate({
-        reportId,
-        customerEmail,
-        customerName,
-        rego: vehicleInfo.rego || 'UNKNOWN',
-        state: vehicleInfo.state,
-        vin: vehicleInfo.vin
-      }).then(() => {
+      // Process PPSR synchronously - wait for completion before responding
+      // With maxDuration=60, we have time to complete the ~26 second PPSR process
+      try {
+        console.log('🔄 Starting PPSR certificate fetch from payment_intent.succeeded...')
+        await processPPSRCertificate({
+          reportId,
+          customerEmail,
+          customerName,
+          rego: vehicleInfo.rego || 'UNKNOWN',
+          state: vehicleInfo.state,
+          vin: vehicleInfo.vin
+        })
         console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
-      }).catch(async (ppsrError) => {
+      } catch (ppsrError) {
         console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
         // Store error in database for debugging
         await supabaseAdmin
@@ -579,9 +584,9 @@ export async function POST(request: NextRequest) {
             }
           })
           .eq('id', reportId)
-      })
+        // Report stays in 'pending' status for manual processing
+      }
 
-      console.log('🔄 PPSR processing started in background')
       return NextResponse.json({ success: true, id: data[0]?.id, customer_id: customerId })
     }
 
