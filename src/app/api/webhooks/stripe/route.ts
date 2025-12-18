@@ -392,39 +392,43 @@ export async function POST(request: NextRequest) {
       console.log('💳 Payment Intent succeeded:', paymentIntent.id)
       console.log('💳 Customer:', paymentIntent.customer)
       console.log('💳 Amount:', paymentIntent.amount)
-      console.log('💳 Metadata:', paymentIntent.metadata)
+      console.log('💳 Invoice:', paymentIntent.invoice)
 
-      // Get invoice ID from metadata (Payment Elements flow)
-      const invoiceId = paymentIntent.metadata?.invoice_id
+      // Get invoice ID - try from invoice field first, fallback to metadata
+      let invoiceId = typeof paymentIntent.invoice === 'string'
+        ? paymentIntent.invoice
+        : paymentIntent.invoice?.id || paymentIntent.metadata?.invoice_id
 
       if (!invoiceId) {
-        console.log('⚠️ No invoice_id in payment intent metadata')
+        console.log('⚠️ No invoice found on payment intent')
         return NextResponse.json({
           received: true,
           type: event.type,
-          message: 'No invoice_id in metadata - skipping account creation'
+          message: 'No invoice found - likely not a subscription payment'
         })
       }
 
-      console.log('📄 Invoice ID from metadata:', invoiceId)
+      console.log('📄 Invoice ID:', invoiceId)
 
-      // Get subscription ID from metadata (more reliable than invoice)
-      const subscriptionId = paymentIntent.metadata?.subscription_id
-
-      if (!subscriptionId) {
-        console.log('⚠️ No subscription_id in payment intent metadata')
-        return NextResponse.json({
-          received: true,
-          type: event.type,
-          message: 'No subscription_id in metadata - skipping account creation'
-        })
-      }
-
-      console.log('🔄 Subscription ID from metadata:', subscriptionId)
-
+      // Get the invoice to find the subscription
       const invoice = await stripe.invoices.retrieve(invoiceId)
       console.log('📄 Invoice retrieved:', invoice.id)
       console.log('📄 Invoice status:', invoice.status)
+
+      const subscriptionId = typeof invoice.subscription === 'string'
+        ? invoice.subscription
+        : invoice.subscription?.id || paymentIntent.metadata?.subscription_id
+
+      if (!subscriptionId) {
+        console.log('⚠️ No subscription found on invoice')
+        return NextResponse.json({
+          received: true,
+          type: event.type,
+          message: 'No subscription found - likely a one-time payment'
+        })
+      }
+
+      console.log('🔄 Subscription ID:', subscriptionId)
 
       // Mark invoice as paid (Payment Elements flow requires this)
       if (invoice.status === 'open') {
