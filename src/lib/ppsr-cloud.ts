@@ -61,15 +61,19 @@ class PPSRCloudClient {
       oauthUrl: 'https://gateway.ppsrcloud.com/connect/token'
     }
 
-    if (!this.config.clientId || !this.config.clientSecret) {
-      throw new Error('PPSR Cloud credentials not configured')
-    }
+    // Note: Don't validate credentials here during construction
+    // They may not be available during build time, only at runtime
   }
 
   /**
    * Get OAuth2 access token (with caching)
    */
   private async getAccessToken(): Promise<string> {
+    // Validate credentials at runtime (not during build)
+    if (!this.config.clientId || !this.config.clientSecret) {
+      throw new Error('PPSR Cloud credentials not configured')
+    }
+
     // Return cached token if still valid (with 60s buffer)
     if (this.accessToken && Date.now() < this.tokenExpiry - 60000) {
       return this.accessToken
