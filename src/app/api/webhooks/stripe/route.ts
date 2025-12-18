@@ -527,6 +527,20 @@ export async function POST(request: NextRequest) {
           console.log('✅ PPSR certificate fetched and email sent successfully from payment_intent')
         } catch (ppsrError) {
           console.error('❌ PPSR processing failed from payment_intent:', ppsrError)
+          // Store error in database for debugging
+          await supabaseAdmin
+            .from('reports')
+            .update({
+              report_data: {
+                ...data[0]?.report_data,
+                ppsr_error: {
+                  message: ppsrError instanceof Error ? ppsrError.message : 'Unknown error',
+                  stack: ppsrError instanceof Error ? ppsrError.stack : undefined,
+                  timestamp: new Date().toISOString()
+                }
+              }
+            })
+            .eq('id', reportId)
           // Report stays in 'pending' status for manual processing
         }
       }
