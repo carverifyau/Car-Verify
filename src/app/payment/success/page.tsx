@@ -53,7 +53,7 @@ function PaymentSuccessContent() {
               Payment Successful!
             </h1>
             <p className="text-xl text-white/80 mb-2">
-              Your vehicle report is being generated
+              Check your email - your PPSR certificate is on its way!
             </p>
             {paymentIntent && (
               <p className="text-white/60 text-sm">
@@ -88,7 +88,7 @@ function PaymentSuccessContent() {
                 </div>
                 <h3 className="text-lg font-semibold text-white mb-2">Email Delivery</h3>
                 <p className="text-white/70 text-sm">
-                  Your complete report will be emailed to you within 2-3 minutes
+                  Your PPSR certificate will be emailed to you within 30 seconds
                 </p>
               </div>
 
@@ -111,12 +111,12 @@ function PaymentSuccessContent() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <h3 className="text-lg font-semibold text-amber-300 mb-3">Important Information</h3>
+            <h3 className="text-lg font-semibold text-amber-300 mb-3">📧 Check Your Email</h3>
             <ul className="space-y-2 text-white/80 text-sm">
-              <li>• Check your email inbox and spam folder for your report</li>
-              <li>• Your report includes official PPSR certificate and detailed vehicle history</li>
-              <li>• If you don&apos;t receive your report within 5 minutes, contact our support team</li>
-              <li>• Keep your order ID safe for any future inquiries</li>
+              <li>• Your PPSR certificate will arrive in your inbox within 30 seconds</li>
+              <li>• Check your spam folder if you don&apos;t see it in your inbox</li>
+              <li>• The certificate will be attached as a PDF document</li>
+              <li>• You can also view your certificate in your dashboard (coming soon)</li>
             </ul>
           </motion.div>
 

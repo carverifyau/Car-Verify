@@ -293,12 +293,6 @@ function generateReportSummary(reportData: any, rego: string, state: string): st
     <p><strong>Registration:</strong> ${rego} (${state})</p>
   `
 
-  // PPSR Status
-  if (reportData.ppsrStatus) {
-    const ppsrClass = reportData.ppsrStatus === 'clear' ? 'status-good' : 'status-warning'
-    summary += `<p><strong>PPSR Status:</strong> <span class="${ppsrClass}">${reportData.ppsrStatus === 'clear' ? 'Clear - No finance owing' : 'Encumbered - Finance owing'}</span></p>`
-  }
-
   // Market Values
   if (reportData.retailValue || reportData.privateValue || reportData.tradeValue) {
     summary += `<p><strong>Market Valuation:</strong></p><ul>`
