@@ -63,8 +63,8 @@ async function processPPSRCertificate(params: {
       const now = new Date().getTime()
       const timeDiffMinutes = (now - recentReportTime) / (1000 * 60)
 
-      // If a report was completed in the last 5 minutes, skip this one
-      if (timeDiffMinutes < 5) {
+      // If a report was completed in the last 24 hours, skip this one
+      if (timeDiffMinutes < 1440) { // 24 hours = 1440 minutes
         console.log('✅ PPSR certificate already processed recently for this customer/vehicle')
         console.log(`⏭️ Recent report ID: ${recentReport.id}, created ${timeDiffMinutes.toFixed(1)} minutes ago`)
         console.log('⏭️ Skipping duplicate PPSR processing')
