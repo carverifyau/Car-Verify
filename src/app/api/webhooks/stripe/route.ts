@@ -32,6 +32,61 @@ async function processPPSRCertificate(params: {
   try {
     console.log('🚗 Auto-fetching PPSR certificate for', params.rego, params.state)
 
+    // IDEMPOTENCY CHECK: See if PPSR has already been processed for this report
+    const { data: existingReport } = await supabaseAdmin
+      .from('reports')
+      .select('status, ppsr_pdf_data, ppsr_pdf_filename, report_data')
+      .eq('id', params.reportId)
+      .single()
+
+    if (existingReport?.status === 'completed' && existingReport?.ppsr_pdf_data) {
+      console.log('✅ PPSR certificate already exists for report:', params.reportId)
+      console.log('⏭️ Skipping duplicate PPSR processing')
+      return { success: true, skipped: true, reason: 'already_processed' }
+    }
+
+    // IDEMPOTENCY CHECK: See if another report exists for the same customer/vehicle that was recently completed
+    const { data: recentReports } = await supabaseAdmin
+      .from('reports')
+      .select('id, status, ppsr_pdf_data, created_at')
+      .eq('customer_email', params.customerEmail)
+      .eq('vehicle_identifier->rego', params.rego)
+      .eq('vehicle_identifier->state', params.state)
+      .eq('status', 'completed')
+      .not('ppsr_pdf_data', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(1)
+
+    if (recentReports && recentReports.length > 0) {
+      const recentReport = recentReports[0]
+      const recentReportTime = new Date(recentReport.created_at).getTime()
+      const now = new Date().getTime()
+      const timeDiffMinutes = (now - recentReportTime) / (1000 * 60)
+
+      // If a report was completed in the last 5 minutes, skip this one
+      if (timeDiffMinutes < 5) {
+        console.log('✅ PPSR certificate already processed recently for this customer/vehicle')
+        console.log(`⏭️ Recent report ID: ${recentReport.id}, created ${timeDiffMinutes.toFixed(1)} minutes ago`)
+        console.log('⏭️ Skipping duplicate PPSR processing')
+
+        // Mark this report as completed without re-processing
+        await supabaseAdmin
+          .from('reports')
+          .update({
+            status: 'completed',
+            report_data: {
+              ...existingReport?.report_data,
+              skipped_duplicate: true,
+              duplicate_of_report_id: recentReport.id,
+              updated_at: new Date().toISOString()
+            }
+          })
+          .eq('id', params.reportId)
+
+        return { success: true, skipped: true, reason: 'recent_duplicate' }
+      }
+    }
+
     // Step 1: Fetch PPSR certificate from PPSR Cloud
     const ppsrResult = await ppsrCloudClient.performPPSRCheck({
       vin: params.vin,
