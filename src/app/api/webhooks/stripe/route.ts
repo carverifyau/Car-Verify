@@ -233,6 +233,17 @@ export async function POST(request: NextRequest) {
       const session = event.data.object
       console.log('💳 Processing session:', session.id)
       console.log('💳 Session mode:', session.mode)
+      console.log('💳 Payment status:', session.payment_status)
+
+      // CRITICAL: Only process if payment is actually paid
+      if (session.payment_status !== 'paid') {
+        console.log('⚠️ Payment not completed yet, skipping PPSR processing')
+        console.log('⚠️ Payment status:', session.payment_status)
+        return NextResponse.json({
+          received: true,
+          message: 'Checkout completed but payment not yet paid - waiting for payment_intent.succeeded event'
+        })
+      }
 
       // For subscription mode, metadata is in subscription object
       let metadata = session.metadata || {}
@@ -677,6 +688,14 @@ export async function POST(request: NextRequest) {
         // Only trigger for 'customer.subscription.created', not updates
         if (event.type === 'customer.subscription.created') {
           console.log('🔍 Checking for vehicle metadata to trigger PPSR automation...')
+          console.log('🔍 Subscription status:', subscription.status)
+
+          // CRITICAL: Only process PPSR if subscription is active or trialing (payment successful)
+          if (subscription.status !== 'active' && subscription.status !== 'trialing') {
+            console.log('⚠️ Subscription not active/trialing, skipping PPSR processing')
+            console.log('⚠️ Current status:', subscription.status)
+            return NextResponse.json({ success: true, customer_id: customerId, message: 'Subscription created but not active yet' })
+          }
 
           // Extract vehicle details from subscription metadata
           const metadata = subscription.metadata
