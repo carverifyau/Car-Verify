@@ -30,7 +30,11 @@ async function processPPSRCertificate(params: {
   vin?: string
 }) {
   try {
-    console.log('🚗 Auto-fetching PPSR certificate for', params.rego, params.state)
+    console.log('🚗 PPSR PROCESSING STARTED')
+    console.log('🚗 Report ID:', params.reportId)
+    console.log('🚗 Customer:', params.customerEmail)
+    console.log('🚗 Vehicle:', params.rego, params.state)
+    console.log('🚗 Timestamp:', new Date().toISOString())
 
     // IDEMPOTENCY CHECK: See if PPSR has already been processed for this report
     const { data: existingReport } = await supabaseAdmin
@@ -40,8 +44,10 @@ async function processPPSRCertificate(params: {
       .single()
 
     if (existingReport?.status === 'completed' && existingReport?.ppsr_pdf_data) {
-      console.log('✅ PPSR certificate already exists for report:', params.reportId)
-      console.log('⏭️ Skipping duplicate PPSR processing')
+      console.log('⛔ IDEMPOTENCY CHECK 1: PPSR certificate already exists for this report')
+      console.log('⛔ Report ID:', params.reportId)
+      console.log('⛔ Status:', existingReport.status)
+      console.log('⛔ SKIPPING DUPLICATE PPSR FETCH - NO CHARGE')
       return { success: true, skipped: true, reason: 'already_processed' }
     }
 
@@ -65,9 +71,12 @@ async function processPPSRCertificate(params: {
 
       // If a report was completed in the last 24 hours, skip this one
       if (timeDiffMinutes < 1440) { // 24 hours = 1440 minutes
-        console.log('✅ PPSR certificate already processed recently for this customer/vehicle')
-        console.log(`⏭️ Recent report ID: ${recentReport.id}, created ${timeDiffMinutes.toFixed(1)} minutes ago`)
-        console.log('⏭️ Skipping duplicate PPSR processing')
+        console.log('⛔ IDEMPOTENCY CHECK 2: Recent report found for same customer/vehicle')
+        console.log('⛔ Recent report ID:', recentReport.id)
+        console.log(`⛔ Created ${timeDiffMinutes.toFixed(1)} minutes ago`)
+        console.log('⛔ Customer:', params.customerEmail)
+        console.log('⛔ Vehicle:', params.rego, params.state)
+        console.log('⛔ SKIPPING DUPLICATE PPSR FETCH - NO CHARGE')
 
         // Mark this report as completed without re-processing
         await supabaseAdmin
@@ -88,13 +97,20 @@ async function processPPSRCertificate(params: {
     }
 
     // Step 1: Fetch PPSR certificate from PPSR Cloud
+    console.log('💰 ABOUT TO FETCH PPSR CERTIFICATE - THIS WILL CHARGE PPSR CLOUD')
+    console.log('💰 Customer:', params.customerEmail)
+    console.log('💰 Vehicle:', params.rego, params.state)
+    console.log('💰 Timestamp:', new Date().toISOString())
+
     const ppsrResult = await ppsrCloudClient.performPPSRCheck({
       vin: params.vin,
       registrationPlate: params.rego,
       registrationState: params.state
     })
 
-    console.log('✅ PPSR certificate fetched:', ppsrResult.filename)
+    console.log('✅ PPSR CERTIFICATE FETCHED - PPSR CLOUD CHARGED')
+    console.log('✅ Filename:', ppsrResult.filename)
+    console.log('✅ Timestamp:', new Date().toISOString())
 
     // Step 2: Send email with certificate and welcome message
     const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/send-report-email`, {
