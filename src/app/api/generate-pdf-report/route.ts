@@ -1664,15 +1664,15 @@ function generateReportHTML(data: ReportData): string {
                         <div class="analysis-card">
                             <h4>🎯 Key Market Factors</h4>
                             <ul class="factor-list">
-                                ${data.aiMarketResearch.marketAnalysis.keyFactors.map(factor => `<li>${factor}</li>`).join('')}
+                                ${(data.aiMarketResearch.marketAnalysis?.keyFactors || []).map(factor => `<li>${factor}</li>`).join('')}
                             </ul>
                         </div>
 
-                        ${data.aiMarketResearch.marketAnalysis.knownIssues.length > 0 ? `
+                        ${(data.aiMarketResearch.marketAnalysis?.knownIssues || []).length > 0 ? `
                         <div class="analysis-card warning-card">
                             <h4>⚠️ Known Issues</h4>
                             <ul class="issue-list">
-                                ${data.aiMarketResearch.marketAnalysis.knownIssues.map(issue => `<li>${issue}</li>`).join('')}
+                                ${(data.aiMarketResearch.marketAnalysis?.knownIssues || []).map(issue => `<li>${issue}</li>`).join('')}
                             </ul>
                         </div>
                         ` : ''}
@@ -1683,7 +1683,7 @@ function generateReportHTML(data: ReportData): string {
                 <div class="market-notes-section">
                     <h4>📊 Detailed Market Analysis</h4>
                     <div class="market-notes-content">
-                        <p>${data.aiMarketResearch.marketAnalysis.marketNotes}</p>
+                        <p>${data.aiMarketResearch.marketAnalysis?.marketNotes || 'No detailed market analysis available.'}</p>
                     </div>
                 </div>
 
