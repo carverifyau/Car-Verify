@@ -63,26 +63,9 @@ function BuildingReportContent() {
 
   const buildReport = async () => {
     try {
-      // Animate progress smoothly from 0 to 100 over 20 seconds
-      const duration = 20000
-      const interval = 100
-      const increments = duration / interval
-      const progressPerIncrement = 100 / increments
-
-      const progressInterval = setInterval(() => {
-        setProgress(prev => {
-          const newProgress = prev + progressPerIncrement
-          if (newProgress >= 100) {
-            clearInterval(progressInterval)
-            return 100
-          }
-          return newProgress
-        })
-      }, interval)
-
       // Step 1: Verify payment
       setCurrentStage('Verifying payment...')
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      setProgress(10)
 
       const verifyResponse = await fetch('/api/verify-payment', {
         method: 'POST',
@@ -91,31 +74,32 @@ function BuildingReportContent() {
       })
 
       if (!verifyResponse.ok) {
-        clearInterval(progressInterval)
         throw new Error('Payment verification failed')
       }
 
       const verifyData = await verifyResponse.json()
+      setProgress(30)
 
       // Step 2: Wait for webhook to generate PPSR report
       // The Stripe webhook is generating the PPSR certificate in the background
       setCurrentStage('Building your PPSR report...')
 
-      // Just show loading animation - the webhook is handling PPSR generation
-      // This avoids duplicate API calls to PPSR Cloud
-      await new Promise(resolve => setTimeout(resolve, 8000))
+      // Animate progress smoothly from 30% to 90% over 8 seconds while webhook processes
+      const animationDuration = 8000
+      const steps = 40 // 30% to 90% = 60 steps
+      const stepDuration = animationDuration / steps
 
-      // Wait for progress to hit 100%
-      while (progress < 100) {
-        await new Promise(resolve => setTimeout(resolve, 100))
+      for (let i = 0; i < steps; i++) {
+        await new Promise(resolve => setTimeout(resolve, stepDuration))
+        setProgress(30 + (i + 1) * 1.5) // Increment by 1.5% each step
       }
 
-      // Wait 1 more second for smooth UX
-      await new Promise(resolve => setTimeout(resolve, 1000))
-
-      clearInterval(progressInterval)
+      // Final push to 100%
+      setProgress(100)
+      await new Promise(resolve => setTimeout(resolve, 500))
 
       // Redirect to payment-success (which will fetch the report from the database)
+      console.log('Redirecting to payment-success with session:', sessionId)
       router.push(`/payment-success?session_id=${sessionId}`)
 
     } catch (err) {
