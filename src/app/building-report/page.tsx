@@ -63,21 +63,36 @@ function BuildingReportContent() {
 
   const buildReport = async () => {
     try {
-      // Step 1: Verify payment
+      // Step 1: Verify payment (with polling for subscription activation)
       setCurrentStage('Verifying payment...')
       setProgress(10)
 
-      const verifyResponse = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessionId }),
-      })
+      let verifyData = null
+      let attempts = 0
+      const maxAttempts = 10 // Try for up to 20 seconds (10 attempts × 2 seconds)
 
-      if (!verifyResponse.ok) {
-        throw new Error('Payment verification failed')
+      while (attempts < maxAttempts) {
+        const verifyResponse = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId }),
+        })
+
+        if (verifyResponse.ok) {
+          verifyData = await verifyResponse.json()
+          break
+        }
+
+        // If subscription is still processing, wait and retry
+        attempts++
+        setProgress(10 + (attempts * 2)) // Increment progress slightly
+        await new Promise(resolve => setTimeout(resolve, 2000)) // Wait 2 seconds before retry
       }
 
-      const verifyData = await verifyResponse.json()
+      if (!verifyData) {
+        throw new Error('Payment verification timed out. Please check your email for your report.')
+      }
+
       setProgress(30)
 
       // Step 2: Wait for webhook to generate PPSR report
