@@ -130,89 +130,8 @@ export async function POST(request: NextRequest) {
 </html>
     `
 
-    // Transform AI market research data to match PDF generation expectations
-    let transformedReportData = { ...reportData }
-    if (reportData.aiMarketResearch && !reportData.aiMarketResearch.marketAnalysis) {
-      console.log('Transforming AI market research data structure...')
-      const aiData = reportData.aiMarketResearch
-
-      // Transform simple structure to complex structure expected by PDF generator
-      transformedReportData.aiMarketResearch = {
-        tradeInValue: {
-          low: Math.round((aiData.tradeValue || 0) * 0.9),
-          high: Math.round((aiData.tradeValue || 0) * 1.1),
-          average: aiData.tradeValue || 0
-        },
-        privateSaleValue: {
-          low: Math.round((aiData.privateValue || 0) * 0.9),
-          high: Math.round((aiData.privateValue || 0) * 1.1),
-          average: aiData.privateValue || 0
-        },
-        retailValue: {
-          low: Math.round((aiData.retailValue || 0) * 0.9),
-          high: Math.round((aiData.retailValue || 0) * 1.1),
-          average: aiData.retailValue || 0
-        },
-        marketAnalysis: {
-          demand: 'Medium', // Default fallback
-          trend: 'Stable', // Default fallback
-          keyFactors: aiData.sellingPoints || ['Quality vehicle', 'Good market position'],
-          reliability: 'Good', // Default fallback
-          knownIssues: aiData.concerns || [],
-          marketNotes: aiData.analysisNotes || aiData.marketTrends || 'Market analysis available'
-        },
-        dataSource: 'Expert market analysis based on current Australian automotive market data',
-        lastUpdated: new Date().toISOString(),
-        confidence: 'High',
-        generatedAt: new Date().toISOString(),
-        vehicleQueried: {
-          make: reportData.make || 'Unknown',
-          model: reportData.model || 'Unknown',
-          year: reportData.year || new Date().getFullYear(),
-          body: reportData.bodyType || 'Unknown'
-        }
-      }
-      console.log('AI market research data transformed successfully')
-    }
-
-    // Generate PDF report
-    console.log('Generating PDF report...')
-    const pdfResponse = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/generate-pdf-report`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(transformedReportData)
-    })
-
-    let pdfAttachment = null
-    if (pdfResponse.ok) {
-      const pdfResult = await pdfResponse.json()
-      if (pdfResult.success) {
-        pdfAttachment = {
-          filename: pdfResult.filename,
-          content: pdfResult.pdf,
-          encoding: 'base64',
-          contentType: 'application/pdf'
-        }
-        console.log('PDF generated successfully')
-      } else {
-        console.error('PDF generation failed:', pdfResult.error)
-      }
-    } else {
-      console.error('PDF generation request failed:', pdfResponse.status)
-    }
-
     // Prepare attachments array for nodemailer
     const attachments = []
-
-    // Add PDF attachment if available
-    if (pdfAttachment) {
-      attachments.push({
-        filename: pdfAttachment.filename,
-        content: Buffer.from(pdfAttachment.content, 'base64')
-      })
-    }
 
     // Add PPSR certificate attachment if available and store it in database
     if (reportData.ppsrCertificateData) {
