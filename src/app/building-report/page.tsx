@@ -80,9 +80,9 @@ function BuildingReportContent() {
         })
       }, interval)
 
-      // Step 1: Verify payment (20% progress)
+      // Step 1: Verify payment
       setCurrentStage('Verifying payment...')
-      await new Promise(resolve => setTimeout(resolve, 4000))
+      await new Promise(resolve => setTimeout(resolve, 2000))
 
       const verifyResponse = await fetch('/api/verify-payment', {
         method: 'POST',
@@ -97,41 +97,25 @@ function BuildingReportContent() {
 
       const verifyData = await verifyResponse.json()
 
-      // Step 2: Generate PPSR Report (remaining progress)
-      setCurrentStage('Generating your PPSR report...')
-      await new Promise(resolve => setTimeout(resolve, 4000))
+      // Step 2: Wait for webhook to generate PPSR report
+      // The Stripe webhook is generating the PPSR certificate in the background
+      setCurrentStage('Building your PPSR report...')
 
-      const reportResponse = await fetch('/api/generate-ppsr-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          rego: verifyData.metadata.rego,
-          state: verifyData.metadata.state,
-        }),
-      })
-
-      if (!reportResponse.ok) {
-        clearInterval(progressInterval)
-        throw new Error('PPSR report generation failed')
-      }
-
-      const reportData = await reportResponse.json()
-
-      // Store report data in sessionStorage so payment-success can access it
-      sessionStorage.setItem('ppsrReportData', JSON.stringify(reportData))
-      sessionStorage.setItem('vehicleMetadata', JSON.stringify(verifyData.metadata))
+      // Just show loading animation - the webhook is handling PPSR generation
+      // This avoids duplicate API calls to PPSR Cloud
+      await new Promise(resolve => setTimeout(resolve, 8000))
 
       // Wait for progress to hit 100%
       while (progress < 100) {
         await new Promise(resolve => setTimeout(resolve, 100))
       }
 
-      // Wait 1 more second
+      // Wait 1 more second for smooth UX
       await new Promise(resolve => setTimeout(resolve, 1000))
 
       clearInterval(progressInterval)
 
-      // Redirect to payment-success
+      // Redirect to payment-success (which will fetch the report from the database)
       router.push(`/payment-success?session_id=${sessionId}`)
 
     } catch (err) {
