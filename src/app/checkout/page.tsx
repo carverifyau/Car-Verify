@@ -23,6 +23,7 @@ function CheckoutPageContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const [vehicleInfo, setVehicleInfo] = useState<VehicleInfo | null>(null)
+  const [vehicleDetails, setVehicleDetails] = useState<{ make?: string; model?: string; year?: string } | null>(null)
   const [customerEmail, setCustomerEmail] = useState('')
   const [clientSecret, setClientSecret] = useState('')
   const [subscriptionId, setSubscriptionId] = useState('')
@@ -30,6 +31,34 @@ function CheckoutPageContent() {
   const [showPaymentForm, setShowPaymentForm] = useState(false)
 
   useEffect(() => {
+    // Try to get vehicle data from sessionStorage first (Bumper-style flow)
+    const storedVehicleData = sessionStorage.getItem('vehicleData')
+    if (storedVehicleData) {
+      try {
+        const vehicleData = JSON.parse(storedVehicleData)
+        setVehicleInfo({
+          type: 'rego',
+          rego: vehicleData.rego,
+          state: vehicleData.state,
+          vin: vehicleData.vin
+        })
+        setVehicleDetails({
+          make: vehicleData.make,
+          model: vehicleData.model,
+          year: vehicleData.year
+        })
+        analytics.checkoutViewed({
+          type: 'rego',
+          rego: vehicleData.rego,
+          state: vehicleData.state
+        })
+        return
+      } catch (e) {
+        console.error('Failed to parse stored vehicle data:', e)
+      }
+    }
+
+    // Fallback to URL params (old flow)
     const vin = searchParams.get('vin')
     const rego = searchParams.get('rego')
     const state = searchParams.get('state')
@@ -190,7 +219,17 @@ function CheckoutPageContent() {
           >
             <h2 className="text-xl font-bold text-gray-900 mb-4">Vehicle Information</h2>
             <div className="text-gray-700">
-              {vehicleInfo.type === 'vin' ? (
+              {vehicleDetails && vehicleDetails.make ? (
+                <div className="text-center">
+                  <p className="text-blue-600 font-bold text-2xl mb-2">
+                    {vehicleDetails.year} {vehicleDetails.make} {vehicleDetails.model}
+                  </p>
+                  <p className="text-gray-600 text-sm mb-2">
+                    Registration: {vehicleInfo.rego} ({vehicleInfo.state})
+                  </p>
+                  <p className="text-gray-500 text-xs">VIN: {vehicleInfo.vin}</p>
+                </div>
+              ) : vehicleInfo.type === 'vin' ? (
                 <div className="text-center">
                   <p className="text-blue-600 font-semibold text-lg">VIN: {vehicleInfo.vin}</p>
                   <p className="text-gray-600 text-sm mt-2">We&apos;ll search all Australian databases for this vehicle</p>

@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { ArrowRight, CheckCircle, Shield, Search, Loader2 } from 'lucide-react'
 import { analytics } from '@/lib/analytics'
-import { supabase } from '@/lib/supabase-client'
+import { supabase, isSupabaseConfigured } from '@/lib/supabase-client'
 
 interface VehicleData {
   make: string;
@@ -27,6 +28,7 @@ interface Subscription {
 }
 
 export default function VehicleLookupFormWithPreview() {
+  const router = useRouter()
   const [lookupType, setLookupType] = useState<'vin' | 'rego'>('rego')
   const [vin, setVin] = useState('')
   const [rego, setRego] = useState('')
@@ -37,6 +39,89 @@ export default function VehicleLookupFormWithPreview() {
   const [validationError, setValidationError] = useState('')
   const [isValidating, setIsValidating] = useState(false)
 
+  // Bumper-style flow states
+  const [viewState, setViewState] = useState<'form' | 'loading' | 'confirmed' | 'building-report' | 'agreement' | 'email-capture' | 'pricing'>('form')
+  const [progress, setProgress] = useState(0)
+  const [vehicleData, setVehicleData] = useState<VehicleData | null>(null)
+  const [currentFactIndex, setCurrentFactIndex] = useState(0)
+  const [reportSection, setReportSection] = useState(0)
+  const [reportProgress, setReportProgress] = useState(0)
+  const [email, setEmail] = useState('')
+  const [agreeToTerms, setAgreeToTerms] = useState(false)
+
+  // Cycling facts for "Did you know"
+  const didYouKnowFacts = [
+    "Car Verify checks official PPSR records to protect you from buying stolen or written-off vehicles.",
+    "Over 200,000 vehicles in Australia have outstanding finance or are reported stolen.",
+    "A PPSR check can reveal if a vehicle has been written off, even if it's been repaired and looks fine.",
+    "Over 50,000 vehicles are reported stolen in Australia each year.",
+    "Finance owing on a vehicle can transfer to the new owner if not checked.",
+    "PPSR checks can reveal if a vehicle has been used as a taxi or rental car.",
+    "Some stolen vehicles are re-registered with fake VIN numbers.",
+    "Written-off vehicles can sometimes be legally re-registered after repairs."
+  ]
+
+  // Report building sections (20 seconds each)
+  const reportSections = [
+    { title: "Searching for finance owing", icon: "💰" },
+    { title: "Checking write-off status", icon: "🔨" },
+    { title: "Verifying stolen vehicle records", icon: "🚨" }
+  ]
+
+  // Auto-transition from confirmed to building-report after 5 seconds
+  useEffect(() => {
+    if (viewState === 'confirmed') {
+      const timer = setTimeout(() => {
+        setViewState('building-report')
+        setReportSection(0)
+        setReportProgress(0)
+      }, 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [viewState])
+
+  // Report building progress (60 seconds total, 3 sections × 20 seconds)
+  useEffect(() => {
+    if (viewState === 'building-report') {
+      const sectionDuration = 20000 // 20 seconds per section
+      const interval = 100
+      const progressPerIncrement = (100 / (sectionDuration / interval))
+
+      const progressInterval = setInterval(() => {
+        setReportProgress(prev => {
+          const newProgress = prev + progressPerIncrement
+
+          // Check if section is complete
+          if (newProgress >= 100) {
+            // Move to next section
+            if (reportSection < reportSections.length - 1) {
+              setReportSection(s => s + 1)
+              return 0
+            } else {
+              // All sections complete, move to agreement
+              clearInterval(progressInterval)
+              setViewState('agreement')
+              return 100
+            }
+          }
+          return newProgress
+        })
+      }, interval)
+
+      return () => clearInterval(progressInterval)
+    }
+  }, [viewState, reportSection])
+
+  // Cycle through "Did You Know" facts every 5 seconds during report building
+  useEffect(() => {
+    if (viewState === 'building-report') {
+      const factInterval = setInterval(() => {
+        setCurrentFactIndex(prev => (prev + 1) % didYouKnowFacts.length)
+      }, 5000)
+      return () => clearInterval(factInterval)
+    }
+  }, [viewState])
+
   // Check if user is logged in with subscription
   useEffect(() => {
     checkSubscription()
@@ -44,6 +129,12 @@ export default function VehicleLookupFormWithPreview() {
 
   const checkSubscription = async () => {
     try {
+      // Skip if Supabase is not configured
+      if (!isSupabaseConfigured()) {
+        setIsCheckingAuth(false)
+        return
+      }
+
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
@@ -82,116 +173,699 @@ export default function VehicleLookupFormWithPreview() {
       return
     }
 
-    // Validate vehicle details before proceeding
-    setIsValidating(true)
-    try {
-      const validationResponse = await fetch('/api/validate-vehicle', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          vin: lookupType === 'vin' ? vin : undefined,
-          rego: lookupType === 'rego' ? rego : undefined,
-          state: lookupType === 'rego' ? state : undefined
-        })
-      })
-
-      const validationData = await validationResponse.json()
-
-      if (!validationData.valid) {
-        setValidationError(validationData.error || 'Invalid vehicle details')
-        setIsValidating(false)
-        return
-      }
-
-      // Show warning if provided
-      if (validationData.warning) {
-        console.warn(validationData.warning)
-      }
-
-    } catch (error) {
-      console.error('Validation error:', error)
-      setValidationError('Failed to validate vehicle details. Please try again.')
-      setIsValidating(false)
-      return
-    }
-    setIsValidating(false)
-
     // Track form submission
     const vehicleId = lookupType === 'rego' ? `${rego}-${state}` : vin
     analytics.formSubmitted(lookupType, vehicleId)
 
-    // Show scanning animation
-    setIsScanning(true)
-
-    try {
-      // If user has active subscription with checks remaining, submit directly
-      if (subscription && (subscription.checks_used < subscription.checks_limit)) {
-        console.log('User has active subscription - submitting report directly')
-
-        const response = await fetch('/api/submit-report', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            rego: lookupType === 'rego' ? rego : undefined,
-            state: lookupType === 'rego' ? state : undefined,
-            vin: lookupType === 'vin' ? vin : undefined
-          })
-        })
-
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw new Error(data.error || 'Failed to submit report')
-        }
-
-        // Get user email for success page
-        const { data: { user } } = await supabase.auth.getUser()
-        const userEmail = user?.email || ''
-
-        // Redirect to success page
-        window.location.href = `/submission-success?checksRemaining=${data.checksRemaining}&email=${encodeURIComponent(userEmail)}&totalChecks=${subscription.checks_limit || 10}`
-        return
-      }
-
-      // No active subscription - proceed to checkout for payment
-      console.log('No active subscription - redirecting to checkout')
-
-      // Simulate scanning delay for legitimacy
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Create a pending report and go to checkout
-      const reportData = {
-        rego: lookupType === 'rego' ? rego : '',
-        state: lookupType === 'rego' ? state : '',
-        vin: lookupType === 'vin' ? vin : '',
-        timestamp: new Date().toISOString(),
-        customerId: 'cust_' + Date.now()
-      }
-
-      // Store in localStorage to simulate creating a pending report
-      const pendingReports = JSON.parse(localStorage.getItem('pendingReports') || '[]')
-      pendingReports.push({ id: 'RPT' + Date.now(), ...reportData, status: 'pending' })
-      localStorage.setItem('pendingReports', JSON.stringify(pendingReports))
-
-      const params = new URLSearchParams()
-      if (lookupType === 'rego') {
-        params.set('rego', rego)
-        params.set('state', state)
-      } else {
-        params.set('vin', vin)
-      }
-
-      window.location.href = `/checkout?${params.toString()}`
-    } catch (error) {
-      console.error('Error submitting report:', error)
-      alert(error instanceof Error ? error.message : 'Failed to submit report. Please try again.')
-      setIsScanning(false)
+    // Redirect to dedicated loading page
+    if (lookupType === 'rego') {
+      router.push(`/vehicle-lookup-loading?rego=${encodeURIComponent(rego)}&state=${encodeURIComponent(state)}`)
+    } else {
+      router.push(`/vehicle-lookup-loading?vin=${encodeURIComponent(vin)}`)
     }
   }
 
 
   const checksRemaining = subscription ? subscription.checks_limit - subscription.checks_used : 0
 
+  // Bumper-style Loading View
+  if (viewState === 'loading') {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+        <div className="text-center">
+          <div className="mb-8">
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
+              We're searching our database for
+            </h2>
+            <p className="text-2xl md:text-3xl font-bold text-blue-600">
+              {lookupType === 'rego' ? `${rego} (${state})` : vin}
+            </p>
+          </div>
+
+          {/* Progress */}
+          <div className="text-5xl md:text-6xl font-bold text-gray-900 mb-8">
+            {Math.round(progress)}%
+          </div>
+
+          {/* Progress Bar */}
+          <div className="w-full bg-gray-200 rounded-full h-3 mb-12">
+            <div
+              className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+
+          {/* Car Driving Animation */}
+          <div className="mb-12 relative overflow-hidden rounded-2xl" style={{ height: '300px' }}>
+            {/* Animated gradient background (sky) */}
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-400 via-blue-300 to-blue-200"></div>
+
+            {/* Animated clouds */}
+            <div className="absolute top-4 w-full h-20 overflow-hidden">
+              <div className="animate-cloud-slow absolute" style={{ left: '10%', top: '10px' }}>
+                <div className="bg-white/40 rounded-full w-16 h-8 backdrop-blur-sm"></div>
+              </div>
+              <div className="animate-cloud-medium absolute" style={{ left: '60%', top: '5px' }}>
+                <div className="bg-white/30 rounded-full w-20 h-10 backdrop-blur-sm"></div>
+              </div>
+              <div className="animate-cloud-fast absolute" style={{ left: '85%', top: '15px' }}>
+                <div className="bg-white/35 rounded-full w-12 h-6 backdrop-blur-sm"></div>
+              </div>
+            </div>
+
+            {/* Road with perspective */}
+            <div className="absolute bottom-0 w-full h-48 bg-gradient-to-b from-gray-600 to-gray-700">
+              {/* Road edge lines */}
+              <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
+                {/* Left edge */}
+                <div className="absolute left-0 top-0 h-full w-1 bg-white/30" style={{ transform: 'perspective(100px) rotateX(60deg)' }}></div>
+                {/* Right edge */}
+                <div className="absolute right-0 top-0 h-full w-1 bg-white/30" style={{ transform: 'perspective(100px) rotateX(60deg)' }}></div>
+              </div>
+
+              {/* Animated center lane markings */}
+              <div className="absolute left-1/2 top-0 w-full h-full -translate-x-1/2">
+                <div className="animate-road-lines">
+                  {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+                    <div
+                      key={i}
+                      className="absolute bg-yellow-400 rounded-full"
+                      style={{
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        top: `${i * 15}%`,
+                        width: '4px',
+                        height: '30px',
+                      }}
+                    ></div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Side scenery - trees passing by */}
+              <div className="absolute left-0 top-0 h-24 w-full overflow-hidden">
+                <div className="animate-scenery-left flex space-x-8">
+                  {[0, 1, 2, 3, 4, 5].map((i) => (
+                    <div key={i} className="flex-shrink-0">
+                      {/* Simple tree */}
+                      <div className="w-8 h-12 bg-green-600 rounded-t-full relative" style={{ marginLeft: '20px' }}>
+                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-2 h-6 bg-amber-800"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* The Car - centered and slightly bouncing */}
+            <div className="absolute left-1/2 bottom-20 -translate-x-1/2 animate-car-drive">
+              <svg viewBox="0 0 200 100" className="w-48 drop-shadow-2xl">
+                <defs>
+                  {/* Car body gradient - sleek sports car */}
+                  <linearGradient id="carGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#EF4444" />
+                    <stop offset="100%" stopColor="#DC2626" />
+                  </linearGradient>
+                  <linearGradient id="windowShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#60A5FA" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#1E40AF" stopOpacity="0.8" />
+                  </linearGradient>
+                  <radialGradient id="wheelGrad">
+                    <stop offset="0%" stopColor="#1F2937" />
+                    <stop offset="70%" stopColor="#111827" />
+                    <stop offset="100%" stopColor="#000000" />
+                  </radialGradient>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                      <feMergeNode in="coloredBlur"/>
+                      <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                  </filter>
+                </defs>
+
+                {/* Car shadow */}
+                <ellipse cx="100" cy="92" rx="70" ry="8" fill="#000000" opacity="0.3" />
+
+                {/* Main body - sleek sports car shape */}
+                <path
+                  d="M 30 70 L 40 60 L 60 50 L 80 48 L 120 48 L 140 50 L 160 60 L 170 70 L 170 80 L 30 80 Z"
+                  fill="url(#carGradient)"
+                  stroke="#991B1B"
+                  strokeWidth="1.5"
+                />
+
+                {/* Roof/Cabin - low and aerodynamic */}
+                <path
+                  d="M 65 50 L 75 38 L 105 36 L 125 38 L 135 50 Z"
+                  fill="url(#carGradient)"
+                  stroke="#991B1B"
+                  strokeWidth="1.5"
+                />
+
+                {/* Windows with shine effect */}
+                <path
+                  d="M 76 39 L 80 42 L 100 41 Z"
+                  fill="url(#windowShine)"
+                  opacity="0.9"
+                />
+                <path
+                  d="M 106 41 L 110 42 L 124 39 Z"
+                  fill="url(#windowShine)"
+                  opacity="0.9"
+                />
+
+                {/* Headlights with glow */}
+                <ellipse cx="28" cy="65" rx="4" ry="3" fill="#FEF3C7" filter="url(#glow)" />
+                <ellipse cx="28" cy="65" rx="2" ry="1.5" fill="#FFFFFF" />
+
+                {/* Taillights */}
+                <ellipse cx="172" cy="65" rx="4" ry="3" fill="#FCA5A5" opacity="0.9" />
+                <ellipse cx="172" cy="65" rx="2" ry="1.5" fill="#EF4444" />
+
+                {/* Side mirror */}
+                <rect x="62" y="45" width="4" height="3" rx="1" fill="url(#carGradient)" />
+
+                {/* Wheels with spinning animation */}
+                <g className="animate-wheel-spin" style={{ transformOrigin: '60px 80px' }}>
+                  <circle cx="60" cy="80" r="12" fill="url(#wheelGrad)" />
+                  <circle cx="60" cy="80" r="9" fill="#374151" />
+                  <circle cx="60" cy="80" r="5" fill="#1F2937" />
+                  {/* Spokes */}
+                  <line x1="60" y1="72" x2="60" y2="88" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="52" y1="80" x2="68" y2="80" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="55" y1="75" x2="65" y2="85" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="55" y1="85" x2="65" y2="75" stroke="#6B7280" strokeWidth="1.5" />
+                </g>
+
+                <g className="animate-wheel-spin" style={{ transformOrigin: '140px 80px' }}>
+                  <circle cx="140" cy="80" r="12" fill="url(#wheelGrad)" />
+                  <circle cx="140" cy="80" r="9" fill="#374151" />
+                  <circle cx="140" cy="80" r="5" fill="#1F2937" />
+                  {/* Spokes */}
+                  <line x1="140" y1="72" x2="140" y2="88" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="132" y1="80" x2="148" y2="80" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="135" y1="75" x2="145" y2="85" stroke="#6B7280" strokeWidth="1.5" />
+                  <line x1="135" y1="85" x2="145" y2="75" stroke="#6B7280" strokeWidth="1.5" />
+                </g>
+
+                {/* Speed lines for motion effect */}
+                <g opacity="0.4">
+                  <line x1="10" y1="55" x2="25" y2="55" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="5" y1="65" x2="22" y2="65" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="8" y1="75" x2="20" y2="75" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" />
+                </g>
+              </svg>
+            </div>
+          </div>
+
+          <style jsx>{`
+            @keyframes cloud-drift {
+              from { transform: translateX(100vw); }
+              to { transform: translateX(-20vw); }
+            }
+            @keyframes road-lines {
+              from { transform: translateY(-30px); }
+              to { transform: translateY(100%); }
+            }
+            @keyframes scenery-pass {
+              from { transform: translateX(100%); }
+              to { transform: translateX(-100%); }
+            }
+            @keyframes car-bounce {
+              0%, 100% { transform: translate(-50%, 0); }
+              50% { transform: translate(-50%, -2px); }
+            }
+            @keyframes wheel-rotate {
+              from { transform: rotate(0deg); }
+              to { transform: rotate(360deg); }
+            }
+            .animate-cloud-slow {
+              animation: cloud-drift 30s linear infinite;
+            }
+            .animate-cloud-medium {
+              animation: cloud-drift 20s linear infinite;
+              animation-delay: -5s;
+            }
+            .animate-cloud-fast {
+              animation: cloud-drift 15s linear infinite;
+              animation-delay: -10s;
+            }
+            .animate-road-lines {
+              animation: road-lines 2s linear infinite;
+            }
+            .animate-scenery-left {
+              animation: scenery-pass 4s linear infinite;
+            }
+            .animate-car-drive {
+              animation: car-bounce 0.4s ease-in-out infinite;
+            }
+            .animate-wheel-spin {
+              animation: wheel-rotate 0.6s linear infinite;
+            }
+          `}</style>
+
+          {/* Loading Text */}
+          <div className="space-y-4 mb-8">
+            <p className="text-lg md:text-xl text-gray-900 font-semibold">
+              Looking up millions of records
+            </p>
+            <p className="text-gray-600">
+              Please wait while we identify your vehicle
+            </p>
+          </div>
+
+          {/* Did You Know - with cycling facts */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 relative overflow-hidden">
+            <p className="text-blue-600 font-bold mb-2">DID YOU KNOW:</p>
+            <div className="relative" style={{ minHeight: '60px' }}>
+              {didYouKnowFacts.map((fact, index) => (
+                <p
+                  key={index}
+                  className={`text-gray-700 transition-all duration-500 absolute inset-0 ${
+                    index === currentFactIndex
+                      ? 'opacity-100 translate-y-0'
+                      : index < currentFactIndex
+                      ? 'opacity-0 -translate-y-4'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                >
+                  {fact}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Bumper-style Vehicle Confirmed View
+  if (viewState === 'confirmed' && vehicleData) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+        <div className="text-center">
+          <div className="mb-8">
+            <h2 className="text-2xl md:text-3xl text-gray-900 mb-4 font-bold">
+              GREAT, THIS IS A
+            </h2>
+            <p className="text-3xl md:text-5xl font-bold text-blue-600">
+              {vehicleData.year} {vehicleData.make} {vehicleData.model}
+            </p>
+          </div>
+
+          {/* Vehicle Details Card */}
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-6 md:p-8 mb-8">
+            <div className="grid grid-cols-2 gap-6 text-left">
+              <div>
+                <p className="text-gray-500 text-sm mb-1">Registration</p>
+                <p className="text-gray-900 font-semibold text-lg">{vehicleData.rego}</p>
+              </div>
+              <div>
+                <p className="text-gray-500 text-sm mb-1">State</p>
+                <p className="text-gray-900 font-semibold text-lg">{vehicleData.state}</p>
+              </div>
+              {vehicleData.vin && (
+                <>
+                  <div>
+                    <p className="text-gray-500 text-sm mb-1">VIN</p>
+                    <p className="text-gray-900 font-semibold text-sm font-mono">{vehicleData.vin}</p>
+                  </div>
+                  <div>
+                    <p className="text-gray-500 text-sm mb-1">Year</p>
+                    <p className="text-gray-900 font-semibold text-lg">{vehicleData.year}</p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Auto-transition message */}
+          <div className="flex items-center justify-center space-x-2">
+            <Loader2 className="h-5 w-5 text-blue-600 animate-spin" />
+            <p className="text-gray-600">Preparing your report...</p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Building Report View
+  if (viewState === 'building-report' && vehicleData) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+        <div className="text-center">
+          <div className="mb-8">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Building Your PPSR Report
+            </h2>
+            <p className="text-lg md:text-xl text-gray-700">
+              {vehicleData.year} {vehicleData.make} {vehicleData.model}
+            </p>
+          </div>
+
+          {/* Current Section */}
+          <div className="mb-8">
+            <div className="flex items-center justify-center space-x-3 mb-6">
+              <span className="text-4xl md:text-5xl">{reportSections[reportSection].icon}</span>
+              <h3 className="text-xl md:text-2xl font-bold text-blue-600">
+                {reportSections[reportSection].title}
+              </h3>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden mb-4">
+              <div
+                className="bg-blue-600 h-3 rounded-full transition-all duration-100"
+                style={{ width: `${reportProgress}%` }}
+              />
+            </div>
+
+            <p className="text-gray-600 text-sm">
+              Section {reportSection + 1} of {reportSections.length}
+            </p>
+          </div>
+
+          {/* All Sections Progress */}
+          <div className="mb-12 space-y-3">
+            {reportSections.map((section, index) => (
+              <div
+                key={index}
+                className={`flex items-center justify-between p-4 rounded-xl ${
+                  index < reportSection
+                    ? 'bg-green-50 border border-green-200'
+                    : index === reportSection
+                    ? 'bg-blue-50 border border-blue-200'
+                    : 'bg-gray-50 border border-gray-200'
+                }`}
+              >
+                <div className="flex items-center space-x-3">
+                  <span className="text-2xl">{section.icon}</span>
+                  <span className={`font-semibold ${
+                    index <= reportSection ? 'text-gray-900' : 'text-gray-400'
+                  }`}>
+                    {section.title}
+                  </span>
+                </div>
+                {index < reportSection && (
+                  <span className="text-green-600 text-2xl">✓</span>
+                )}
+                {index === reportSection && (
+                  <Loader2 className="h-5 w-5 text-blue-600 animate-spin" />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Did You Know */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 relative overflow-hidden">
+            <p className="text-blue-600 font-bold mb-2">DID YOU KNOW:</p>
+            <div className="relative" style={{ minHeight: '60px' }}>
+              {didYouKnowFacts.map((fact, index) => (
+                <p
+                  key={index}
+                  className={`text-gray-700 transition-all duration-500 absolute inset-0 ${
+                    index === currentFactIndex
+                      ? 'opacity-100 translate-y-0'
+                      : index < currentFactIndex
+                      ? 'opacity-0 -translate-y-4'
+                      : 'opacity-0 translate-y-4'
+                  }`}
+                >
+                  {fact}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Agreement View
+  if (viewState === 'agreement' && vehicleData) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Your Report is Ready!
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700">
+            {vehicleData.year} {vehicleData.make} {vehicleData.model}
+          </p>
+        </div>
+
+        <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+          <div className="flex items-center space-x-3 mb-2">
+            <span className="text-green-600 text-3xl">✓</span>
+            <h3 className="text-xl font-bold text-green-900">All Checks Complete</h3>
+          </div>
+          <p className="text-green-800 text-sm">
+            We've completed finance, write-off, and stolen vehicle checks for your vehicle.
+          </p>
+        </div>
+
+        {/* Checkbox Agreement */}
+        <div className="mb-6">
+          <label className="flex items-start space-x-3 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={agreeToTerms}
+              onChange={(e) => setAgreeToTerms(e.target.checked)}
+              className="mt-1 w-5 h-5 rounded border-2 border-gray-300 bg-white checked:bg-blue-600 checked:border-blue-600 cursor-pointer"
+            />
+            <span className="text-gray-700 text-sm">
+              I agree to the Terms & Conditions and understand this is a comprehensive PPSR report for {vehicleData.year} {vehicleData.make} {vehicleData.model} ({vehicleData.rego}, {vehicleData.state}).
+            </span>
+          </label>
+        </div>
+
+        {/* Continue Button */}
+        <button
+          onClick={() => setViewState('email-capture')}
+          disabled={!agreeToTerms}
+          className="w-full py-4 md:py-5 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-lg md:text-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
+          Continue
+        </button>
+      </div>
+    )
+  }
+
+  // Email Capture View
+  if (viewState === 'email-capture' && vehicleData) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Where Should We Send Your Report?
+          </h2>
+          <p className="text-base md:text-lg text-gray-700">
+            Enter your email to receive a copy of your PPSR report
+          </p>
+        </div>
+
+        {/* Email Input */}
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Email Address
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && email.includes('@') && setViewState('pricing')}
+            placeholder="your@email.com"
+            className="w-full px-6 py-4 rounded-lg border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 text-gray-900 placeholder-gray-500 text-lg font-semibold transition-all duration-200"
+          />
+        </div>
+
+        {/* Benefits */}
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center space-x-3 text-gray-700">
+            <span className="text-blue-600">✓</span>
+            <span>Instant PDF delivery</span>
+          </div>
+          <div className="flex items-center space-x-3 text-gray-700">
+            <span className="text-blue-600">✓</span>
+            <span>Comprehensive PPSR report</span>
+          </div>
+          <div className="flex items-center space-x-3 text-gray-700">
+            <span className="text-blue-600">✓</span>
+            <span>Official AFSA certificate</span>
+          </div>
+        </div>
+
+        {/* Continue Button */}
+        <button
+          onClick={() => setViewState('pricing')}
+          disabled={!email.includes('@')}
+          className="w-full py-4 md:py-5 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold text-lg md:text-xl transition-all duration-200 shadow-lg hover:shadow-xl"
+        >
+          Continue to Pricing
+        </button>
+
+        <p className="text-gray-500 text-xs text-center mt-4">
+          We'll never spam you or share your email
+        </p>
+      </div>
+    )
+  }
+
+  // Pricing View (BeenVerified-style)
+  if (viewState === 'pricing' && vehicleData) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-4xl mx-auto">
+        <div className="text-center mb-8">
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-4">
+            Get Your PPSR Report Now
+          </h2>
+          <p className="text-lg md:text-xl text-gray-700">
+            {vehicleData.year} {vehicleData.make} {vehicleData.model} ({vehicleData.rego})
+          </p>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          {/* 5-Day Trial */}
+          <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-blue-400 transition-all">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-1 bg-blue-100 border border-blue-200 rounded-full mb-4">
+                <span className="text-blue-600 font-semibold text-sm">MOST POPULAR</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">5-Day Trial</h3>
+              <div className="mb-4">
+                <span className="text-4xl md:text-5xl font-bold text-blue-600">$1</span>
+                <span className="text-gray-600 text-lg"> for 5 days</span>
+              </div>
+              <p className="text-gray-700 text-sm mb-2">Then $24.95/month</p>
+              <p className="text-gray-500 text-xs">Cancel anytime</p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Unlimited PPSR reports for 5 days</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Official AFSA certificates</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Instant PDF delivery</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">24/7 access</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                // Store all data and proceed to checkout
+                const params = new URLSearchParams()
+                if (lookupType === 'rego') {
+                  params.set('rego', rego)
+                  params.set('state', state)
+                } else {
+                  params.set('vin', vin)
+                }
+                if (vehicleData.vin) params.set('vehicle_vin', vehicleData.vin)
+                params.set('vehicle_make', vehicleData.make)
+                params.set('vehicle_model', vehicleData.model)
+                if (vehicleData.year) params.set('vehicle_year', vehicleData.year.toString())
+                if (email) params.set('email', email)
+                params.set('plan', '5-day')
+                window.location.href = `/checkout?${params.toString()}`
+              }}
+              className="w-full py-4 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              Start 5-Day Trial
+            </button>
+          </div>
+
+          {/* 1-Day Trial */}
+          <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-purple-400 transition-all">
+            <div className="text-center mb-6">
+              <div className="inline-block px-4 py-1 bg-purple-100 border border-purple-200 rounded-full mb-4">
+                <span className="text-purple-600 font-semibold text-sm">QUICK START</span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">1-Day Trial</h3>
+              <div className="mb-4">
+                <span className="text-4xl md:text-5xl font-bold text-purple-600">$5</span>
+                <span className="text-gray-600 text-lg"> for 1 day</span>
+              </div>
+              <p className="text-gray-700 text-sm mb-2">Then $24.95/month</p>
+              <p className="text-gray-500 text-xs">Cancel anytime</p>
+            </div>
+
+            <div className="space-y-3 mb-6">
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Unlimited PPSR reports for 1 day</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Official AFSA certificates</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Instant PDF delivery</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">24/7 access</span>
+              </div>
+            </div>
+
+            <button
+              onClick={() => {
+                // Store all data and proceed to checkout
+                const params = new URLSearchParams()
+                if (lookupType === 'rego') {
+                  params.set('rego', rego)
+                  params.set('state', state)
+                } else {
+                  params.set('vin', vin)
+                }
+                if (vehicleData.vin) params.set('vehicle_vin', vehicleData.vin)
+                params.set('vehicle_make', vehicleData.make)
+                params.set('vehicle_model', vehicleData.model)
+                if (vehicleData.year) params.set('vehicle_year', vehicleData.year.toString())
+                if (email) params.set('email', email)
+                params.set('plan', '1-day')
+                window.location.href = `/checkout?${params.toString()}`
+              }}
+              className="w-full py-4 px-6 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
+            >
+              Start 1-Day Trial
+            </button>
+          </div>
+        </div>
+
+        {/* Trust Badges */}
+        <div className="text-center">
+          <p className="text-gray-600 text-sm mb-4">
+            Secure checkout • SSL encrypted • Cancel anytime
+          </p>
+          <div className="flex justify-center items-center space-x-6 flex-wrap gap-2">
+            <div className="bg-gray-100 px-4 py-2 rounded-lg">
+              <p className="text-gray-700 text-xs font-semibold">Money Back Guarantee</p>
+            </div>
+            <div className="bg-gray-100 px-4 py-2 rounded-lg">
+              <p className="text-gray-700 text-xs font-semibold">Official PPSR</p>
+            </div>
+            <div className="bg-gray-100 px-4 py-2 rounded-lg">
+              <p className="text-gray-700 text-xs font-semibold">Instant Access</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Default Form View
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-lg p-6 md:p-8 max-w-2xl mx-auto">
       <div className="text-center mb-6 md:mb-8">

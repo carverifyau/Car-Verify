@@ -46,7 +46,7 @@ export default function CustomCheckoutForm({
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/checkout/success?session_id=${subscriptionId}`,
+          return_url: `${window.location.origin}/building-report?session_id=${subscriptionId}`,
         },
       })
 

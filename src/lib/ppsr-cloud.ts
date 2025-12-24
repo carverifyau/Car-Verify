@@ -130,14 +130,17 @@ class PPSRCloudClient {
     })
 
     if (!response.ok) {
+      const errorBody = await response.text()
       console.error('❌ VIN lookup failed:', response.status)
+      console.error('   Response:', errorBody.substring(0, 500))
       return null
     }
 
     const data: VINLookupResponse = await response.json()
 
     if (data.hasError || !data.resource?.vin) {
-      console.log('⚠️ VIN not found, will search by registration plate instead')
+      console.log('⚠️ VIN not found or has errors')
+      console.log('   Response:', JSON.stringify(data, null, 2))
       return null
     }
 

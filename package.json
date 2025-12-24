@@ -33,6 +33,7 @@
     "next": "^16.0.10",
     "nodemailer": "^7.0.10",
     "openai": "^6.1.0",
+    "pdf-parse": "^2.4.5",
     "prisma": "^6.16.2",
     "puppeteer": "^24.25.0",
     "puppeteer-core": "^24.29.0",

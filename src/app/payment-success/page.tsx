@@ -1,0 +1,351 @@
+'use client'
+
+import { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Shield } from 'lucide-react'
+import Link from 'next/link'
+import { motion, AnimatePresence } from 'framer-motion'
+
+const TESTIMONIALS = [
+  {
+    text: "Car Verify saved me from buying a stolen vehicle. The report was instant and comprehensive!",
+    author: "Sarah M.",
+    location: "Sydney, NSW"
+  },
+  {
+    text: "Found out the car had $15,000 in finance owing. Dodged a bullet thanks to this service!",
+    author: "James T.",
+    location: "Melbourne, VIC"
+  },
+  {
+    text: "Super fast and easy to use. Got my PPSR certificate in under a minute!",
+    author: "Lisa K.",
+    location: "Brisbane, QLD"
+  },
+  {
+    text: "The detailed report helped me negotiate a better price. Worth every cent!",
+    author: "Michael R.",
+    location: "Perth, WA"
+  },
+  {
+    text: "Peace of mind before the big purchase. Highly recommend to anyone buying a used car!",
+    author: "Emma W.",
+    location: "Adelaide, SA"
+  }
+]
+
+function PaymentSuccessContent() {
+  const searchParams = useSearchParams()
+  const sessionId = searchParams.get('session_id')
+
+  const [status, setStatus] = useState<'verifying' | 'generating' | 'complete' | 'error'>('verifying')
+  const [progress, setProgress] = useState(0)
+  const [error, setError] = useState<string | null>(null)
+  const [reportData, setReportData] = useState<any>(null)
+  const [vehicleData, setVehicleData] = useState<any>(null)
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0)
+
+  // Cycle through testimonials every 3 seconds
+  useEffect(() => {
+    if (status === 'verifying' || status === 'generating') {
+      const interval = setInterval(() => {
+        setCurrentTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length)
+      }, 3000)
+      return () => clearInterval(interval)
+    }
+  }, [status])
+
+  useEffect(() => {
+    if (!sessionId) {
+      setError('No session ID found')
+      setStatus('error')
+      return
+    }
+
+    verifyPaymentAndGenerateReport()
+  }, [sessionId])
+
+  const verifyPaymentAndGenerateReport = async () => {
+    try {
+      setStatus('verifying')
+      setProgress(50)
+
+      // Try to get report data from sessionStorage (set by building-report page)
+      const storedReportData = sessionStorage.getItem('ppsrReportData')
+      const storedVehicleData = sessionStorage.getItem('vehicleMetadata')
+
+      if (storedReportData && storedVehicleData) {
+        // Report was already generated, just display it
+        setReportData(JSON.parse(storedReportData))
+        setVehicleData(JSON.parse(storedVehicleData))
+        setProgress(100)
+        setStatus('complete')
+
+        // Clean up sessionStorage
+        sessionStorage.removeItem('ppsrReportData')
+        sessionStorage.removeItem('vehicleMetadata')
+      } else {
+        // Fallback: fetch data if not in storage
+        const verifyResponse = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sessionId }),
+        })
+
+        if (!verifyResponse.ok) {
+          throw new Error('Payment verification failed')
+        }
+
+        const verifyData = await verifyResponse.json()
+        setVehicleData(verifyData.metadata)
+        setProgress(100)
+        setStatus('complete')
+      }
+
+    } catch (err) {
+      console.error('Error:', err)
+      setError(err instanceof Error ? err.message : 'Something went wrong')
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-gray-100">
+        <div className="container mx-auto px-4 py-3 sm:py-4">
+          <Link href="/" className="flex items-center justify-center space-x-2 sm:space-x-3">
+            <div className="bg-blue-600 p-1.5 sm:p-2 rounded-lg">
+              <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+            </div>
+            <div>
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">Car Verify</span>
+              <div className="text-[10px] sm:text-xs text-blue-600 font-medium">AUTHORISED PPSR PROVIDER</div>
+            </div>
+          </Link>
+        </div>
+      </header>
+
+      <div className="container mx-auto px-4 py-6 sm:py-12">
+        {/* Loading/Generating State */}
+        {(status === 'verifying' || status === 'generating') && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-2">
+                {status === 'verifying' ? 'Verifying Payment...' : 'Building Your Report...'}
+              </h1>
+              <p className="text-base sm:text-lg text-gray-600 px-2">
+                {status === 'verifying'
+                  ? 'Please wait while we confirm your payment'
+                  : 'Generating your comprehensive PPSR report'}
+              </p>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="mb-6 sm:mb-8 px-2">
+              <div className="w-full bg-gray-200 rounded-full h-3 sm:h-4 overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-blue-500 to-blue-600"
+                  initial={{ width: '0%' }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
+              <p className="text-sm sm:text-base text-gray-600 mt-2">{progress}% Complete</p>
+            </div>
+
+            {/* Loading Animation */}
+            <div className="flex justify-center mb-6 sm:mb-8">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-12 h-12 sm:w-16 sm:h-16 border-3 sm:border-4 border-blue-600 border-t-transparent rounded-full"
+              />
+            </div>
+
+            {vehicleData && (
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 mx-2">
+                <p className="text-sm sm:text-base text-blue-900 font-semibold">
+                  Generating report for: {vehicleData.year} {vehicleData.make} {vehicleData.model}
+                </p>
+                <p className="text-xs sm:text-sm text-blue-700 mt-1">
+                  {vehicleData.rego} ({vehicleData.state})
+                </p>
+              </div>
+            )}
+
+            {/* Cycling Testimonials */}
+            <div className="mt-8 sm:mt-12 px-2">
+              <div className="relative min-h-[160px] sm:min-h-[140px]">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentTestimonialIndex}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.5 }}
+                    className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 shadow-sm"
+                  >
+                    <div className="flex items-start mb-4">
+                      <div className="text-blue-600 text-3xl sm:text-4xl mr-2 leading-none">"</div>
+                      <p className="text-sm sm:text-base text-gray-700 italic pt-1 sm:pt-2">
+                        {TESTIMONIALS[currentTestimonialIndex].text}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                        {TESTIMONIALS[currentTestimonialIndex].author}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {TESTIMONIALS[currentTestimonialIndex].location}
+                      </p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Testimonial Indicators */}
+              <div className="flex justify-center gap-2 mt-4">
+                {TESTIMONIALS.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      index === currentTestimonialIndex
+                        ? 'w-8 bg-blue-600'
+                        : 'w-1.5 bg-gray-300'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Error State */}
+        {status === 'error' && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <div className="bg-red-50 border border-red-200 rounded-xl p-6 sm:p-8 mx-2">
+              <h1 className="text-2xl sm:text-3xl font-bold text-red-900 mb-3 sm:mb-4">
+                Oops! Something went wrong
+              </h1>
+              <p className="text-sm sm:text-base text-red-700 mb-4 sm:mb-6">{error}</p>
+              <Link
+                href="/"
+                className="inline-block px-5 sm:px-6 py-2.5 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Return to Homepage
+              </Link>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Complete State - Show Report */}
+        {status === 'complete' && reportData && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="text-center mb-6 sm:mb-8 px-2">
+              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-green-100 rounded-full mb-3 sm:mb-4">
+                <span className="text-2xl sm:text-3xl">✓</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                Your PPSR Report is Ready!
+              </h1>
+              <p className="text-base sm:text-lg text-gray-600">
+                {vehicleData?.year} {vehicleData?.make} {vehicleData?.model}
+              </p>
+            </div>
+
+            {/* PPSR Report Display */}
+            <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 md:p-8 shadow-sm mx-2">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+                PPSR Certificate
+              </h2>
+
+              {/* Report Summary */}
+              <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
+                  <div>
+                    <span className="text-gray-600">Search Number:</span>
+                    <span className="ml-2 font-semibold text-gray-900">{reportData.report?.searchNumber || 'N/A'}</span>
+                  </div>
+                  <div>
+                    <span className="text-gray-600">Certificate:</span>
+                    <span className="ml-2 font-semibold text-gray-900">{reportData.report?.filename || 'PPSR Certificate'}</span>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <span className="text-gray-600">Generated:</span>
+                    <span className="ml-2 font-semibold text-gray-900">
+                      {reportData.report?.generatedAt ? new Date(reportData.report.generatedAt).toLocaleString() : 'Just now'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* PDF Viewer */}
+              {reportData.report?.pdfBase64 && (
+                <div className="mb-4 sm:mb-6">
+                  <iframe
+                    src={`data:application/pdf;base64,${reportData.report.pdfBase64}`}
+                    className="w-full rounded-lg border border-gray-300"
+                    style={{ height: '600px' }}
+                    title="PPSR Certificate"
+                  />
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button
+                  onClick={() => {
+                    if (reportData.report?.pdfBase64) {
+                      const link = document.createElement('a')
+                      link.href = `data:application/pdf;base64,${reportData.report.pdfBase64}`
+                      link.download = reportData.report.filename || 'PPSR_Certificate.pdf'
+                      link.click()
+                    }
+                  }}
+                  className="flex-1 py-2.5 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Download PDF
+                </button>
+                <button className="flex-1 py-2.5 sm:py-3 bg-gray-200 text-gray-900 text-sm sm:text-base font-semibold rounded-lg hover:bg-gray-300 transition-colors">
+                  Email Report
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default function PaymentSuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"
+          />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <PaymentSuccessContent />
+    </Suspense>
+  )
+}
