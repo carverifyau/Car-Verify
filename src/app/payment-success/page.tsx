@@ -78,15 +78,20 @@ function PaymentSuccessContent() {
       })
 
       if (!reportResponse.ok) {
-        // Report might not be ready yet, poll a few times
+        // Report might not be ready yet, poll for up to 30 seconds
+        console.log('Report not ready yet, polling...')
         let attempts = 0
-        const maxAttempts = 5
+        const maxAttempts = 15 // 15 attempts × 2 seconds = 30 seconds
         let reportData = null
+
+        setCurrentStage('Building your report...')
 
         while (attempts < maxAttempts) {
           await new Promise(resolve => setTimeout(resolve, 2000)) // Wait 2 seconds
           attempts++
-          setProgress(25 + (attempts * 15)) // Increase progress
+          setProgress(25 + (attempts * 5)) // Increase progress slowly
+
+          console.log(`Polling attempt ${attempts}/${maxAttempts}`)
 
           const retryResponse = await fetch('/api/get-report-by-session', {
             method: 'POST',
@@ -96,12 +101,17 @@ function PaymentSuccessContent() {
 
           if (retryResponse.ok) {
             reportData = await retryResponse.json()
+            console.log('Report found!')
             break
+          } else {
+            const errorText = await retryResponse.text()
+            console.log(`Attempt ${attempts} failed:`, errorText)
           }
         }
 
         if (!reportData) {
-          throw new Error('Report is still being generated. Please check your email or refresh the page.')
+          console.error('Report not found after polling')
+          throw new Error('Your report is still being generated. We\'ve sent it to your email - please check your inbox!')
         }
 
         setReportData(reportData)
@@ -110,6 +120,7 @@ function PaymentSuccessContent() {
         }
       } else {
         const reportData = await reportResponse.json()
+        console.log('Report found immediately!')
         setReportData(reportData)
         if (reportData.report?.metadata) {
           setVehicleData(reportData.report.metadata)
