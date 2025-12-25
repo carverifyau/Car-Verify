@@ -468,7 +468,7 @@ function CheckoutPageContent() {
           >
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 text-sm text-gray-600 leading-relaxed">
               <p className="mb-3">
-                <strong className="text-gray-900">Subscription Terms:</strong> After your $1 payment today, your subscription will automatically renew at $20/month unless cancelled. The subscription includes 10 PPSR certificate checks per month, instant delivery, and access to all official government databases. You can cancel anytime from your account settings with no penalties or fees.
+                <strong className="text-gray-900">Subscription Terms:</strong> After your $1 payment today, your subscription will automatically renew at $19.99/month unless cancelled. The subscription includes 10 PPSR certificate checks per month, instant delivery, and access to all official government databases. You can cancel anytime from your account settings with no penalties or fees.
               </p>
               <p className="mb-3">
                 <strong className="text-gray-900">Refund Policy:</strong> We offer a 30-day money-back guarantee. If you're not satisfied with our service, contact us at carverifyau@gmail.com for a full refund.

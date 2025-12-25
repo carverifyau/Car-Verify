@@ -280,76 +280,174 @@ function PaymentSuccessContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl mx-auto"
+            className="max-w-5xl mx-auto"
           >
-            <div className="text-center mb-6 sm:mb-8 px-2">
-              <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 bg-green-100 rounded-full mb-3 sm:mb-4">
-                <span className="text-2xl sm:text-3xl">✓</span>
-              </div>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            {/* Success Header */}
+            <div className="text-center mb-8 px-4">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full mb-4 shadow-lg"
+              >
+                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3">
                 Your PPSR Report is Ready!
               </h1>
-              <p className="text-base sm:text-lg text-gray-600">
-                {vehicleData?.year} {vehicleData?.make} {vehicleData?.model}
-              </p>
+              {vehicleData && (
+                <p className="text-lg sm:text-xl text-gray-600 font-medium">
+                  {vehicleData.year} {vehicleData.make} {vehicleData.model}
+                </p>
+              )}
             </div>
 
-            {/* PPSR Report Display */}
-            <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 md:p-8 shadow-sm mx-2">
-              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
-                PPSR Certificate
-              </h2>
+            {/* PPSR Report Card */}
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mx-4">
+              {/* Card Header */}
+              <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-6">
+                <h2 className="text-2xl sm:text-3xl font-bold text-white flex items-center">
+                  <svg className="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  Official PPSR Certificate
+                </h2>
+                <p className="text-blue-100 mt-2">Official government-issued vehicle security check</p>
+              </div>
 
-              {/* Report Summary */}
-              <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-xs sm:text-sm">
-                  <div>
-                    <span className="text-gray-600">Search Number:</span>
-                    <span className="ml-2 font-semibold text-gray-900">{reportData.report?.searchNumber || 'N/A'}</span>
+              {/* Report Details */}
+              <div className="p-6 bg-gradient-to-br from-gray-50 to-blue-50">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm text-gray-600 mb-1">Certificate ID</div>
+                    <div className="text-lg font-bold text-gray-900">{reportData.report?.filename || 'PPSR Certificate'}</div>
                   </div>
-                  <div>
-                    <span className="text-gray-600">Certificate:</span>
-                    <span className="ml-2 font-semibold text-gray-900">{reportData.report?.filename || 'PPSR Certificate'}</span>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <span className="text-gray-600">Generated:</span>
-                    <span className="ml-2 font-semibold text-gray-900">
+                  <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
+                    <div className="text-sm text-gray-600 mb-1">Generated</div>
+                    <div className="text-lg font-bold text-gray-900">
                       {reportData.report?.generatedAt ? new Date(reportData.report.generatedAt).toLocaleString() : 'Just now'}
-                    </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* What's Included */}
+                <div className="bg-white rounded-lg p-5 border border-gray-200 shadow-sm mb-6">
+                  <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                    <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    What's Included
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700">Finance Owing / Security Interests</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700">Stolen Vehicle Status</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700">Write-Off History (WOVR)</span>
+                    </div>
+                    <div className="flex items-start">
+                      <svg className="w-5 h-5 text-green-500 mr-2 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-sm text-gray-700">Official AFSA Certificate</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* PDF Preview */}
+                {reportData.report?.pdfBase64 && (
+                  <div className="bg-white rounded-lg border-2 border-gray-300 overflow-hidden shadow-md mb-6">
+                    <div className="bg-gray-100 px-4 py-2 border-b border-gray-300">
+                      <p className="text-sm font-semibold text-gray-700">Certificate Preview</p>
+                    </div>
+                    <iframe
+                      src={`data:application/pdf;base64,${reportData.report.pdfBase64}`}
+                      className="w-full"
+                      style={{ height: '600px' }}
+                      title="PPSR Certificate"
+                    />
+                  </div>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    onClick={() => {
+                      if (reportData.report?.pdfBase64) {
+                        const byteCharacters = atob(reportData.report.pdfBase64)
+                        const byteNumbers = new Array(byteCharacters.length)
+                        for (let i = 0; i < byteCharacters.length; i++) {
+                          byteNumbers[i] = byteCharacters.charCodeAt(i)
+                        }
+                        const byteArray = new Uint8Array(byteNumbers)
+                        const blob = new Blob([byteArray], { type: 'application/pdf' })
+                        const url = window.URL.createObjectURL(blob)
+                        const link = document.createElement('a')
+                        link.href = url
+                        link.download = reportData.report.filename || 'PPSR_Certificate.pdf'
+                        document.body.appendChild(link)
+                        link.click()
+                        document.body.removeChild(link)
+                        window.URL.revokeObjectURL(url)
+                      }
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download PDF
+                  </button>
+                  <Link
+                    href="/account"
+                    className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 text-base font-bold rounded-xl hover:from-gray-200 hover:to-gray-300 transition-all border-2 border-gray-300 hover:border-gray-400"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    View My Account
+                  </Link>
+                </div>
+
+                {/* Email Confirmation */}
+                <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-start">
+                    <svg className="w-6 h-6 text-blue-600 mr-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                      <p className="text-sm font-semibold text-blue-900">Certificate Sent to Your Email</p>
+                      <p className="text-sm text-blue-700 mt-1">A copy has been sent to your email address with full details and your account login information.</p>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
 
-              {/* PDF Viewer */}
-              {reportData.report?.pdfBase64 && (
-                <div className="mb-4 sm:mb-6">
-                  <iframe
-                    src={`data:application/pdf;base64,${reportData.report.pdfBase64}`}
-                    className="w-full rounded-lg border border-gray-300"
-                    style={{ height: '600px' }}
-                    title="PPSR Certificate"
-                  />
+            {/* Next Steps */}
+            <div className="mt-8 px-4">
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">What's Next?</h3>
+                <div className="space-y-2 text-sm text-gray-700">
+                  <p>✅ Your PPSR certificate is ready to download</p>
+                  <p>✅ A copy has been emailed to you</p>
+                  <p>✅ You can access it anytime from your account</p>
+                  <p>✅ You have 9 more checks remaining this month</p>
                 </div>
-              )}
-
-              {/* Action Buttons */}
-              <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-                <button
-                  onClick={() => {
-                    if (reportData.report?.pdfBase64) {
-                      const link = document.createElement('a')
-                      link.href = `data:application/pdf;base64,${reportData.report.pdfBase64}`
-                      link.download = reportData.report.filename || 'PPSR_Certificate.pdf'
-                      link.click()
-                    }
-                  }}
-                  className="flex-1 py-2.5 sm:py-3 bg-blue-600 text-white text-sm sm:text-base font-semibold rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Download PDF
-                </button>
-                <button className="flex-1 py-2.5 sm:py-3 bg-gray-200 text-gray-900 text-sm sm:text-base font-semibold rounded-lg hover:bg-gray-300 transition-colors">
-                  Email Report
-                </button>
               </div>
             </div>
           </motion.div>
