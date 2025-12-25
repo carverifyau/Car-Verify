@@ -20,14 +20,42 @@ export async function POST(request: NextRequest) {
     let orderId: string | null = null
 
     if (sessionId.startsWith('sub_')) {
+      // It's a subscription - we need to get the payment intent from the latest invoice
       subscriptionId = sessionId
-      orderId = sessionId
+      console.log('[GET-REPORT] Fetching subscription to find payment intent...')
+
+      const subscription = await stripe.subscriptions.retrieve(sessionId, {
+        expand: ['latest_invoice']
+      })
+
+      const latestInvoice = subscription.latest_invoice
+      if (latestInvoice && typeof latestInvoice === 'object' && latestInvoice.payment_intent) {
+        orderId = typeof latestInvoice.payment_intent === 'string'
+          ? latestInvoice.payment_intent
+          : latestInvoice.payment_intent.id
+        console.log('[GET-REPORT] Found payment intent from subscription:', orderId)
+      } else {
+        console.error('[GET-REPORT] No payment intent found in subscription')
+        return NextResponse.json(
+          { error: 'No payment intent found for subscription' },
+          { status: 404 }
+        )
+      }
     } else if (sessionId.startsWith('cs_')) {
       // Get checkout session to find subscription or payment intent
       const session = await stripe.checkout.sessions.retrieve(sessionId)
       if (session.subscription) {
         subscriptionId = session.subscription as string
-        orderId = subscriptionId
+        // Need to get payment intent from subscription
+        const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+          expand: ['latest_invoice']
+        })
+        const latestInvoice = subscription.latest_invoice
+        if (latestInvoice && typeof latestInvoice === 'object' && latestInvoice.payment_intent) {
+          orderId = typeof latestInvoice.payment_intent === 'string'
+            ? latestInvoice.payment_intent
+            : latestInvoice.payment_intent.id
+        }
       } else if (session.payment_intent) {
         orderId = session.payment_intent as string
       }
