@@ -51,8 +51,29 @@ export async function POST(request: NextRequest) {
 
     if (error || !report) {
       console.error('[GET-REPORT] Report not found:', error)
+      console.error('[GET-REPORT] Tried order_id:', orderId)
+
+      // Debug: Try to find ANY recent reports to see what order_ids exist
+      const { data: recentReports } = await supabaseAdmin
+        .from('reports')
+        .select('id, order_id, created_at, status')
+        .order('created_at', { ascending: false })
+        .limit(5)
+
+      console.log('[GET-REPORT] Recent reports in database:', recentReports)
+
       return NextResponse.json(
-        { error: 'Report not found' },
+        {
+          error: 'Report not found',
+          debug: {
+            searchedOrderId: orderId,
+            recentReports: recentReports?.map(r => ({
+              order_id: r.order_id,
+              status: r.status,
+              created: r.created_at
+            }))
+          }
+        },
         { status: 404 }
       )
     }
