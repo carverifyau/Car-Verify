@@ -15,76 +15,50 @@ export async function POST(request: NextRequest) {
 
     console.log('[GET-REPORT] Looking up report for sessionId:', sessionId)
 
-    // Get subscription or checkout session from Stripe
-    let subscriptionId: string | null = null
-    let orderId: string | null = null
+    // Get customer email from Stripe
+    let customerEmail: string | null = null
 
     if (sessionId.startsWith('sub_')) {
-      // It's a subscription - we need to get the payment intent from the latest invoice
-      subscriptionId = sessionId
-      console.log('[GET-REPORT] Fetching subscription to find payment intent...')
-
-      const subscription = await stripe.subscriptions.retrieve(sessionId, {
-        expand: ['latest_invoice']
-      })
-
-      const latestInvoice = subscription.latest_invoice
-      if (latestInvoice && typeof latestInvoice === 'object' && latestInvoice.payment_intent) {
-        orderId = typeof latestInvoice.payment_intent === 'string'
-          ? latestInvoice.payment_intent
-          : latestInvoice.payment_intent.id
-        console.log('[GET-REPORT] Found payment intent from subscription:', orderId)
-      } else {
-        console.error('[GET-REPORT] No payment intent found in subscription')
-        return NextResponse.json(
-          { error: 'No payment intent found for subscription' },
-          { status: 404 }
-        )
-      }
+      // Get email from subscription
+      const subscription = await stripe.subscriptions.retrieve(sessionId)
+      const customer = await stripe.customers.retrieve(subscription.customer as string)
+      customerEmail = customer.deleted ? null : customer.email
+      console.log('[GET-REPORT] Found customer email from subscription:', customerEmail)
     } else if (sessionId.startsWith('cs_')) {
-      // Get checkout session to find subscription or payment intent
+      // Get email from checkout session
       const session = await stripe.checkout.sessions.retrieve(sessionId)
-      if (session.subscription) {
-        subscriptionId = session.subscription as string
-        // Need to get payment intent from subscription
-        const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
-          expand: ['latest_invoice']
-        })
-        const latestInvoice = subscription.latest_invoice
-        if (latestInvoice && typeof latestInvoice === 'object' && latestInvoice.payment_intent) {
-          orderId = typeof latestInvoice.payment_intent === 'string'
-            ? latestInvoice.payment_intent
-            : latestInvoice.payment_intent.id
-        }
-      } else if (session.payment_intent) {
-        orderId = session.payment_intent as string
-      }
+      customerEmail = session.customer_details?.email || null
+      console.log('[GET-REPORT] Found customer email from checkout session:', customerEmail)
     }
 
-    if (!orderId) {
+    if (!customerEmail) {
       return NextResponse.json(
-        { error: 'Could not find order ID from session' },
+        { error: 'Could not find customer email from session' },
         { status: 404 }
       )
     }
 
-    console.log('[GET-REPORT] Looking up report with order_id:', orderId)
+    console.log('[GET-REPORT] Looking up recent report for customer:', customerEmail)
 
-    // Fetch report from database
-    const { data: report, error } = await supabaseAdmin
+    // Look up most recent report for this customer (created in last 5 minutes)
+    const fiveMinutesAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString()
+
+    const { data: reports, error } = await supabaseAdmin
       .from('reports')
       .select('*')
-      .eq('order_id', orderId)
-      .single()
+      .eq('customer_email', customerEmail)
+      .gte('created_at', fiveMinutesAgo)
+      .order('created_at', { ascending: false })
+      .limit(1)
 
-    if (error || !report) {
-      console.error('[GET-REPORT] Report not found:', error)
-      console.error('[GET-REPORT] Tried order_id:', orderId)
+    if (error || !reports || reports.length === 0) {
+      console.error('[GET-REPORT] Report not found for customer:', customerEmail)
+      console.error('[GET-REPORT] Error:', error)
 
-      // Debug: Try to find ANY recent reports to see what order_ids exist
+      // Debug: Try to find ANY recent reports
       const { data: recentReports } = await supabaseAdmin
         .from('reports')
-        .select('id, order_id, created_at, status')
+        .select('id, order_id, customer_email, created_at, status')
         .order('created_at', { ascending: false })
         .limit(5)
 
@@ -94,9 +68,9 @@ export async function POST(request: NextRequest) {
         {
           error: 'Report not found',
           debug: {
-            searchedOrderId: orderId,
+            searchedEmail: customerEmail,
             recentReports: recentReports?.map(r => ({
-              order_id: r.order_id,
+              customer_email: r.customer_email,
               status: r.status,
               created: r.created_at
             }))
@@ -105,6 +79,8 @@ export async function POST(request: NextRequest) {
         { status: 404 }
       )
     }
+
+    const report = reports[0]
 
     console.log('[GET-REPORT] Report found:', {
       id: report.id,
