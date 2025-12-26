@@ -385,33 +385,16 @@ function PaymentSuccessContent() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <button
-                    onClick={() => {
-                      if (reportData.report?.pdfBase64) {
-                        const byteCharacters = atob(reportData.report.pdfBase64)
-                        const byteNumbers = new Array(byteCharacters.length)
-                        for (let i = 0; i < byteCharacters.length; i++) {
-                          byteNumbers[i] = byteCharacters.charCodeAt(i)
-                        }
-                        const byteArray = new Uint8Array(byteNumbers)
-                        const blob = new Blob([byteArray], { type: 'application/pdf' })
-                        const url = window.URL.createObjectURL(blob)
-                        const link = document.createElement('a')
-                        link.href = url
-                        link.download = reportData.report.filename || 'PPSR_Certificate.pdf'
-                        document.body.appendChild(link)
-                        link.click()
-                        document.body.removeChild(link)
-                        window.URL.revokeObjectURL(url)
-                      }
-                    }}
+                  <a
+                    href={reportData.report?.pdfBase64 ? `data:application/pdf;base64,${reportData.report.pdfBase64}` : '#'}
+                    download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
                     className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     Download PDF
-                  </button>
+                  </a>
                   <Link
                     href="/account"
                     className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 text-base font-bold rounded-xl hover:from-gray-200 hover:to-gray-300 transition-all border-2 border-gray-300 hover:border-gray-400"
@@ -446,7 +429,7 @@ function PaymentSuccessContent() {
                   <p>✅ Your PPSR certificate is ready to download</p>
                   <p>✅ A copy has been emailed to you</p>
                   <p>✅ You can access it anytime from your account</p>
-                  <p>✅ You have 9 more checks remaining this month</p>
+                  <p>✅ You have unlimited checks with your subscription</p>
                 </div>
               </div>
             </div>

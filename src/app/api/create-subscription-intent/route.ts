@@ -66,14 +66,14 @@ export async function POST(request: NextRequest) {
       console.log('[SUBSCRIPTION INTENT] New customer created:', customer.id)
     }
 
-    // Create or get the coupon for $19 off
+    // Create or get the coupon for $28.99 off (makes it $1 trial)
     let couponId = 'first-check-discount'
     try {
       await stripe.coupons.retrieve(couponId)
     } catch (error) {
       await stripe.coupons.create({
         id: couponId,
-        amount_off: 1900,
+        amount_off: 2899, // $28.99 off, making first payment $1
         currency: 'aud',
         duration: 'once',
         name: 'First PPSR Check - $1 Trial',
@@ -91,7 +91,7 @@ export async function POST(request: NextRequest) {
     } else {
       product = await stripe.products.create({
         name: 'Car Verify PPSR Subscription',
-        description: '10 PPSR certificate checks per month',
+        description: 'Unlimited PPSR certificate checks per month',
       })
     }
 
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
     } else {
       price = await stripe.prices.create({
         product: product.id,
-        unit_amount: 2000, // $20
+        unit_amount: 2999, // $29.99
         currency: 'aud',
         recurring: {
           interval: 'month',
@@ -116,6 +116,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Create subscription with payment collection
+    // TOGGLE THIS: Set useTrial to true for $1 trial, false for direct $29.99
+    const useTrial = true // Change to false to remove trial
+
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
@@ -123,9 +126,11 @@ export async function POST(request: NextRequest) {
           price: price.id,
         },
       ],
-      discounts: [{
-        coupon: couponId,
-      }],
+      ...(useTrial && {
+        discounts: [{
+          coupon: couponId,
+        }],
+      }),
       payment_behavior: 'default_incomplete',
       payment_settings: {
         payment_method_types: ['card'],
@@ -138,7 +143,7 @@ export async function POST(request: NextRequest) {
         vehicleRego: validatedData.vehicleInfo.rego || '',
         vehicleState: validatedData.vehicleInfo.state || '',
         reportType: validatedData.reportType,
-        checksPerMonth: '10',
+        checksPerMonth: '5', // Unlimited marketing, 5 actual limit
       },
       expand: ['latest_invoice.payment_intent'],
     })
