@@ -108,7 +108,7 @@ export default function CustomCheckoutForm({
         ) : (
           <>
             <Lock className="h-6 w-6" />
-            <span>Pay $1 & Get PPSR Check</span>
+            <span>Subscribe $29.99/month</span>
           </>
         )}
       </button>
@@ -131,7 +131,7 @@ export default function CustomCheckoutForm({
 
       {/* Fine Print */}
       <div className="text-center text-xs text-gray-500">
-        By confirming payment, you agree to start a subscription at $1 today, then $20/month.
+        By confirming payment, you agree to start a subscription at $29.99/month.
         <br />
         You can cancel anytime from your account settings.
       </div>

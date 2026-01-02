@@ -726,38 +726,37 @@ export default function VehicleLookupFormWithPreview() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* 5-Day Trial */}
-          <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-blue-400 transition-all">
+        <div className="max-w-2xl mx-auto mb-8">
+          {/* Casual Plan */}
+          <div className="bg-white border-2 border-blue-400 rounded-2xl p-6 md:p-8 shadow-xl">
             <div className="text-center mb-6">
               <div className="inline-block px-4 py-1 bg-blue-100 border border-blue-200 rounded-full mb-4">
-                <span className="text-blue-600 font-semibold text-sm">MOST POPULAR</span>
+                <span className="text-blue-600 font-semibold text-sm">CASUAL PLAN</span>
               </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">5-Day Trial</h3>
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Unlimited Reports</h3>
               <div className="mb-4">
-                <span className="text-4xl md:text-5xl font-bold text-blue-600">$1</span>
-                <span className="text-gray-600 text-lg"> for 5 days</span>
+                <span className="text-4xl md:text-5xl font-bold text-blue-600">$29.99</span>
+                <span className="text-gray-600 text-lg">/month</span>
               </div>
-              <p className="text-gray-700 text-sm mb-2">Then $24.95/month</p>
               <p className="text-gray-500 text-xs">Cancel anytime</p>
             </div>
 
             <div className="space-y-3 mb-6">
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
-                <span className="text-sm">Unlimited PPSR reports for 5 days</span>
+                <span className="text-sm">PDF Download</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
-                <span className="text-sm">Official AFSA certificates</span>
+                <span className="text-sm">Full Online Access</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
-                <span className="text-sm">Instant PDF delivery</span>
+                <span className="text-sm">Unlimited Reports</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
-                <span className="text-sm">24/7 access</span>
+                <span className="text-sm">Market Valuations (coming soon)</span>
               </div>
             </div>
 
@@ -776,70 +775,12 @@ export default function VehicleLookupFormWithPreview() {
                 params.set('vehicle_model', vehicleData.model)
                 if (vehicleData.year) params.set('vehicle_year', vehicleData.year.toString())
                 if (email) params.set('email', email)
-                params.set('plan', '5-day')
+                params.set('plan', 'casual')
                 window.location.href = `/checkout?${params.toString()}`
               }}
               className="w-full py-4 px-6 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
             >
-              Start 5-Day Trial
-            </button>
-          </div>
-
-          {/* 1-Day Trial */}
-          <div className="bg-white border-2 border-gray-200 rounded-2xl p-6 md:p-8 hover:border-purple-400 transition-all">
-            <div className="text-center mb-6">
-              <div className="inline-block px-4 py-1 bg-purple-100 border border-purple-200 rounded-full mb-4">
-                <span className="text-purple-600 font-semibold text-sm">QUICK START</span>
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">1-Day Trial</h3>
-              <div className="mb-4">
-                <span className="text-4xl md:text-5xl font-bold text-purple-600">$5</span>
-                <span className="text-gray-600 text-lg"> for 1 day</span>
-              </div>
-              <p className="text-gray-700 text-sm mb-2">Then $24.95/month</p>
-              <p className="text-gray-500 text-xs">Cancel anytime</p>
-            </div>
-
-            <div className="space-y-3 mb-6">
-              <div className="flex items-center space-x-2 text-gray-700">
-                <span className="text-green-600">✓</span>
-                <span className="text-sm">Unlimited PPSR reports for 1 day</span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-700">
-                <span className="text-green-600">✓</span>
-                <span className="text-sm">Official AFSA certificates</span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-700">
-                <span className="text-green-600">✓</span>
-                <span className="text-sm">Instant PDF delivery</span>
-              </div>
-              <div className="flex items-center space-x-2 text-gray-700">
-                <span className="text-green-600">✓</span>
-                <span className="text-sm">24/7 access</span>
-              </div>
-            </div>
-
-            <button
-              onClick={() => {
-                // Store all data and proceed to checkout
-                const params = new URLSearchParams()
-                if (lookupType === 'rego') {
-                  params.set('rego', rego)
-                  params.set('state', state)
-                } else {
-                  params.set('vin', vin)
-                }
-                if (vehicleData.vin) params.set('vehicle_vin', vehicleData.vin)
-                params.set('vehicle_make', vehicleData.make)
-                params.set('vehicle_model', vehicleData.model)
-                if (vehicleData.year) params.set('vehicle_year', vehicleData.year.toString())
-                if (email) params.set('email', email)
-                params.set('plan', '1-day')
-                window.location.href = `/checkout?${params.toString()}`
-              }}
-              className="w-full py-4 px-6 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              Start 1-Day Trial
+              Subscribe Now - $29.99/month
             </button>
           </div>
         </div>

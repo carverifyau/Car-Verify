@@ -66,19 +66,7 @@ export async function POST(request: NextRequest) {
       console.log('[SUBSCRIPTION INTENT] New customer created:', customer.id)
     }
 
-    // Create or get the coupon for $28.99 off (makes it $1 trial)
-    let couponId = 'first-check-discount'
-    try {
-      await stripe.coupons.retrieve(couponId)
-    } catch (error) {
-      await stripe.coupons.create({
-        id: couponId,
-        amount_off: 2899, // $28.99 off, making first payment $1
-        currency: 'aud',
-        duration: 'once',
-        name: 'First PPSR Check - $1 Trial',
-      })
-    }
+    // No trial coupon needed for Casual plan
 
     // Create or get product
     const products = await stripe.products.list({
@@ -86,12 +74,12 @@ export async function POST(request: NextRequest) {
     })
 
     let product
-    if (products.data.length > 0 && products.data[0].name === 'Car Verify PPSR Subscription') {
+    if (products.data.length > 0 && products.data[0].name === 'Car Verify Casual Plan') {
       product = products.data[0]
     } else {
       product = await stripe.products.create({
-        name: 'Car Verify PPSR Subscription',
-        description: 'Unlimited PPSR certificate checks per month',
+        name: 'Car Verify Casual Plan',
+        description: 'Unlimited PPSR reports with full online access and PDF downloads',
       })
     }
 
@@ -115,10 +103,7 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Create subscription with payment collection
-    // TOGGLE THIS: Set useTrial to true for $1 trial, false for direct $29.99
-    const useTrial = true // Change to false to remove trial
-
+    // Create subscription with payment collection (no trial for Casual plan)
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
@@ -126,16 +111,12 @@ export async function POST(request: NextRequest) {
           price: price.id,
         },
       ],
-      ...(useTrial && {
-        discounts: [{
-          coupon: couponId,
-        }],
-      }),
       payment_behavior: 'default_incomplete',
       payment_settings: {
         payment_method_types: ['card'],
         save_default_payment_method: 'on_subscription',
       },
+      expand: ['latest_invoice.payment_intent'],
       metadata: {
         customerEmail: validatedData.customerEmail,
         vehicleType: validatedData.vehicleInfo.type,
@@ -143,9 +124,12 @@ export async function POST(request: NextRequest) {
         vehicleRego: validatedData.vehicleInfo.rego || '',
         vehicleState: validatedData.vehicleInfo.state || '',
         reportType: validatedData.reportType,
-        checksPerMonth: '5', // Unlimited marketing, 5 actual limit
+        planName: 'Casual',
+        checksPerMonth: 'unlimited',
+        pdfDownload: 'true',
+        fullOnlineAccess: 'true',
+        marketValuations: 'coming_soon',
       },
-      expand: ['latest_invoice.payment_intent'],
     })
 
     console.log('[SUBSCRIPTION INTENT] Subscription created:', subscription.id)
@@ -174,6 +158,7 @@ export async function POST(request: NextRequest) {
         amount: invoice.amount_due,
         currency: invoice.currency,
         customer: customer.id,
+        setup_future_usage: 'off_session', // Save payment method for recurring charges
         metadata: {
           invoice_id: invoice.id,
           subscription_id: subscription.id,

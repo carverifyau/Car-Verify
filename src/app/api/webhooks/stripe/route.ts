@@ -941,6 +941,66 @@ export async function POST(request: NextRequest) {
       })
     }
 
+    // Handle invoice finalization - ensure payment intent has setup_future_usage
+    if (event.type === 'invoice.finalized') {
+      const invoice = event.data.object
+      console.log('📄 Invoice finalized:', invoice.id)
+
+      // If this invoice has a payment intent, ensure it's set up for future usage
+      if (invoice.payment_intent && typeof invoice.payment_intent === 'string') {
+        try {
+          await stripe.paymentIntents.update(invoice.payment_intent, {
+            setup_future_usage: 'off_session',
+          })
+          console.log('✅ Updated payment intent with setup_future_usage')
+        } catch (error) {
+          console.error('⚠️ Failed to update payment intent:', error)
+        }
+      }
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Invoice finalized'
+      })
+    }
+
+    // Handle recurring payment failures
+    if (event.type === 'invoice.payment_failed') {
+      const invoice = event.data.object
+      console.log('💳❌ Invoice payment failed:', invoice.id)
+      console.log('💳❌ Subscription:', invoice.subscription)
+      console.log('💳❌ Customer:', invoice.customer)
+      console.log('💳❌ Amount:', invoice.amount_due / 100)
+      console.log('💳❌ Attempt count:', invoice.attempt_count)
+
+      // Notify customer about payment failure
+      // You could send an email here or update database status
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Payment failure logged'
+      })
+    }
+
+    // Handle when payment requires action (3D Secure, etc.)
+    if (event.type === 'invoice.payment_action_required') {
+      const invoice = event.data.object
+      console.log('💳⚠️ Invoice requires payment action:', invoice.id)
+      console.log('💳⚠️ Subscription:', invoice.subscription)
+      console.log('💳⚠️ Customer:', invoice.customer)
+
+      // Send email to customer with payment link
+      // invoice.hosted_invoice_url contains the link
+
+      return NextResponse.json({
+        received: true,
+        type: event.type,
+        message: 'Payment action required notification sent'
+      })
+    }
+
     // For other events
     return NextResponse.json({ received: true, type: event.type })
 
