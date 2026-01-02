@@ -760,7 +760,7 @@ export default function VehicleLookupFormWithPreview() {
               </div>
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
-                <span className="text-sm">Better Deals to Insurance</span>
+                <span className="text-sm">Better Deals for Insurance</span>
               </div>
               <div className="flex items-center space-x-2 text-gray-700">
                 <span className="text-green-600">✓</span>
