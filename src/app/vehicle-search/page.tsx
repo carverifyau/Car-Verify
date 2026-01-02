@@ -790,24 +790,45 @@ export default function VehicleSearchPage() {
                 </p>
               </div>
 
-              {/* Pricing Cards */}
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-                {/* 7-Day Trial - Monthly */}
+              {/* Pricing Card */}
+              <div className="max-w-2xl mx-auto mb-4 sm:mb-6">
                 <div className="bg-white border-2 border-blue-400 rounded-2xl shadow-sm p-4 sm:p-6 md:p-8">
                   <div className="text-center mb-4 sm:mb-6">
                     <div className="inline-block px-3 sm:px-4 py-1 bg-blue-100 border border-blue-200 rounded-full mb-3 sm:mb-4">
-                      <span className="text-blue-600 font-semibold text-xs sm:text-sm">CASUAL</span>
+                      <span className="text-blue-600 font-semibold text-xs sm:text-sm">CASUAL PLAN</span>
                     </div>
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Unlimited Reports</h3>
                     <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$1</span>
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$29.99</span>
+                      <span className="text-gray-600 text-lg">/month</span>
                     </div>
-                    <p className="text-gray-700 text-sm sm:text-base font-medium">7 day trial membership*</p>
+                    <p className="text-gray-500 text-xs">Cancel anytime</p>
                   </div>
 
                   <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
                     <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-blue-600">✓</span>
+                      <span className="text-green-600">✓</span>
+                      <span className="text-xs sm:text-sm">PDF Download</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700">
+                      <span className="text-green-600">✓</span>
                       <span className="text-xs sm:text-sm">Full Online Access</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-xs sm:text-sm">Unlimited Reports</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-xs sm:text-sm">Market Valuations (coming soon)</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-xs sm:text-sm">Better Deals for Insurance</span>
+                    </div>
+                    <div className="flex items-center space-x-2 text-gray-700">
+                      <span className="text-green-600">✓</span>
+                      <span className="text-xs sm:text-sm">Better Deals for Finance</span>
                     </div>
                   </div>
 
@@ -821,55 +842,15 @@ export default function VehicleSearchPage() {
                     disabled={isProcessingPayment}
                     className="w-full py-3 sm:py-4 bg-blue-600 text-white font-bold text-base sm:text-lg rounded-xl hover:bg-blue-700 transition-all duration-300 disabled:opacity-50"
                   >
-                    {isProcessingPayment ? 'Loading...' : 'Select Casual Plan'}
-                  </button>
-                </div>
-
-                {/* 7-Day Trial - 3 Monthly */}
-                <div className="bg-white border-2 border-gray-200 rounded-2xl shadow-sm p-4 sm:p-6 md:p-8 hover:border-purple-400 transition-all">
-                  <div className="text-center mb-4 sm:mb-6">
-                    <div className="inline-block px-3 sm:px-4 py-1 bg-purple-100 border border-purple-200 rounded-full mb-3 sm:mb-4">
-                      <span className="text-purple-600 font-semibold text-xs sm:text-sm">PLUS</span>
-                    </div>
-                    <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-purple-600">$5</span>
-                    </div>
-                    <p className="text-gray-700 text-sm sm:text-base font-medium">7 day trial membership*</p>
-                  </div>
-
-                  <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-purple-600">✓</span>
-                      <span className="text-xs sm:text-sm">Full Online Access</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-purple-600">✓</span>
-                      <span className="text-xs sm:text-sm flex items-center">PDF Downloads <span className="ml-1 text-red-600">📄</span></span>
-                    </div>
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      console.log('🟣 Plus plan button clicked')
-                      setSelectedPlan('plus')
-                      setStep('payment')
-                      console.log('🟣 Step set to payment')
-                    }}
-                    disabled={isProcessingPayment}
-                    className="w-full py-3 sm:py-4 bg-purple-600 text-white font-bold text-base sm:text-lg rounded-xl hover:bg-purple-700 transition-all duration-300 disabled:opacity-50"
-                  >
-                    {isProcessingPayment ? 'Loading...' : 'Select Plus Plan'}
+                    {isProcessingPayment ? 'Loading...' : 'Subscribe Now - $29.99/month'}
                   </button>
                 </div>
               </div>
 
               {/* Billing and Cancellation Information */}
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6 text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
-                <p className="mb-4">
-                  *Cancel anytime by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online via your account page once logged in. Your 7 day membership trial is limited to running 20 reports during the trial period.
-                </p>
                 <p>
-                  After your 7 day trial, you will be billed <strong>$19.99 per month</strong> for the Casual plan, or <strong>$14.99/month (billed every 3 months at $44.97)</strong> for the Plus plan. Both plans are limited to running 20 reports per month.
+                  Cancel anytime by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online via your account page once logged in. Your Casual plan provides <strong>unlimited reports</strong> for $29.99 per month.
                 </p>
               </div>
 
@@ -920,7 +901,7 @@ export default function VehicleSearchPage() {
               <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">BILLING DETAILS</h3>
                 <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
-                  Your membership automatically renews every month (Casual) or every 3 months (Plus) unless you cancel before the start of the next term. We will charge the recurring membership fee to the same payment option you use today. You can cancel your membership at any time, by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online by simply accessing your account page.
+                  Your membership automatically renews every month at $29.99 unless you cancel before the start of the next term. We will charge the recurring membership fee to the same payment option you use today. You can cancel your membership at any time, by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online by simply accessing your account page.
                 </p>
               </div>
 
@@ -1030,13 +1011,13 @@ export default function VehicleSearchPage() {
                     </div>
                     <div className="border-t border-blue-200 pt-2 mt-2"></div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-900 font-bold text-xs sm:text-sm">7-Day Trial:</span>
+                      <span className="text-gray-900 font-bold text-xs sm:text-sm">Monthly Price:</span>
                       <span className="text-xl sm:text-2xl font-bold text-blue-600">
-                        ${selectedPlan === 'casual' ? '1' : '5'}
+                        $29.99
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 pt-1">
-                      Then ${selectedPlan === 'casual' ? '19.99/month' : '14.99/month (billed quarterly)'}
+                      Unlimited reports • Cancel anytime
                     </p>
                   </div>
                 </div>
