@@ -793,6 +793,75 @@ export default function VehicleLookupFormWithPreview() {
           </div>
         </div>
 
+        {/* Price Comparison */}
+        <div className="max-w-3xl mx-auto mb-8">
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-6 md:p-8">
+            <div className="text-center mb-6">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Why Car Verify is Better Value</h3>
+              <p className="text-gray-600">Compare us to other PPSR providers</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b-2 border-gray-200">
+                    <th className="text-left py-3 px-2 text-sm font-semibold text-gray-700">Provider</th>
+                    <th className="text-center py-3 px-2 text-sm font-semibold text-gray-700">Price</th>
+                    <th className="text-center py-3 px-2 text-sm font-semibold text-gray-700">Reports</th>
+                    <th className="text-center py-3 px-2 text-sm font-semibold text-gray-700">PDF Download</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="bg-blue-50 border-2 border-blue-400">
+                    <td className="py-4 px-2 font-bold text-blue-900 text-sm md:text-base">
+                      <div className="flex items-center space-x-2">
+                        <span>Car Verify</span>
+                        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">YOU</span>
+                      </div>
+                    </td>
+                    <td className="py-4 px-2 text-center font-bold text-blue-900 text-sm md:text-base">$29.99/month</td>
+                    <td className="py-4 px-2 text-center font-bold text-green-600 text-sm md:text-base">Unlimited ✓</td>
+                    <td className="py-4 px-2 text-center font-bold text-green-600 text-sm md:text-base">✓</td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="py-4 px-2 text-gray-700 text-sm md:text-base">CarHistory</td>
+                    <td className="py-4 px-2 text-center text-gray-700 text-sm md:text-base">$27.50</td>
+                    <td className="py-4 px-2 text-center text-red-600 font-semibold text-sm md:text-base">1 Report Only</td>
+                    <td className="py-4 px-2 text-center text-green-600 text-sm md:text-base">✓</td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="py-4 px-2 text-gray-700 text-sm md:text-base">PPSR Direct</td>
+                    <td className="py-4 px-2 text-center text-gray-700 text-sm md:text-base">$25.70</td>
+                    <td className="py-4 px-2 text-center text-red-600 font-semibold text-sm md:text-base">1 Report Only</td>
+                    <td className="py-4 px-2 text-center text-green-600 text-sm md:text-base">✓</td>
+                  </tr>
+                  <tr className="border-b border-gray-200">
+                    <td className="py-4 px-2 text-gray-700 text-sm md:text-base">RevsCheck</td>
+                    <td className="py-4 px-2 text-center text-gray-700 text-sm md:text-base">$29.95</td>
+                    <td className="py-4 px-2 text-center text-red-600 font-semibold text-sm md:text-base">1 Report Only</td>
+                    <td className="py-4 px-2 text-center text-green-600 text-sm md:text-base">✓</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="mt-6 bg-white rounded-lg p-4 border border-green-300">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <CheckCircle className="w-6 h-6 text-green-600 mt-0.5" />
+                </div>
+                <div>
+                  <p className="font-bold text-gray-900 mb-1">Get Unlimited Reports for the Price of 1</p>
+                  <p className="text-sm text-gray-600">
+                    Perfect for car dealers, mechanics, or buyers comparing multiple vehicles.
+                    Just 2 reports and you've already saved money compared to competitors!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Trust Badges */}
         <div className="text-center">
           <p className="text-gray-600 text-sm mb-4">
