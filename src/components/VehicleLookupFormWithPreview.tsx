@@ -758,6 +758,14 @@ export default function VehicleLookupFormWithPreview() {
                 <span className="text-green-600">✓</span>
                 <span className="text-sm">Market Valuations (coming soon)</span>
               </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Better Deals to Insurance</span>
+              </div>
+              <div className="flex items-center space-x-2 text-gray-700">
+                <span className="text-green-600">✓</span>
+                <span className="text-sm">Better Deals for Finance</span>
+              </div>
             </div>
 
             <button
