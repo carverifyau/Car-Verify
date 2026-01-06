@@ -281,23 +281,13 @@ export default function VehicleSearchPage() {
     }
   }, [step, reportSection])
 
-  // Cycle through testimonials every 3 seconds during loading
+  // Cycle through testimonials every 3 seconds during loading and building-report
   useEffect(() => {
-    if (step === 'loading') {
+    if (step === 'loading' || step === 'building-report') {
       const testimonialInterval = setInterval(() => {
         setCurrentTestimonialIndex(prev => (prev + 1) % testimonials.length)
       }, 3000)
       return () => clearInterval(testimonialInterval)
-    }
-  }, [step])
-
-  // Cycle through "Did You Know" facts every 5 seconds during report building
-  useEffect(() => {
-    if (step === 'building-report') {
-      const factInterval = setInterval(() => {
-        setDidYouKnowIndex(prev => (prev + 1) % didYouKnowFacts.length)
-      }, 5000)
-      return () => clearInterval(factInterval)
     }
   }, [step])
 
@@ -630,21 +620,49 @@ export default function VehicleSearchPage() {
                 ))}
               </div>
 
-              {/* Did You Know */}
-              <div className="p-4 sm:p-6 bg-blue-50 border border-blue-200 rounded-xl">
-                <p className="text-blue-600 font-bold mb-2 text-sm sm:text-base">DID YOU KNOW:</p>
-                <AnimatePresence mode="wait">
-                  <motion.p
-                    key={didYouKnowIndex}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-gray-700 text-sm sm:text-base"
-                  >
-                    {didYouKnowFacts[didYouKnowIndex]}
-                  </motion.p>
-                </AnimatePresence>
+              {/* Customer Testimonials */}
+              <div className="mt-8 sm:mt-12">
+                <div className="relative min-h-[160px] sm:min-h-[140px]">
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={currentTestimonialIndex}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.5 }}
+                      className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 shadow-sm"
+                    >
+                      <div className="flex items-start mb-4">
+                        <div className="text-blue-600 text-3xl sm:text-4xl mr-2 leading-none">"</div>
+                        <p className="text-sm sm:text-base text-gray-700 italic pt-1 sm:pt-2">
+                          {testimonials[currentTestimonialIndex].text}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-xs sm:text-sm font-semibold text-gray-900">
+                          {testimonials[currentTestimonialIndex].author}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {testimonials[currentTestimonialIndex].location}
+                        </p>
+                      </div>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+
+                {/* Testimonial Progress Dots */}
+                <div className="flex justify-center gap-2 mt-4">
+                  {testimonials.map((_, index) => (
+                    <div
+                      key={index}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        index === currentTestimonialIndex
+                          ? 'w-8 bg-blue-600'
+                          : 'w-1.5 bg-gray-300'
+                      }`}
+                    />
+                  ))}
+                </div>
               </div>
             </motion.div>
           )}
