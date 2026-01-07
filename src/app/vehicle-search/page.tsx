@@ -212,6 +212,31 @@ export default function VehicleSearchPage() {
       text: "Peace of mind before the big purchase. Highly recommend to anyone buying a used car!",
       author: "Emma W.",
       location: "Adelaide, SA"
+    },
+    {
+      text: "Discovered the car was a repairable write-off that the seller didn't mention. Thank you Car Verify!",
+      author: "David L.",
+      location: "Gold Coast, QLD"
+    },
+    {
+      text: "As a used car dealer, this service saves me so much time. The unlimited reports plan is perfect!",
+      author: "Tony P.",
+      location: "Parramatta, NSW"
+    },
+    {
+      text: "Clear and professional reports. Much easier to understand than going directly through PPSR.",
+      author: "Rachel S.",
+      location: "Canberra, ACT"
+    },
+    {
+      text: "Found multiple security interests on a car I was about to buy. This service paid for itself instantly!",
+      author: "Mark H.",
+      location: "Hobart, TAS"
+    },
+    {
+      text: "The customer service team helped me understand my report. Very impressed with the whole experience!",
+      author: "Jennifer K.",
+      location: "Darwin, NT"
     }
   ]
 
