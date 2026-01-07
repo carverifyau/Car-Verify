@@ -127,7 +127,33 @@ export function parsePPSRSearchResult(
   searchNumber?: string,
   certificateNumber?: string
 ): ParsedPPSRData {
-  console.log('[PPSR Parser] Parsing search result:', JSON.stringify(searchResult, null, 2))
+  console.log('[PPSR Parser] ====== PARSING PPSR SEARCH RESULT ======')
+  console.log('[PPSR Parser] Full search result structure:')
+  console.log(JSON.stringify(searchResult, null, 2))
+  console.log('[PPSR Parser] Search result keys:', Object.keys(searchResult || {}))
+  console.log('[PPSR Parser] Vehicle identifier:', vehicleIdentifier)
+  console.log('[PPSR Parser] ==========================================')
+
+  // If searchResult is null/undefined, return minimal data
+  if (!searchResult) {
+    console.warn('[PPSR Parser] WARNING: searchResult is null or undefined!')
+    return {
+      rego: vehicleIdentifier.rego || '',
+      state: vehicleIdentifier.state || '',
+      vin: vehicleIdentifier.vin,
+      ppsrStatus: {
+        hasFinance: false,
+        isStolen: false,
+        isWrittenOff: false,
+        securityInterests: 0,
+        encumbrances: []
+      },
+      reportId,
+      searchDate,
+      certificateNumber,
+      ppsrSearchNumber: searchNumber
+    }
+  }
 
   // Extract NEVDIS data if available
   const nevdis = searchResult?.nevdisData || {}
