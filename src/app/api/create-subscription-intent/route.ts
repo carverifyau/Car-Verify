@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     } else {
       price = await stripe.prices.create({
         product: product.id,
-        unit_amount: 2999, // $29.99
+        unit_amount: 50, // $0.50
         currency: 'aud',
         recurring: {
           interval: 'month',

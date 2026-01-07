@@ -842,7 +842,7 @@ export default function VehicleSearchPage() {
                     </div>
                     <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Unlimited Reports</h3>
                     <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$29.99</span>
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$0.50</span>
                       <span className="text-gray-600 text-lg">/month</span>
                     </div>
                     <p className="text-gray-500 text-xs">Cancel anytime</p>
@@ -916,7 +916,7 @@ export default function VehicleSearchPage() {
                               <span className="bg-blue-600 text-white text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">YOU</span>
                             </div>
                           </td>
-                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-blue-900 text-xs sm:text-sm md:text-base">$29.99/mo</td>
+                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-blue-900 text-xs sm:text-sm md:text-base">$0.50/mo</td>
                           <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">Unlimited ✓</td>
                           <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
@@ -962,7 +962,7 @@ export default function VehicleSearchPage() {
               {/* Billing and Cancellation Information */}
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6 text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
                 <p>
-                  Cancel anytime by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online via your account page once logged in. Your Casual plan provides <strong>unlimited reports</strong> for $29.99 per month.
+                  Cancel anytime by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online via your account page once logged in. Your Casual plan provides <strong>unlimited reports</strong> for $0.50 per month.
                 </p>
               </div>
 
@@ -1013,7 +1013,7 @@ export default function VehicleSearchPage() {
               <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
                 <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">BILLING DETAILS</h3>
                 <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
-                  Your membership automatically renews every month at $29.99 unless you cancel before the start of the next term. We will charge the recurring membership fee to the same payment option you use today. You can cancel your membership at any time, by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online by simply accessing your account page.
+                  Your membership automatically renews every month at $0.50 unless you cancel before the start of the next term. We will charge the recurring membership fee to the same payment option you use today. You can cancel your membership at any time, by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online by simply accessing your account page.
                 </p>
               </div>
 
@@ -1125,7 +1125,7 @@ export default function VehicleSearchPage() {
                     <div className="flex justify-between items-center">
                       <span className="text-gray-900 font-bold text-xs sm:text-sm">Monthly Price:</span>
                       <span className="text-xl sm:text-2xl font-bold text-blue-600">
-                        $29.99
+                        $0.50
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 pt-1">
