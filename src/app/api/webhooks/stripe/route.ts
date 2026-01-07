@@ -143,7 +143,12 @@ async function processPPSRCertificate(params: {
     console.log('✅ Welcome email sent to:', params.customerEmail)
 
     // Step 3: Save PPSR PDF data and update report status to completed
-    const { error: updateError } = await supabaseAdmin
+    console.log('💾 Saving PPSR PDF to database...')
+    console.log('  Report ID:', params.reportId)
+    console.log('  PDF filename:', ppsrResult.filename)
+    console.log('  PDF data size:', ppsrResult.pdfBase64.length, 'characters')
+
+    const { error: updateError, data: updateData } = await supabaseAdmin
       .from('reports')
       .update({
         status: 'completed',
@@ -152,12 +157,22 @@ async function processPPSRCertificate(params: {
         updated_at: new Date().toISOString()
       })
       .eq('id', params.reportId)
+      .select()
 
     if (updateError) {
-      console.error('⚠️ Failed to update report status:', updateError)
-    } else {
-      console.log('✅ Report marked as completed with PDF data saved:', params.reportId)
+      console.error('❌ Failed to save PDF to database:', updateError)
+      console.error('   Error details:', JSON.stringify(updateError, null, 2))
+      throw new Error(`Failed to save PDF: ${updateError.message}`)
     }
+
+    if (!updateData || updateData.length === 0) {
+      console.error('❌ Update returned no data - report may not exist')
+      throw new Error('Report not found when trying to save PDF')
+    }
+
+    console.log('✅ Report marked as completed with PDF data saved')
+    console.log('   Updated report ID:', updateData[0].id)
+    console.log('   PDF saved:', !!updateData[0].ppsr_pdf_data)
 
     return { success: true }
 
