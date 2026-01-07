@@ -5,8 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { Shield } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import CustomVehicleReport from '@/components/CustomVehicleReport'
-import type { ParsedPPSRData } from '@/lib/ppsr-data-parser'
 
 const TESTIMONIALS = [
   {
@@ -45,7 +43,6 @@ function PaymentSuccessContent() {
   const [error, setError] = useState<string | null>(null)
   const [reportData, setReportData] = useState<any>(null)
   const [vehicleData, setVehicleData] = useState<any>(null)
-  const [parsedData, setParsedData] = useState<ParsedPPSRData | null>(null)
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0)
 
   // Cycle through testimonials every 3 seconds
@@ -121,9 +118,6 @@ function PaymentSuccessContent() {
         if (reportData.report?.metadata) {
           setVehicleData(reportData.report.metadata)
         }
-        if (reportData.report?.parsedData) {
-          setParsedData(reportData.report.parsedData)
-        }
       } else {
         const reportData = await reportResponse.json()
         console.log('Report found immediately!')
@@ -131,18 +125,10 @@ function PaymentSuccessContent() {
         if (reportData.report?.metadata) {
           setVehicleData(reportData.report.metadata)
         }
-        if (reportData.report?.parsedData) {
-          setParsedData(reportData.report.parsedData)
-        }
       }
 
       setProgress(100)
       setStatus('complete')
-
-      console.log('✅ Report loaded successfully')
-      console.log('Report data:', reportData)
-      console.log('Has PDF data?', !!reportData?.report?.pdfBase64)
-      console.log('Has parsed data?', !!reportData?.report?.parsedData)
 
     } catch (err) {
       console.error('Error:', err)
@@ -289,12 +275,12 @@ function PaymentSuccessContent() {
           </motion.div>
         )}
 
-        {/* Complete State - Show Custom Report */}
+        {/* Complete State - Show Report */}
         {status === 'complete' && reportData && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-full"
+            className="max-w-5xl mx-auto"
           >
             {/* Success Header */}
             <div className="text-center mb-8 px-4">
@@ -318,43 +304,8 @@ function PaymentSuccessContent() {
               )}
             </div>
 
-            {/* Show Custom Report if we have parsed data */}
-            {parsedData ? (
-              <div className="mb-8">
-                <CustomVehicleReport {...parsedData} />
-
-                {/* Download Official PPSR Certificate Section */}
-                <div className="max-w-5xl mx-auto mt-8 px-4">
-                  <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-6">
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center">
-                          <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                          </svg>
-                          Official PPSR Certificate
-                        </h3>
-                        <p className="text-sm text-gray-700">Download the official government-issued PPSR certificate for your records</p>
-                      </div>
-                      <a
-                        href={reportData.report?.pdfBase64 ? `data:application/pdf;base64,${reportData.report.pdfBase64}` : '#'}
-                        download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
-                        className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl"
-                      >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        Download PDF
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              /* Fallback: Show raw PPSR certificate if no parsed data */
-              <div className="max-w-5xl mx-auto">
-                {/* PPSR Report Card */}
-                <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mx-4">
+            {/* PPSR Report Card */}
+            <div className="bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden mx-4">
               {/* Card Header */}
               <div className="bg-gradient-to-r from-blue-600 to-indigo-600 px-6 py-6">
                 <h2 className="text-2xl sm:text-3xl font-bold text-white flex items-center">
@@ -434,28 +385,16 @@ function PaymentSuccessContent() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  {reportData.report?.pdfBase64 ? (
-                    <a
-                      href={`data:application/pdf;base64,${reportData.report.pdfBase64}`}
-                      download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
-                      className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
-                    >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                      Download PDF
-                    </a>
-                  ) : (
-                    <button
-                      disabled
-                      className="flex-1 flex items-center justify-center gap-2 py-4 bg-gray-300 text-gray-500 text-base font-bold rounded-xl cursor-not-allowed"
-                    >
-                      <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                      </svg>
-                      Generating PDF...
-                    </button>
-                  )}
+                  <a
+                    href={reportData.report?.pdfBase64 ? `data:application/pdf;base64,${reportData.report.pdfBase64}` : '#'}
+                    download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
+                    className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Download PDF
+                  </a>
                   <Link
                     href="/account"
                     className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 text-base font-bold rounded-xl hover:from-gray-200 hover:to-gray-300 transition-all border-2 border-gray-300 hover:border-gray-400"
@@ -482,20 +421,18 @@ function PaymentSuccessContent() {
               </div>
             </div>
 
-                {/* Next Steps */}
-                <div className="mt-8 px-4">
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
-                    <h3 className="text-lg font-bold text-gray-900 mb-3">What's Next?</h3>
-                    <div className="space-y-2 text-sm text-gray-700">
-                      <p>✅ Your PPSR certificate is ready to download</p>
-                      <p>✅ A copy has been emailed to you</p>
-                      <p>✅ You can access it anytime from your account</p>
-                      <p>✅ You have unlimited checks with your subscription</p>
-                    </div>
-                  </div>
+            {/* Next Steps */}
+            <div className="mt-8 px-4">
+              <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border border-green-200">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">What's Next?</h3>
+                <div className="space-y-2 text-sm text-gray-700">
+                  <p>✅ Your PPSR certificate is ready to download</p>
+                  <p>✅ A copy has been emailed to you</p>
+                  <p>✅ You can access it anytime from your account</p>
+                  <p>✅ You have unlimited checks with your subscription</p>
                 </div>
               </div>
-            )}
+            </div>
           </motion.div>
         )}
       </div>

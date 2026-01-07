@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { stripe } from '@/lib/stripe'
-import { parsePPSRSearchResult } from '@/lib/ppsr-data-parser'
 
 export async function POST(request: NextRequest) {
   try {
@@ -86,27 +85,8 @@ export async function POST(request: NextRequest) {
     console.log('[GET-REPORT] Report found:', {
       id: report.id,
       status: report.status,
-      hasPPSR: !!report.ppsr_pdf_data,
-      hasSearchResult: !!report.ppsr_search_result
+      hasPPSR: !!report.ppsr_pdf_data
     })
-
-    // Parse PPSR search result if available
-    let parsedData = null
-    if (report.ppsr_search_result && report.vehicle_identifier) {
-      try {
-        parsedData = parsePPSRSearchResult(
-          report.ppsr_search_result,
-          report.vehicle_identifier,
-          report.id,
-          report.created_at,
-          report.ppsr_search_result?.searchNumber,
-          report.ppsr_search_result?.certificateNumber
-        )
-        console.log('[GET-REPORT] Successfully parsed PPSR data')
-      } catch (error) {
-        console.error('[GET-REPORT] Failed to parse PPSR data:', error)
-      }
-    }
 
     // Return report data
     return NextResponse.json({
@@ -117,8 +97,7 @@ export async function POST(request: NextRequest) {
         pdfBase64: report.ppsr_pdf_data,
         filename: report.ppsr_pdf_filename,
         metadata: report.vehicle_identifier,
-        generatedAt: report.updated_at || report.created_at,
-        parsedData: parsedData
+        generatedAt: report.updated_at || report.created_at
       }
     })
 
