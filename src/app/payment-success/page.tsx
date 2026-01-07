@@ -139,6 +139,11 @@ function PaymentSuccessContent() {
       setProgress(100)
       setStatus('complete')
 
+      console.log('✅ Report loaded successfully')
+      console.log('Report data:', reportData)
+      console.log('Has PDF data?', !!reportData?.report?.pdfBase64)
+      console.log('Has parsed data?', !!reportData?.report?.parsedData)
+
     } catch (err) {
       console.error('Error:', err)
       setError(err instanceof Error ? err.message : 'Something went wrong')
@@ -429,16 +434,28 @@ function PaymentSuccessContent() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <a
-                    href={reportData.report?.pdfBase64 ? `data:application/pdf;base64,${reportData.report.pdfBase64}` : '#'}
-                    download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
-                    className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
-                  >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Download PDF
-                  </a>
+                  {reportData.report?.pdfBase64 ? (
+                    <a
+                      href={`data:application/pdf;base64,${reportData.report.pdfBase64}`}
+                      download={reportData.report?.filename || 'PPSR_Certificate.pdf'}
+                      className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-base font-bold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                      </svg>
+                      Download PDF
+                    </a>
+                  ) : (
+                    <button
+                      disabled
+                      className="flex-1 flex items-center justify-center gap-2 py-4 bg-gray-300 text-gray-500 text-base font-bold rounded-xl cursor-not-allowed"
+                    >
+                      <svg className="w-5 h-5 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                      </svg>
+                      Generating PDF...
+                    </button>
+                  )}
                   <Link
                     href="/account"
                     className="flex-1 flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-900 text-base font-bold rounded-xl hover:from-gray-200 hover:to-gray-300 transition-all border-2 border-gray-300 hover:border-gray-400"
