@@ -142,11 +142,13 @@ async function processPPSRCertificate(params: {
 
     console.log('✅ Welcome email sent to:', params.customerEmail)
 
-    // Step 3: Update report status to completed
+    // Step 3: Save PPSR PDF data and update report status to completed
     const { error: updateError } = await supabaseAdmin
       .from('reports')
       .update({
         status: 'completed',
+        ppsr_pdf_data: ppsrResult.pdfBase64,
+        ppsr_pdf_filename: ppsrResult.filename,
         updated_at: new Date().toISOString()
       })
       .eq('id', params.reportId)
@@ -154,7 +156,7 @@ async function processPPSRCertificate(params: {
     if (updateError) {
       console.error('⚠️ Failed to update report status:', updateError)
     } else {
-      console.log('✅ Report marked as completed:', params.reportId)
+      console.log('✅ Report marked as completed with PDF data saved:', params.reportId)
     }
 
     return { success: true }
