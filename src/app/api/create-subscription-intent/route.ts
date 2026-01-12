@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import Stripe from 'stripe'
+import { isPPSRMaintenanceWindow, formatTimeRemaining, getTimeUntilMaintenanceEnds } from '@/lib/ppsr-maintenance'
 
 const getStripeClient = () => {
   const apiKey = process.env.STRIPE_SECRET_KEY
@@ -37,6 +38,26 @@ const createSubscriptionIntentSchema = z.object({
 export async function POST(request: NextRequest) {
   try {
     console.log('[SUBSCRIPTION INTENT] Received request')
+
+    // Check if PPSR Cloud is in maintenance window
+    const maintenanceStatus = isPPSRMaintenanceWindow()
+    if (maintenanceStatus.isInMaintenance) {
+      console.log('[SUBSCRIPTION INTENT] Blocked - PPSR maintenance window active')
+      const timeRemaining = getTimeUntilMaintenanceEnds()
+      const timeMessage = timeRemaining ? ` Service will be available in ${formatTimeRemaining(timeRemaining)}.` : ''
+
+      return NextResponse.json(
+        {
+          error: 'Service temporarily unavailable',
+          message: maintenanceStatus.message + timeMessage,
+          maintenanceWindow: {
+            start: maintenanceStatus.maintenanceWindow?.start,
+            end: maintenanceStatus.maintenanceWindow?.end,
+          },
+        },
+        { status: 503 }
+      )
+    }
 
     const body = await request.json()
     const validatedData = createSubscriptionIntentSchema.parse(body)

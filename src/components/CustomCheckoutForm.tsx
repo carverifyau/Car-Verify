@@ -7,13 +7,13 @@ import { CreditCard, Lock, CheckCircle } from 'lucide-react'
 
 interface CustomCheckoutFormProps {
   clientSecret: string
-  subscriptionId: string
+  paymentIntentId: string
   customerEmail: string
 }
 
 export default function CustomCheckoutForm({
   clientSecret,
-  subscriptionId,
+  paymentIntentId,
   customerEmail
 }: CustomCheckoutFormProps) {
   const stripe = useStripe()
@@ -46,7 +46,7 @@ export default function CustomCheckoutForm({
       const { error: confirmError } = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: `${window.location.origin}/building-report?session_id=${subscriptionId}`,
+          return_url: `${window.location.origin}/building-report?payment_intent=${paymentIntentId}`,
         },
       })
 
@@ -108,7 +108,7 @@ export default function CustomCheckoutForm({
         ) : (
           <>
             <Lock className="h-6 w-6" />
-            <span>Subscribe $0.50/month</span>
+            <span>Pay $19.99 - Get Report</span>
           </>
         )}
       </button>
@@ -131,9 +131,9 @@ export default function CustomCheckoutForm({
 
       {/* Fine Print */}
       <div className="text-center text-xs text-gray-500">
-        By confirming payment, you agree to start a subscription at $0.50/month.
+        By confirming payment, you agree to purchase a PPSR report for $19.99.
         <br />
-        You can cancel anytime from your account settings.
+        Your report will be delivered to your email instantly.
       </div>
     </form>
   )

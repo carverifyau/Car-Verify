@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Shield } from 'lucide-react'
+import { Shield, AlertTriangle } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import CustomCheckoutForm from '@/components/CustomCheckoutForm'
+import { usePPSRMaintenance } from '@/hooks/usePPSRMaintenance'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -36,7 +37,10 @@ export default function VehicleSearchPage() {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
   const [paymentError, setPaymentError] = useState<string | null>(null)
   const [clientSecret, setClientSecret] = useState('')
-  const [subscriptionId, setSubscriptionId] = useState('')
+  const [paymentIntentId, setPaymentIntentId] = useState('')
+
+  // Check PPSR maintenance window
+  const maintenanceStatus = usePPSRMaintenance()
 
   // Read vehicle data from URL params on mount
   useEffect(() => {
@@ -140,8 +144,8 @@ export default function VehicleSearchPage() {
     setPaymentError(null)
 
     try {
-      console.log('💳 Calling create-subscription-intent API...')
-      const response = await fetch('/api/create-subscription-intent', {
+      console.log('💳 Calling create-payment-intent API...')
+      const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -162,11 +166,15 @@ export default function VehicleSearchPage() {
       console.log('💳 API response received:', data)
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to initialize payment')
+        // Handle maintenance window specifically
+        if (response.status === 503 && data.message) {
+          throw new Error(data.message)
+        }
+        throw new Error(data.message || data.error || 'Failed to initialize payment')
       }
 
       setClientSecret(data.clientSecret)
-      setSubscriptionId(data.subscriptionId)
+      setPaymentIntentId(data.paymentIntentId)
       console.log('💳 Payment initialized successfully')
     } catch (error) {
       console.error('❌ Payment initialization error:', error)
@@ -334,6 +342,28 @@ export default function VehicleSearchPage() {
           </div>
         </div>
       </header>
+
+      {/* Maintenance Warning Banner */}
+      {maintenanceStatus.isInMaintenance && (
+        <div className="bg-yellow-50 border-b border-yellow-200">
+          <div className="container mx-auto px-4 py-3">
+            <div className="flex items-start space-x-3">
+              <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+              <div className="flex-1">
+                <p className="text-sm font-medium text-yellow-900">
+                  Scheduled Maintenance in Progress
+                </p>
+                <p className="text-xs text-yellow-700 mt-1">
+                  {maintenanceStatus.message}
+                  {maintenanceStatus.timeRemaining && (
+                    <span className="font-medium"> Service will be available in {maintenanceStatus.timeRemaining}.</span>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12">
         <AnimatePresence mode="wait">
@@ -840,12 +870,12 @@ export default function VehicleSearchPage() {
                     <div className="inline-block px-3 sm:px-4 py-1 bg-blue-100 border border-blue-200 rounded-full mb-3 sm:mb-4">
                       <span className="text-blue-600 font-semibold text-xs sm:text-sm">CASUAL PLAN</span>
                     </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Unlimited Reports</h3>
+                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Single Report</h3>
                     <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$0.50</span>
-                      <span className="text-gray-600 text-lg">/month</span>
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$19.99</span>
+                      <span className="text-gray-600 text-lg"> per report</span>
                     </div>
-                    <p className="text-gray-500 text-xs">Cancel anytime</p>
+                    <p className="text-gray-500 text-xs">Instant delivery via email</p>
                   </div>
 
                   <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
@@ -859,7 +889,7 @@ export default function VehicleSearchPage() {
                     </div>
                     <div className="flex items-center space-x-2 text-gray-700">
                       <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Unlimited Reports</span>
+                      <span className="text-xs sm:text-sm">Complete PPSR Report</span>
                     </div>
                     <div className="flex items-center space-x-2 text-gray-700">
                       <span className="text-green-600">✓</span>
@@ -916,8 +946,8 @@ export default function VehicleSearchPage() {
                               <span className="bg-blue-600 text-white text-xs px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-full">YOU</span>
                             </div>
                           </td>
-                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-blue-900 text-xs sm:text-sm md:text-base">$0.50/mo</td>
-                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">Unlimited ✓</td>
+                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-blue-900 text-xs sm:text-sm md:text-base">$19.99</td>
+                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">1 Report ✓</td>
                           <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
                         <tr className="border-b border-gray-200">
@@ -948,9 +978,9 @@ export default function VehicleSearchPage() {
                         <span className="text-green-600 text-lg sm:text-xl">✓</span>
                       </div>
                       <div>
-                        <p className="font-bold text-gray-900 mb-1 text-xs sm:text-sm">Get Unlimited Reports for the Price of 1</p>
+                        <p className="font-bold text-gray-900 mb-1 text-xs sm:text-sm">Fast & Reliable PPSR Reports</p>
                         <p className="text-xs sm:text-sm text-gray-600">
-                          Perfect for car dealers, mechanics, or buyers comparing multiple vehicles.
+                          Instant delivery with complete security information for your vehicle.
                           Just 2 reports and you've already saved money compared to competitors!
                         </p>
                       </div>
@@ -962,7 +992,7 @@ export default function VehicleSearchPage() {
               {/* Billing and Cancellation Information */}
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6 text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
                 <p>
-                  Cancel anytime by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online via your account page once logged in. Your Casual plan provides <strong>unlimited reports</strong> for $0.50 per month.
+                  This is a one-time payment of <strong>$19.99 for a single PPSR report</strong>. Your report will be delivered instantly to your email after payment. Need support? Email <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a>.
                 </p>
               </div>
 
@@ -1011,9 +1041,9 @@ export default function VehicleSearchPage() {
 
               {/* Billing Details */}
               <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">BILLING DETAILS</h3>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">PAYMENT DETAILS</h3>
                 <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
-                  Your membership automatically renews every month at $0.50 unless you cancel before the start of the next term. We will charge the recurring membership fee to the same payment option you use today. You can cancel your membership at any time, by emailing <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a> or online by simply accessing your account page.
+                  This is a one-time payment for a single PPSR report. You will be charged $19.99 AUD and your report will be delivered immediately to your email address. This is not a subscription and you will not be charged again. To purchase additional reports, simply visit our website again.
                 </p>
               </div>
 
@@ -1123,13 +1153,13 @@ export default function VehicleSearchPage() {
                     </div>
                     <div className="border-t border-blue-200 pt-2 mt-2"></div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-900 font-bold text-xs sm:text-sm">Monthly Price:</span>
+                      <span className="text-gray-900 font-bold text-xs sm:text-sm">Report Price:</span>
                       <span className="text-xl sm:text-2xl font-bold text-blue-600">
-                        $0.50
+                        $19.99
                       </span>
                     </div>
                     <p className="text-xs text-gray-500 pt-1">
-                      Unlimited reports • Cancel anytime
+                      One-time payment • Instant delivery
                     </p>
                   </div>
                 </div>
@@ -1161,7 +1191,7 @@ export default function VehicleSearchPage() {
                   >
                     <CustomCheckoutForm
                       clientSecret={clientSecret}
-                      subscriptionId={subscriptionId}
+                      paymentIntentId={paymentIntentId}
                       customerEmail={email}
                     />
                   </Elements>

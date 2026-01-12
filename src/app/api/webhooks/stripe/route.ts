@@ -495,18 +495,138 @@ export async function POST(request: NextRequest) {
       console.log('💳 Customer:', paymentIntent.customer)
       console.log('💳 Amount:', paymentIntent.amount)
       console.log('💳 Invoice:', paymentIntent.invoice)
+      console.log('💳 Metadata:', JSON.stringify(paymentIntent.metadata, null, 2))
 
+      // Check if this is a one-time payment (has productType metadata)
+      const isOneTimePayment = paymentIntent.metadata?.productType === 'single_report'
+
+      if (isOneTimePayment) {
+        console.log('💳 One-time payment detected - processing directly from payment intent metadata')
+
+        const customerEmail = paymentIntent.metadata.customerEmail || paymentIntent.receipt_email || 'unknown@test.com'
+        const customerName = paymentIntent.metadata.customerName || 'Customer'
+        const stripeCustomerId = typeof paymentIntent.customer === 'string' ? paymentIntent.customer : paymentIntent.customer?.id || ''
+
+        // Extract vehicle info from metadata
+        const vehicleInfo = {
+          type: paymentIntent.metadata.vehicleType || 'rego',
+          vin: paymentIntent.metadata.vehicleVin || '',
+          rego: paymentIntent.metadata.vehicleRego || '',
+          state: paymentIntent.metadata.vehicleState || 'QLD',
+        }
+
+        console.log('📋 Vehicle info:', vehicleInfo)
+
+        // Create or update customer account
+        let customerId: string | null = null
+        if (stripeCustomerId) {
+          try {
+            customerId = await createOrUpdateCustomerAccount(
+              customerEmail,
+              customerName,
+              stripeCustomerId
+            )
+            console.log('✅ Customer account created/updated:', customerId)
+          } catch (error) {
+            console.error('⚠️ Failed to create/update customer account:', error)
+            // Continue without customer account
+          }
+        }
+
+        // Create report record
+        const reportId = crypto.randomUUID()
+        console.log('📝 Creating report record:', reportId)
+
+        const { error: insertError } = await supabaseAdmin
+          .from('reports')
+          .insert({
+            id: reportId,
+            customer_id: customerId,
+            customer_email: customerEmail,
+            vehicle_info: vehicleInfo,
+            status: 'processing',
+            stripe_payment_id: paymentIntent.id,
+            payment_amount: paymentIntent.amount / 100, // Convert from cents
+            created_at: new Date().toISOString()
+          })
+
+        if (insertError) {
+          console.error('❌ Failed to create report record:', insertError)
+          throw new Error(`Failed to create report: ${insertError.message}`)
+        }
+
+        console.log('✅ Report record created:', reportId)
+
+        // Process PPSR certificate
+        if (!vehicleInfo.rego && !vehicleInfo.vin) {
+          console.log('⚠️ No vehicle info for PPSR')
+          await supabaseAdmin
+            .from('reports')
+            .update({
+              status: 'failed',
+              error_message: 'No vehicle registration or VIN provided',
+              metadata: {
+                error: 'MISSING_VEHICLE_INFO',
+                payment_intent_id: paymentIntent.id
+              }
+            })
+            .eq('id', reportId)
+          return NextResponse.json({ success: true, id: reportId, warning: 'No vehicle info for PPSR' })
+        }
+
+        // Process PPSR synchronously
+        try {
+          console.log('🔄 Starting PPSR certificate fetch from one-time payment...')
+          await processPPSRCertificate({
+            reportId,
+            customerEmail,
+            customerName,
+            rego: vehicleInfo.rego || 'UNKNOWN',
+            state: vehicleInfo.state,
+            vin: vehicleInfo.vin
+          })
+          console.log('✅ PPSR certificate fetched and email sent successfully from one-time payment')
+        } catch (ppsrError) {
+          console.error('❌ PPSR processing failed:', ppsrError)
+          await supabaseAdmin
+            .from('reports')
+            .update({
+              status: 'failed',
+              error_message: ppsrError instanceof Error ? ppsrError.message : 'PPSR processing failed',
+              metadata: {
+                error: 'PPSR_PROCESSING_FAILED',
+                payment_intent_id: paymentIntent.id
+              }
+            })
+            .eq('id', reportId)
+
+          return NextResponse.json({
+            received: true,
+            error: 'PPSR processing failed',
+            details: ppsrError instanceof Error ? ppsrError.message : 'Unknown error'
+          }, { status: 500 })
+        }
+
+        return NextResponse.json({
+          success: true,
+          reportId,
+          type: event.type,
+          message: 'One-time payment processed and PPSR report delivered'
+        })
+      }
+
+      // Handle subscription payments (legacy code)
       // Get invoice ID - try from invoice field first, fallback to metadata
       let invoiceId = typeof paymentIntent.invoice === 'string'
         ? paymentIntent.invoice
         : paymentIntent.invoice?.id || paymentIntent.metadata?.invoice_id
 
       if (!invoiceId) {
-        console.log('⚠️ No invoice found on payment intent')
+        console.log('⚠️ No invoice found on payment intent and not a one-time payment')
         return NextResponse.json({
           received: true,
           type: event.type,
-          message: 'No invoice found - likely not a subscription payment'
+          message: 'No invoice found - likely not a valid payment'
         })
       }
 
