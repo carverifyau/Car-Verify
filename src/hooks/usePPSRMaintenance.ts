@@ -20,48 +20,52 @@ export function usePPSRMaintenance(): MaintenanceStatus {
   useEffect(() => {
     const checkMaintenance = () => {
       try {
-        // Get current time in Sydney/Australia timezone
+        // Get current time in Sydney/Australia timezone using Intl API
         const now = new Date()
 
-        // Parse the formatted string back to get Sydney time components
-        const sydneyTime = new Date(now.toLocaleString('en-US', { timeZone: 'Australia/Sydney' }))
+        // Use Intl.DateTimeFormat to get Sydney timezone components reliably
+        const formatter = new Intl.DateTimeFormat('en-AU', {
+          timeZone: 'Australia/Sydney',
+          weekday: 'short',
+          hour: 'numeric',
+          hour12: false,
+        })
 
-        // Validate the date is valid
-        if (isNaN(sydneyTime.getTime())) {
-          console.error('Invalid Sydney time conversion')
+        const parts = formatter.formatToParts(now)
+        const weekday = parts.find(p => p.type === 'weekday')?.value
+        const hour = parts.find(p => p.type === 'hour')?.value
+
+        if (!weekday || !hour) {
+          console.error('Failed to extract timezone components')
           setStatus({ isInMaintenance: false })
           return
         }
 
-        const day = sydneyTime.getDay() // 0 = Sunday, 3 = Wednesday
-        const hours = sydneyTime.getHours()
+        const hours = parseInt(hour, 10)
+        const isWed = weekday === 'Wed'
+        const isThu = weekday === 'Thu'
 
         // Check if it's Wednesday between 8pm (20:00) and midnight
-        const isWednesday = day === 3
-        const isDuringMaintenanceHours = hours >= 20
+        const isWednesdayMaintenance = isWed && hours >= 20
 
-        // Also check if it's Thursday between midnight and 12am (first hour)
-        const isThursdayEarlyMorning = day === 4 && hours === 0
+        // Also check if it's Thursday between midnight and 1am (first hour)
+        const isThursdayEarlyMorning = isThu && hours === 0
 
-        const isInMaintenance =
-          (isWednesday && isDuringMaintenanceHours) || isThursdayEarlyMorning
+        const isInMaintenance = isWednesdayMaintenance || isThursdayEarlyMorning
 
         if (isInMaintenance) {
-          // Calculate time until maintenance ends
-          let maintenanceEnd: Date
+          // Estimate time remaining (rough calculation since we don't have exact minutes)
+          let hoursRemaining: number
 
-          if (isWednesday) {
-            // Maintenance ends at midnight (start of Thursday)
-            maintenanceEnd = new Date(sydneyTime)
-            maintenanceEnd.setHours(24, 0, 0, 0)
+          if (isWednesdayMaintenance) {
+            // Hours until midnight
+            hoursRemaining = 24 - hours
           } else {
-            // We're in Thursday early morning, ends at 12:00am (already passed midnight)
-            maintenanceEnd = new Date(sydneyTime)
-            maintenanceEnd.setHours(0, 0, 0, 0)
+            // Thursday early morning - less than 1 hour remaining
+            hoursRemaining = 1
           }
 
-          const timeUntilEnd = maintenanceEnd.getTime() - now.getTime()
-          const minutesRemaining = Math.ceil(timeUntilEnd / 1000 / 60)
+          const minutesRemaining = hoursRemaining * 60
 
           let timeRemainingText = ''
           if (minutesRemaining < 60) {
