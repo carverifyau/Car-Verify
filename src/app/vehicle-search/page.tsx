@@ -863,69 +863,137 @@ export default function VehicleSearchPage() {
                 </p>
               </div>
 
+              {/* Trust Badge */}
+              <div className="max-w-2xl mx-auto mb-4 sm:mb-6 text-center">
+                <div className="inline-flex items-center space-x-2 bg-green-50 border border-green-200 rounded-full px-4 py-2">
+                  <span className="text-green-600 font-bold">✓</span>
+                  <span className="text-sm font-semibold text-green-800">Official PPSR Provider</span>
+                  <span className="text-gray-400">•</span>
+                  <span className="text-sm text-gray-600">Instant Delivery</span>
+                </div>
+              </div>
+
+              {/* Main Value Proposition */}
+              <div className="max-w-2xl mx-auto mb-6 sm:mb-8 text-center">
+                <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  Protect Your Purchase with a Complete PPSR Report
+                </h3>
+                <p className="text-base sm:text-lg text-gray-600">
+                  Don't risk buying a stolen vehicle or one with hidden debts. Get the full history in under 60 seconds.
+                </p>
+              </div>
+
               {/* Pricing Card */}
-              <div className="max-w-2xl mx-auto mb-4 sm:mb-6">
-                <div className="bg-white border-2 border-blue-400 rounded-2xl shadow-sm p-4 sm:p-6 md:p-8">
-                  <div className="text-center mb-4 sm:mb-6">
-                    <div className="inline-block px-3 sm:px-4 py-1 bg-blue-100 border border-blue-200 rounded-full mb-3 sm:mb-4">
-                      <span className="text-blue-600 font-semibold text-xs sm:text-sm">CASUAL PLAN</span>
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2">Single Report</h3>
-                    <div className="mb-3 sm:mb-4">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-600">$19.99</span>
-                      <span className="text-gray-600 text-lg"> per report</span>
-                    </div>
-                    <p className="text-gray-500 text-xs">Instant delivery via email</p>
+              <div className="max-w-2xl mx-auto mb-6 sm:mb-8">
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-400 rounded-2xl shadow-xl p-6 sm:p-8 md:p-10 relative overflow-hidden">
+                  {/* Popular Badge */}
+                  <div className="absolute top-0 right-0 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-4 py-1 rounded-bl-xl font-bold text-xs sm:text-sm">
+                    BEST VALUE
                   </div>
 
-                  <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">PDF Download</span>
+                  <div className="text-center mb-6 sm:mb-8">
+                    <div className="mb-4">
+                      <div className="flex items-center justify-center space-x-2 mb-2">
+                        <span className="text-gray-500 text-lg sm:text-xl line-through">$27.50</span>
+                        <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">SAVE $7.51</span>
+                      </div>
+                      <div className="mb-2">
+                        <span className="text-5xl sm:text-6xl md:text-7xl font-bold text-blue-600">$19.99</span>
+                      </div>
+                      <p className="text-gray-600 font-medium">One-time payment • No subscription</p>
                     </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Full Online Access</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Complete PPSR Report</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Market Valuations (coming soon)</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Better Deals for Insurance</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-gray-700">
-                      <span className="text-green-600">✓</span>
-                      <span className="text-xs sm:text-sm">Better Deals for Finance</span>
+                  </div>
+
+                  {/* What's Included */}
+                  <div className="bg-white rounded-xl p-4 sm:p-6 mb-6">
+                    <h4 className="font-bold text-gray-900 mb-4 text-center text-base sm:text-lg">✓ Your Complete PPSR Report Includes:</h4>
+                    <div className="space-y-3">
+                      <div className="flex items-start space-x-3">
+                        <span className="text-green-600 font-bold text-lg flex-shrink-0">✓</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm sm:text-base">Finance & Money Owing</p>
+                          <p className="text-xs sm:text-sm text-gray-600">Check if the vehicle has any outstanding loans or debts</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <span className="text-green-600 font-bold text-lg flex-shrink-0">✓</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm sm:text-base">Stolen Vehicle Check</p>
+                          <p className="text-xs sm:text-sm text-gray-600">Verify the vehicle isn't reported as stolen</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <span className="text-green-600 font-bold text-lg flex-shrink-0">✓</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm sm:text-base">Write-Off History</p>
+                          <p className="text-xs sm:text-sm text-gray-600">See if the vehicle was previously written off</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <span className="text-green-600 font-bold text-lg flex-shrink-0">✓</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm sm:text-base">Official PDF Certificate</p>
+                          <p className="text-xs sm:text-sm text-gray-600">Instant download + emailed copy for your records</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start space-x-3">
+                        <span className="text-green-600 font-bold text-lg flex-shrink-0">✓</span>
+                        <div>
+                          <p className="font-semibold text-gray-900 text-sm sm:text-base">Lifetime Access</p>
+                          <p className="text-xs sm:text-sm text-gray-600">View your report online anytime</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
                   <button
                     onClick={() => {
-                      console.log('🔵 Casual plan button clicked')
+                      console.log('🔵 Get Report button clicked')
                       setSelectedPlan('casual')
                       setStep('payment')
                       console.log('🔵 Step set to payment')
                     }}
                     disabled={isProcessingPayment}
-                    className="w-full py-3 sm:py-4 bg-blue-600 text-white font-bold text-base sm:text-lg rounded-xl hover:bg-blue-700 transition-all duration-300 disabled:opacity-50"
+                    className="w-full py-4 sm:py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg sm:text-xl rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
                   >
-                    {isProcessingPayment ? 'Loading...' : 'Start Your Plan Now'}
+                    {isProcessingPayment ? 'Loading...' : '🔒 Get Your Report Now - $19.99'}
                   </button>
+
+                  <p className="text-center text-xs sm:text-sm text-gray-600 mt-4">
+                    💳 Secure payment • ⚡ Instant delivery • 🔄 30-day money back guarantee
+                  </p>
                 </div>
               </div>
 
-              {/* Price Comparison */}
-              <div className="max-w-3xl mx-auto mb-4 sm:mb-6">
+              {/* Why Choose Us Section */}
+              <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
+                <h3 className="text-2xl sm:text-3xl font-bold text-center text-gray-900 mb-6 sm:mb-8">
+                  Why Thousands Choose Car Verify
+                </h3>
+
+                <div className="grid md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 text-center">
+                    <div className="text-3xl sm:text-4xl mb-3">⚡</div>
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">Instant Results</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">Report delivered to your email in under 60 seconds</p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 text-center">
+                    <div className="text-3xl sm:text-4xl mb-3">💰</div>
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">Best Price</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">Save up to $10 compared to other providers</p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 text-center">
+                    <div className="text-3xl sm:text-4xl mb-3">🔒</div>
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">100% Secure</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">Bank-level encryption & secure payment</p>
+                  </div>
+                </div>
+
+                {/* Price Comparison */}
                 <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-4 sm:p-6 md:p-8">
                   <div className="text-center mb-4 sm:mb-6">
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">Why Car Verify is Better Value</h3>
-                    <p className="text-gray-600 text-xs sm:text-sm">Compare us to other PPSR providers</p>
+                    <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-2">Compare & Save Money</h4>
+                    <p className="text-gray-600 text-xs sm:text-sm">See why we're Australia's best value PPSR provider</p>
                   </div>
 
                   <div className="overflow-x-auto">
@@ -934,7 +1002,7 @@ export default function VehicleSearchPage() {
                         <tr className="border-b-2 border-gray-200">
                           <th className="text-left py-2 sm:py-3 px-2 text-xs sm:text-sm font-semibold text-gray-700">Provider</th>
                           <th className="text-center py-2 sm:py-3 px-2 text-xs sm:text-sm font-semibold text-gray-700">Price</th>
-                          <th className="text-center py-2 sm:py-3 px-2 text-xs sm:text-sm font-semibold text-gray-700">Reports</th>
+                          <th className="text-center py-2 sm:py-3 px-2 text-xs sm:text-sm font-semibold text-gray-700">Delivery</th>
                           <th className="text-center py-2 sm:py-3 px-2 text-xs sm:text-sm font-semibold text-gray-700">PDF</th>
                         </tr>
                       </thead>
@@ -947,25 +1015,25 @@ export default function VehicleSearchPage() {
                             </div>
                           </td>
                           <td className="py-3 sm:py-4 px-2 text-center font-bold text-blue-900 text-xs sm:text-sm md:text-base">$19.99</td>
-                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">1 Report ✓</td>
+                          <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">Instant ⚡</td>
                           <td className="py-3 sm:py-4 px-2 text-center font-bold text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
                         <tr className="border-b border-gray-200">
                           <td className="py-3 sm:py-4 px-2 text-gray-700 text-xs sm:text-sm md:text-base">CarHistory</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-gray-700 text-xs sm:text-sm md:text-base">$27.50</td>
-                          <td className="py-3 sm:py-4 px-2 text-center text-red-600 font-semibold text-xs sm:text-sm md:text-base">1 Only</td>
+                          <td className="py-3 sm:py-4 px-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">~5 mins</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
                         <tr className="border-b border-gray-200">
                           <td className="py-3 sm:py-4 px-2 text-gray-700 text-xs sm:text-sm md:text-base">PPSR Direct</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-gray-700 text-xs sm:text-sm md:text-base">$25.70</td>
-                          <td className="py-3 sm:py-4 px-2 text-center text-red-600 font-semibold text-xs sm:text-sm md:text-base">1 Only</td>
+                          <td className="py-3 sm:py-4 px-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">~10 mins</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
                         <tr className="border-b border-gray-200">
                           <td className="py-3 sm:py-4 px-2 text-gray-700 text-xs sm:text-sm md:text-base">RevsCheck</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-gray-700 text-xs sm:text-sm md:text-base">$29.95</td>
-                          <td className="py-3 sm:py-4 px-2 text-center text-red-600 font-semibold text-xs sm:text-sm md:text-base">1 Only</td>
+                          <td className="py-3 sm:py-4 px-2 text-center text-gray-600 text-xs sm:text-sm md:text-base">~5 mins</td>
                           <td className="py-3 sm:py-4 px-2 text-center text-green-600 text-xs sm:text-sm md:text-base">✓</td>
                         </tr>
                       </tbody>
@@ -973,78 +1041,111 @@ export default function VehicleSearchPage() {
                   </div>
 
                   <div className="mt-4 sm:mt-6 bg-white rounded-lg p-3 sm:p-4 border border-green-300">
-                    <div className="flex items-start space-x-2 sm:space-x-3">
-                      <div className="flex-shrink-0">
-                        <span className="text-green-600 text-lg sm:text-xl">✓</span>
-                      </div>
+                    <div className="text-center">
+                      <p className="font-bold text-green-700 text-sm sm:text-base">
+                        💸 You Save: Up to $9.96 with Car Verify
+                      </p>
+                      <p className="text-xs sm:text-sm text-gray-600 mt-1">
+                        Same official PPSR data, faster delivery, better price
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* What You'll Discover */}
+              <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
+                <div className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8">
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
+                    🔍 What You'll Discover in Your Report
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div className="flex items-start space-x-3">
+                      <span className="text-blue-600 text-xl">💰</span>
                       <div>
-                        <p className="font-bold text-gray-900 mb-1 text-xs sm:text-sm">Fast & Reliable PPSR Reports</p>
-                        <p className="text-xs sm:text-sm text-gray-600">
-                          Instant delivery with complete security information for your vehicle.
-                          Just 2 reports and you've already saved money compared to competitors!
-                        </p>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-1">Money Owing</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Outstanding loans or finance that could become your problem</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="text-blue-600 text-xl">🚨</span>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-1">Stolen Status</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Check if the vehicle is registered as stolen in Australia</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="text-blue-600 text-xl">💥</span>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-1">Write-Off Status</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Previous accident damage that insurance deemed uneconomical</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <span className="text-blue-600 text-xl">📋</span>
+                      <div>
+                        <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-1">Security Interests</h4>
+                        <p className="text-xs sm:text-sm text-gray-600">Legal claims or encumbrances registered against the vehicle</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Billing and Cancellation Information */}
-              <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 sm:p-6 text-gray-700 text-xs sm:text-sm leading-relaxed mb-4 sm:mb-6">
-                <p>
-                  This is a one-time payment of <strong>$19.99 for a single PPSR report</strong>. Your report will be delivered instantly to your email after payment. Need support? Email <a href="mailto:support@carverify.com.au" className="text-blue-600 underline">support@carverify.com.au</a>.
-                </p>
-              </div>
-
-              {/* Membership Benefits */}
-              <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">MEMBERSHIP BENEFITS</h3>
-                <div className="space-y-2 sm:space-y-3">
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">💰</span>
-                    <span className="text-xs sm:text-sm">Finance Owing & Security Interest Checks</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🚨</span>
-                    <span className="text-xs sm:text-sm">Stolen Vehicle Records Search</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🔨</span>
-                    <span className="text-xs sm:text-sm">Write-Off Status & Damage History</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🚗</span>
-                    <span className="text-xs sm:text-sm">Vehicle Make, Model & Year Information</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🔢</span>
-                    <span className="text-xs sm:text-sm">VIN (Vehicle Identification Number) Verification</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">📋</span>
-                    <span className="text-xs sm:text-sm">Registration & State Details</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🛡️</span>
-                    <span className="text-xs sm:text-sm">Official PPSR Certificate</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">🔍</span>
-                    <span className="text-xs sm:text-sm"><strong>MULTIPLE</strong> Ways to Search - By Registration Plate or VIN</span>
-                  </div>
-                  <div className="flex items-start space-x-2 sm:space-x-3 text-gray-700">
-                    <span className="text-base sm:text-lg mt-0.5">📄</span>
-                    <span className="text-xs sm:text-sm"><strong>PDF DOWNLOADS</strong> - Save and Share Your Reports (Plus Plan)</span>
+              {/* Risk Warning */}
+              <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
+                <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 sm:p-6">
+                  <div className="flex items-start space-x-3">
+                    <span className="text-red-600 text-2xl flex-shrink-0">⚠️</span>
+                    <div>
+                      <h4 className="font-bold text-red-900 mb-2 text-sm sm:text-base">Don't Risk It!</h4>
+                      <p className="text-xs sm:text-sm text-red-800 mb-2">
+                        Every year, thousands of Australians unknowingly buy vehicles with hidden problems:
+                      </p>
+                      <ul className="text-xs sm:text-sm text-red-800 space-y-1 list-disc list-inside">
+                        <li>Cars with outstanding finance that can be repossessed</li>
+                        <li>Stolen vehicles that police will seize</li>
+                        <li>Written-off vehicles that are unsafe to drive</li>
+                      </ul>
+                      <p className="text-xs sm:text-sm font-bold text-red-900 mt-3">
+                        A $19.99 report could save you thousands in losses!
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              {/* Billing Details */}
-              <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
-                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">PAYMENT DETAILS</h3>
-                <p className="text-gray-700 text-xs sm:text-sm leading-relaxed">
-                  This is a one-time payment for a single PPSR report. You will be charged $19.99 AUD and your report will be delivered immediately to your email address. This is not a subscription and you will not be charged again. To purchase additional reports, simply visit our website again.
-                </p>
+              {/* FAQ / Common Questions */}
+              <div className="max-w-3xl mx-auto mb-6 sm:mb-8">
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6 text-center">
+                  Common Questions
+                </h3>
+                <div className="space-y-4">
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6">
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">✅ How quickly will I receive my report?</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      Instantly! Your PPSR report will be emailed to you within 60 seconds of payment. You'll also be able to view and download it online immediately.
+                    </p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6">
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">✅ Is this the official PPSR data?</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      Yes! We're an authorized PPSR provider. You receive the exact same official data from the government's Personal Property Securities Register.
+                    </p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6">
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">✅ Is this a subscription?</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      No! This is a one-time payment of $19.99 for a single report. You will not be charged again unless you purchase another report in the future.
+                    </p>
+                  </div>
+                  <div className="bg-white border border-gray-200 rounded-xl p-4 sm:p-6">
+                    <h4 className="font-bold text-gray-900 mb-2 text-sm sm:text-base">✅ Is my payment secure?</h4>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      Absolutely. We use Stripe, the same payment processor trusted by millions of businesses worldwide. Your credit card information is never stored on our servers.
+                    </p>
+                  </div>
+                </div>
               </div>
 
               {/* Satisfaction Guaranteed */}
