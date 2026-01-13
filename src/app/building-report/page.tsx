@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Shield, CheckCircle, Mail } from 'lucide-react'
 import Link from 'next/link'
@@ -14,17 +14,7 @@ function BuildingReportContent() {
   const [verifying, setVerifying] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (!paymentIntentId && !sessionId) {
-      setError('No payment ID found')
-      setVerifying(false)
-      return
-    }
-
-    verifyPayment()
-  }, [paymentIntentId, sessionId])
-
-  const verifyPayment = async () => {
+  const verifyPayment = useCallback(async () => {
     try {
       const verifyResponse = await fetch('/api/verify-payment', {
         method: 'POST',
@@ -47,7 +37,17 @@ function BuildingReportContent() {
       setError(err instanceof Error ? err.message : 'Something went wrong')
       setVerifying(false)
     }
-  }
+  }, [paymentIntentId, sessionId])
+
+  useEffect(() => {
+    if (!paymentIntentId && !sessionId) {
+      setError('No payment ID found')
+      setVerifying(false)
+      return
+    }
+
+    verifyPayment()
+  }, [paymentIntentId, sessionId, verifyPayment])
 
   return (
     <div className="min-h-screen bg-white">
