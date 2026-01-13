@@ -546,7 +546,6 @@ export async function POST(request: NextRequest) {
             vehicle_info: vehicleInfo,
             status: 'processing',
             stripe_payment_id: paymentIntent.id,
-            payment_amount: paymentIntent.amount / 100, // Convert from cents
             created_at: new Date().toISOString()
           })
 
