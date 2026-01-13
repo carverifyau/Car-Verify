@@ -183,7 +183,65 @@ async function processPPSRCertificate(params: {
   }
 }
 
-// Helper function to create or update customer account
+// Simplified helper for one-time payments (no subscription)
+async function createOrUpdateSimpleCustomer(
+  email: string,
+  name: string | null,
+  stripeCustomerId: string
+): Promise<string> {
+  console.log('👤 Creating/updating simple customer for:', email)
+
+  // Check if user already exists
+  const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
+  let user = existingUsers?.users.find(u => u.email === email)
+
+  // Create user if doesn't exist
+  if (!user) {
+    console.log('👤 Creating new user account')
+    const { data: newUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
+      email,
+      email_confirm: true,
+      user_metadata: {
+        name: name || '',
+      },
+    })
+
+    if (authError) {
+      // If user exists error, try to find them
+      if (authError.message?.includes('already been registered')) {
+        console.log('👤 User exists, looking them up...')
+        const { data: users } = await supabaseAdmin.auth.admin.listUsers()
+        user = users?.users.find(u => u.email === email)
+        if (!user) throw new Error('User exists but could not be found')
+      } else {
+        throw authError
+      }
+    } else {
+      user = newUser.user
+    }
+    console.log('✅ User found/created:', user.id)
+  } else {
+    console.log('✅ Existing user found:', user.id)
+  }
+
+  // Create or update customer record
+  await supabaseAdmin
+    .from('customers')
+    .upsert({
+      id: user.id,
+      email,
+      name: name || null,
+      stripe_customer_id: stripeCustomerId,
+      updated_at: new Date().toISOString(),
+    }, {
+      onConflict: 'id',
+    })
+
+  console.log('✅ Customer record created/updated')
+  return user.id
+}
+
+// Helper function to create or update customer account (with subscription)
 async function createOrUpdateCustomerAccount(
   email: string,
   name: string | null,
@@ -521,7 +579,7 @@ export async function POST(request: NextRequest) {
         let customerId: string | null = null
         if (stripeCustomerId) {
           try {
-            customerId = await createOrUpdateCustomerAccount(
+            customerId = await createOrUpdateSimpleCustomer(
               customerEmail,
               customerName,
               stripeCustomerId
@@ -543,10 +601,17 @@ export async function POST(request: NextRequest) {
             id: reportId,
             customer_id: customerId,
             customer_email: customerEmail,
-            vehicle_info: vehicleInfo,
-            status: 'processing',
-            stripe_payment_id: paymentIntent.id,
-            created_at: new Date().toISOString()
+            customer_name: customerName || 'Customer',
+            vehicle_identifier: vehicleInfo,
+            report_type: paymentIntent.metadata.reportType?.toUpperCase() || 'COMPREHENSIVE',
+            status: 'pending',
+            order_id: paymentIntent.id,
+            report_data: {
+              one_time_payment: true,
+              payment_intent_id: paymentIntent.id,
+              amount: paymentIntent.amount / 100,
+              created_at: new Date().toISOString()
+            }
           })
 
         if (insertError) {
