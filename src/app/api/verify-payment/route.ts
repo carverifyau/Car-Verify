@@ -3,19 +3,52 @@ import { stripe } from '@/lib/stripe'
 
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId } = await request.json()
+    const { sessionId, paymentIntentId } = await request.json()
 
-    if (!sessionId) {
+    if (!sessionId && !paymentIntentId) {
       return NextResponse.json(
-        { error: 'Missing session ID' },
+        { error: 'Missing session ID or payment intent ID' },
         { status: 400 }
       )
     }
 
-    console.log('[VERIFY-PAYMENT] Received sessionId:', sessionId)
+    console.log('[VERIFY-PAYMENT] Received sessionId:', sessionId, 'paymentIntentId:', paymentIntentId)
+
+    // Handle PaymentIntent verification (one-time payments)
+    if (paymentIntentId) {
+      console.log('[VERIFY-PAYMENT] Detected payment intent ID, retrieving payment intent...')
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId)
+
+      console.log('[VERIFY-PAYMENT] PaymentIntent status:', paymentIntent.status)
+      console.log('[VERIFY-PAYMENT] PaymentIntent metadata:', paymentIntent.metadata)
+
+      // Verify payment succeeded
+      if (paymentIntent.status !== 'succeeded') {
+        return NextResponse.json(
+          { error: 'Payment not completed' },
+          { status: 400 }
+        )
+      }
+
+      // Get customer email
+      let customerEmail = paymentIntent.receipt_email || null
+      if (!customerEmail && paymentIntent.customer) {
+        const customer = await stripe.customers.retrieve(paymentIntent.customer as string)
+        customerEmail = customer && !customer.deleted ? customer.email : null
+      }
+
+      // Return payment intent data including metadata
+      return NextResponse.json({
+        success: true,
+        metadata: paymentIntent.metadata,
+        customerEmail,
+        amountTotal: paymentIntent.amount,
+        currency: paymentIntent.currency,
+      })
+    }
 
     // Check if it's a subscription ID (starts with 'sub_') or checkout session (starts with 'cs_')
-    if (sessionId.startsWith('sub_')) {
+    if (sessionId && sessionId.startsWith('sub_')) {
       // Handle subscription verification
       console.log('[VERIFY-PAYMENT] Detected subscription ID, retrieving subscription...')
       const subscription = await stripe.subscriptions.retrieve(sessionId, {

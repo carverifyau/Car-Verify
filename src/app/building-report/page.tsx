@@ -37,7 +37,8 @@ const TESTIMONIALS = [
 function BuildingReportContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const sessionId = searchParams.get('session_id')
+  const paymentIntentId = searchParams.get('payment_intent')
+  const sessionId = searchParams.get('session_id') // Legacy support
 
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
@@ -53,13 +54,13 @@ function BuildingReportContent() {
   }, [])
 
   useEffect(() => {
-    if (!sessionId) {
-      setError('No session ID found')
+    if (!paymentIntentId && !sessionId) {
+      setError('No payment ID found')
       return
     }
 
     buildReport()
-  }, [sessionId])
+  }, [paymentIntentId, sessionId])
 
   const buildReport = async () => {
     try {
@@ -75,7 +76,10 @@ function BuildingReportContent() {
         const verifyResponse = await fetch('/api/verify-payment', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ sessionId }),
+          body: JSON.stringify({
+            sessionId: sessionId || undefined,
+            paymentIntentId: paymentIntentId || undefined
+          }),
         })
 
         if (verifyResponse.ok) {
