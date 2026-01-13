@@ -603,7 +603,7 @@ export async function POST(request: NextRequest) {
             customer_email: customerEmail,
             customer_name: customerName || 'Customer',
             vehicle_identifier: vehicleInfo,
-            report_type: paymentIntent.metadata.reportType?.toUpperCase() || 'COMPREHENSIVE',
+            report_type: 'STANDARD',
             status: 'pending',
             order_id: paymentIntent.id,
             report_data: {
