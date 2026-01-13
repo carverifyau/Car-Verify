@@ -1,129 +1,51 @@
 'use client'
 
 import { useState, useEffect, Suspense } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { Shield } from 'lucide-react'
+import { useSearchParams } from 'next/navigation'
+import { Shield, CheckCircle, Mail } from 'lucide-react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-
-const TESTIMONIALS = [
-  {
-    text: "Car Verify saved me from buying a stolen vehicle. The report was instant and comprehensive!",
-    author: "Sarah M.",
-    location: "Sydney, NSW"
-  },
-  {
-    text: "Found out the car had $15,000 in finance owing. Dodged a bullet thanks to this service!",
-    author: "James T.",
-    location: "Melbourne, VIC"
-  },
-  {
-    text: "Super fast and easy to use. Got my PPSR certificate in under a minute!",
-    author: "Lisa K.",
-    location: "Brisbane, QLD"
-  },
-  {
-    text: "The detailed report helped me negotiate a better price. Worth every cent!",
-    author: "Michael R.",
-    location: "Perth, WA"
-  },
-  {
-    text: "Peace of mind before the big purchase. Highly recommend to anyone buying a used car!",
-    author: "Emma W.",
-    location: "Adelaide, SA"
-  }
-]
+import { motion } from 'framer-motion'
 
 function BuildingReportContent() {
   const searchParams = useSearchParams()
-  const router = useRouter()
   const paymentIntentId = searchParams.get('payment_intent')
   const sessionId = searchParams.get('session_id') // Legacy support
 
-  const [progress, setProgress] = useState(0)
+  const [verifying, setVerifying] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0)
-  const [currentStage, setCurrentStage] = useState('Verifying payment...')
-
-  // Cycle through testimonials every 3 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonialIndex((prev) => (prev + 1) % TESTIMONIALS.length)
-    }, 3000)
-    return () => clearInterval(interval)
-  }, [])
 
   useEffect(() => {
     if (!paymentIntentId && !sessionId) {
       setError('No payment ID found')
+      setVerifying(false)
       return
     }
 
-    buildReport()
+    verifyPayment()
   }, [paymentIntentId, sessionId])
 
-  const buildReport = async () => {
+  const verifyPayment = async () => {
     try {
-      // Step 1: Verify payment (with polling for subscription activation)
-      setCurrentStage('Verifying payment...')
-      setProgress(10)
+      const verifyResponse = await fetch('/api/verify-payment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionId: sessionId || undefined,
+          paymentIntentId: paymentIntentId || undefined
+        }),
+      })
 
-      let verifyData = null
-      let attempts = 0
-      const maxAttempts = 10 // Try for up to 20 seconds (10 attempts × 2 seconds)
-
-      while (attempts < maxAttempts) {
-        const verifyResponse = await fetch('/api/verify-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            sessionId: sessionId || undefined,
-            paymentIntentId: paymentIntentId || undefined
-          }),
-        })
-
-        if (verifyResponse.ok) {
-          verifyData = await verifyResponse.json()
-          break
-        }
-
-        // If subscription is still processing, wait and retry
-        attempts++
-        setProgress(10 + (attempts * 2)) // Increment progress slightly
-        await new Promise(resolve => setTimeout(resolve, 2000)) // Wait 2 seconds before retry
+      if (!verifyResponse.ok) {
+        throw new Error('Payment verification failed')
       }
 
-      if (!verifyData) {
-        throw new Error('Payment verification timed out. Please check your email for your report.')
-      }
-
-      setProgress(30)
-
-      // Step 2: Wait for webhook to generate PPSR report
-      // The Stripe webhook is generating the PPSR certificate in the background
-      setCurrentStage('Building your PPSR report...')
-
-      // Animate progress smoothly from 30% to 90% over 8 seconds while webhook processes
-      const animationDuration = 8000
-      const steps = 40 // 30% to 90% = 60 steps
-      const stepDuration = animationDuration / steps
-
-      for (let i = 0; i < steps; i++) {
-        await new Promise(resolve => setTimeout(resolve, stepDuration))
-        setProgress(30 + (i + 1) * 1.5) // Increment by 1.5% each step
-      }
-
-      // Final push to 100%
-      setProgress(100)
-      await new Promise(resolve => setTimeout(resolve, 500))
-
-      // Redirect to payment-success (which will fetch the report from the database)
-      console.log('Redirecting to payment-success with session:', sessionId)
-      router.push(`/payment-success?session_id=${sessionId}`)
+      // Payment verified successfully
+      setVerifying(false)
 
     } catch (err) {
       console.error('Error:', err)
       setError(err instanceof Error ? err.message : 'Something went wrong')
+      setVerifying(false)
     }
   }
 
@@ -164,85 +86,70 @@ function BuildingReportContent() {
               </Link>
             </div>
           </motion.div>
-        ) : (
+        ) : verifying ? (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto w-full"
+            className="max-w-2xl mx-auto text-center"
           >
-            <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 px-2 text-center">
-                {currentStage}
-              </h1>
-              <p className="text-base sm:text-lg text-gray-600 px-2 text-center">
-                Please wait while we build your report
-              </p>
-            </div>
-
-            {/* Progress Bar */}
-            <div className="mb-6 sm:mb-8 px-2">
-              <div className="w-full bg-gray-200 rounded-full h-3 sm:h-4 overflow-hidden">
-                <motion.div
-                  className="h-full bg-gradient-to-r from-blue-500 to-blue-600"
-                  style={{ width: `${progress}%` }}
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-              <p className="text-sm sm:text-base text-gray-600 mt-2 text-center">{Math.round(progress)}% Complete</p>
-            </div>
-
-            {/* Loading Animation */}
-            <div className="flex justify-center mb-6 sm:mb-8">
+            <div className="flex justify-center mb-6">
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                 className="w-12 h-12 sm:w-16 sm:h-16 border-3 sm:border-4 border-blue-600 border-t-transparent rounded-full"
               />
             </div>
-
-            {/* Cycling Testimonials */}
-            <div className="mt-8 sm:mt-12 px-2">
-              <div className="relative min-h-[160px] sm:min-h-[140px]">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentTestimonialIndex}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="bg-white border border-gray-200 rounded-xl p-6 sm:p-8 shadow-sm"
-                  >
-                    <div className="flex items-start mb-4">
-                      <div className="text-blue-600 text-3xl sm:text-4xl mr-2 leading-none">"</div>
-                      <p className="text-sm sm:text-base text-gray-700 italic pt-1 sm:pt-2">
-                        {TESTIMONIALS[currentTestimonialIndex].text}
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs sm:text-sm font-semibold text-gray-900">
-                        {TESTIMONIALS[currentTestimonialIndex].author}
-                      </p>
-                      <p className="text-xs text-gray-500">
-                        {TESTIMONIALS[currentTestimonialIndex].location}
-                      </p>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+              Verifying payment...
+            </h1>
+            <p className="text-gray-600">Please wait a moment</p>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-2xl mx-auto text-center"
+          >
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6 sm:p-8 mx-2">
+              {/* Success Icon */}
+              <div className="flex justify-center mb-4">
+                <div className="bg-green-100 rounded-full p-3">
+                  <CheckCircle className="h-12 w-12 sm:h-16 sm:w-16 text-green-600" />
+                </div>
               </div>
 
-              {/* Testimonial Indicators */}
-              <div className="flex justify-center gap-2 mt-4">
-                {TESTIMONIALS.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`h-1.5 rounded-full transition-all duration-300 ${
-                      index === currentTestimonialIndex
-                        ? 'w-8 bg-blue-600'
-                        : 'w-1.5 bg-gray-300'
-                    }`}
-                  />
-                ))}
+              {/* Success Message */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-900 mb-3 sm:mb-4">
+                Payment Successful!
+              </h1>
+
+              <p className="text-base sm:text-lg text-green-800 mb-6">
+                Your PPSR report is being generated and will be ready shortly.
+              </p>
+
+              {/* Email Notice */}
+              <div className="bg-white border border-green-300 rounded-lg p-4 sm:p-6 mb-6">
+                <div className="flex items-center justify-center mb-3">
+                  <Mail className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600 mr-2" />
+                  <h2 className="text-lg sm:text-xl font-semibold text-gray-900">
+                    Check Your Email
+                  </h2>
+                </div>
+                <p className="text-sm sm:text-base text-gray-700">
+                  Your complete PPSR report will be sent to your email address within the next few minutes.
+                </p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Don't forget to check your spam folder if you don't see it in your inbox.
+                </p>
               </div>
+
+              {/* New Search Button */}
+              <Link
+                href="/"
+                className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-blue-600 text-white text-base sm:text-lg font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-lg"
+              >
+                Search Another Vehicle
+              </Link>
             </div>
           </motion.div>
         )}
