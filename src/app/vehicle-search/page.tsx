@@ -1,13 +1,12 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Shield, AlertTriangle } from 'lucide-react'
+import { Shield } from 'lucide-react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import CustomCheckoutForm from '@/components/CustomCheckoutForm'
-import { usePPSRMaintenance } from '@/hooks/usePPSRMaintenance'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -38,9 +37,6 @@ export default function VehicleSearchPage() {
   const [paymentError, setPaymentError] = useState<string | null>(null)
   const [clientSecret, setClientSecret] = useState('')
   const [paymentIntentId, setPaymentIntentId] = useState('')
-
-  // Check PPSR maintenance window
-  const maintenanceStatus = usePPSRMaintenance()
 
   // Read vehicle data from URL params on mount
   useEffect(() => {
@@ -342,28 +338,6 @@ export default function VehicleSearchPage() {
           </div>
         </div>
       </header>
-
-      {/* Maintenance Warning Banner */}
-      {maintenanceStatus.isInMaintenance && (
-        <div className="bg-yellow-50 border-b border-yellow-200">
-          <div className="container mx-auto px-4 py-3">
-            <div className="flex items-start space-x-3">
-              <AlertTriangle className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
-              <div className="flex-1">
-                <p className="text-sm font-medium text-yellow-900">
-                  Scheduled Maintenance in Progress
-                </p>
-                <p className="text-xs text-yellow-700 mt-1">
-                  {maintenanceStatus.message}
-                  {maintenanceStatus.timeRemaining && (
-                    <span className="font-medium"> Service will be available in {maintenanceStatus.timeRemaining}.</span>
-                  )}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       <div className="container mx-auto px-4 py-6 sm:py-8 md:py-12">
         <AnimatePresence mode="wait">
