@@ -188,57 +188,58 @@ async function createOrUpdateSimpleCustomer(
   email: string,
   name: string | null,
   stripeCustomerId: string
-): Promise<string> {
+): Promise<string | null> {
   console.log('👤 Creating/updating simple customer for:', email)
 
-  // Check if user already exists
-  const { data: existingUsers } = await supabaseAdmin.auth.admin.listUsers()
-  let user = existingUsers?.users.find(u => u.email === email)
-
-  // Create user if doesn't exist
-  if (!user) {
-    console.log('👤 Creating new user account')
+  try {
+    // Try to create user
     const { data: newUser, error: authError } = await supabaseAdmin.auth.admin.createUser({
       email,
       email_confirm: true,
-      user_metadata: {
-        name: name || '',
-      },
+      user_metadata: { name: name || '' },
     })
 
-    if (authError) {
-      // If user exists error, try to find them
-      if (authError.message?.includes('already been registered')) {
-        console.log('👤 User exists, looking them up...')
-        const { data: users } = await supabaseAdmin.auth.admin.listUsers()
-        user = users?.users.find(u => u.email === email)
-        if (!user) throw new Error('User exists but could not be found')
-      } else {
-        throw authError
-      }
-    } else {
-      user = newUser.user
+    if (newUser?.user) {
+      console.log('✅ User created:', newUser.user.id)
+
+      // Create customer record
+      await supabaseAdmin
+        .from('customers')
+        .upsert({
+          id: newUser.user.id,
+          email,
+          name: name || null,
+          stripe_customer_id: stripeCustomerId,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'id' })
+
+      return newUser.user.id
     }
-    console.log('✅ User found/created:', user.id)
-  } else {
-    console.log('✅ Existing user found:', user.id)
+
+    // User exists - try to look them up
+    if (authError?.message?.includes('already been registered')) {
+      console.log('👤 User already exists, looking up by email...')
+
+      const { data, error } = await supabaseAdmin
+        .from('customers')
+        .select('id')
+        .eq('email', email.toLowerCase().trim())
+        .single()
+
+      if (data?.id) {
+        console.log('✅ Found existing customer:', data.id)
+        return data.id
+      }
+
+      console.log('⚠️ User exists but no customer record found, continuing without customer_id')
+      return null
+    }
+
+    throw authError
+  } catch (error) {
+    console.error('⚠️ Customer creation error:', error)
+    return null
   }
-
-  // Create or update customer record
-  await supabaseAdmin
-    .from('customers')
-    .upsert({
-      id: user.id,
-      email,
-      name: name || null,
-      stripe_customer_id: stripeCustomerId,
-      updated_at: new Date().toISOString(),
-    }, {
-      onConflict: 'id',
-    })
-
-  console.log('✅ Customer record created/updated')
-  return user.id
 }
 
 // Helper function to create or update customer account (with subscription)
@@ -575,20 +576,14 @@ export async function POST(request: NextRequest) {
 
         console.log('📋 Vehicle info:', vehicleInfo)
 
-        // Create or update customer account
+        // Create or update customer account (optional, non-blocking)
         let customerId: string | null = null
         if (stripeCustomerId) {
-          try {
-            customerId = await createOrUpdateSimpleCustomer(
-              customerEmail,
-              customerName,
-              stripeCustomerId
-            )
-            console.log('✅ Customer account created/updated:', customerId)
-          } catch (error) {
-            console.error('⚠️ Failed to create/update customer account:', error)
-            // Continue without customer account
-          }
+          customerId = await createOrUpdateSimpleCustomer(
+            customerEmail,
+            customerName,
+            stripeCustomerId
+          )
         }
 
         // Create report record
