@@ -124,7 +124,7 @@ function BuildingReportContent() {
               </h1>
 
               <p className="text-base sm:text-lg text-green-800 mb-6">
-                Your PPSR report is being generated and will be ready shortly.
+                Your official PPSR certificate is being generated now.
               </p>
 
               {/* Email Notice */}
@@ -135,12 +135,17 @@ function BuildingReportContent() {
                     Check Your Email
                   </h2>
                 </div>
-                <p className="text-sm sm:text-base text-gray-700">
-                  Your complete PPSR report will be sent to your email address within the next few minutes.
+                <p className="text-sm sm:text-base text-gray-700 mb-3">
+                  Your official PPSR certificate will be sent to your email address within the next few minutes.
                 </p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Don't forget to check your spam folder if you don't see it in your inbox.
-                </p>
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+                  <p className="text-sm font-semibold text-yellow-900 mb-1">
+                    ⚠️ Important: Check Your Junk/Spam Folder
+                  </p>
+                  <p className="text-xs text-yellow-800">
+                    Automated emails sometimes end up in spam. If you don't see your PPSR certificate in your inbox within 5 minutes, please check your junk mail folder.
+                  </p>
+                </div>
               </div>
 
               {/* New Search Button */}
