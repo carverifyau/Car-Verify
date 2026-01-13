@@ -1246,7 +1246,7 @@ export default function VehicleSearchPage() {
                   </div>
                 )}
 
-                {clientSecret && subscriptionId ? (
+                {clientSecret ? (
                   <Elements
                     stripe={stripePromise}
                     options={{
